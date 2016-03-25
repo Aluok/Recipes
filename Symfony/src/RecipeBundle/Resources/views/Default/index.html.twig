@@ -1,0 +1,75 @@
+{% extends "RecipeBundle::layout.html.twig" %}
+
+
+{% block stylesheets %}
+  {{ parent() }}
+{% endblock %}
+
+{% block header %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Julien's Recipe</h1>
+    <p>
+      Lets discover recipes easy to make or to ravish this nice looking babe
+    </p>
+    <p><a class="btn btn-primary btn-lg" href="{{ path('recipe_list') }}" role="button">Browse »</a></p>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}  <!-- Example row of columns -->
+  {% for flash_message in app.session.flashbag.get('notice') %}
+  <div class="flash-message">
+    {{ flash_message }}
+  </div>
+  {% endfor %}
+  <div class="row">
+    <div class="col-md-4">
+      <h2>5 top viewed recipes</h2>
+      <p>
+        <ul>
+          <li><a href="#">Crepes</a></li>
+          <li><a href="#">Crepes</a></li>
+          <li><a href="#">Crepes</a></li>
+          <li><a href="#">Crepes</a></li>
+          <li><a href="#">Crepes</a></li>
+        </ul>
+      </p>
+
+      <p><a class="btn btn-default" href="#" role="button">More »</a></p>
+    </div>
+    <div class="col-md-4">
+      <h2>5 top rated recipes</h2>
+      <p>
+        <ul>
+          <li><a href="#">Crepes</a></li>
+          <li><a href="#">Crepes</a></li>
+          <li><a href="#">Crepes</a></li>
+          <li><a href="#">Crepes</a></li>
+          <li><a href="#">Crepes</a></li>
+        </ul>
+      </p>
+
+      <p><a class="btn btn-default" href="#" role="button">More »</a></p>
+    </div><div class="col-md-4">
+      <h2>5 top writers</h2>
+      <p>
+        <ul>
+          <li><a href="#">I</a></li>
+          <li><a href="#">You</a></li>
+          <li><a href="#">He</a></li>
+          <li><a href="#">We</a></li>
+          <li><a href="#">They</a></li>
+        </ul>
+      </p>
+
+      <p><a class="btn btn-default" href="#" role="button">More »</a></p>
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

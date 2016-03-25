@@ -1,0 +1,45 @@
+<?php
+// src/RecipeBundle/Entity/User.php
+
+namespace RecipeBundle\Entity;
+
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="fos_user")
+ */
+class User extends BaseUser
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="author")
+     */
+    private $commments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Rating", mappedBy="author")
+     */
+    private $ratings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Recipe", mappedBy="author")
+     */
+    private $recipes;
+
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+        $this->recipes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
+    }
+}

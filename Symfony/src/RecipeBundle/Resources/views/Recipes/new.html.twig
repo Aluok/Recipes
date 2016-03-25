@@ -1,0 +1,64 @@
+{%- extends "RecipeBundle::layout.html.twig" -%}
+
+{%- form_theme form 'bootstrap_3_horizontal_layout.html.twig' -%}
+
+
+{% block content -%}
+    <h1>Recipe creation</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.ingredients) }}
+        {{ form_row(form.category) }}
+        {{ form_row(form.duration) }}
+        {{ form_row(form.steps) }}
+        {{ form_widget(form) }}
+
+        <div class="form-group">
+          <a href="{{ path('recipe_list') }}" class="btn btn-md btn-info col-md-offset-2 col-md-2">
+            <i class="glyphicon glyphicon-arrow-left"></i> Back to the list
+          </a>
+          <input type="submit" value="Create" class="btn btn-success btn-md col-md-offset-1 col-md-2" />
+          <input type="Reset" value="Reset" class="btn btn-warning btn-md col-md-offset-1 col-md-2" />
+        </div>
+    {{ form_end(form) }}
+
+
+
+{%- endblock %}
+
+{% block javascripts -%}
+  {{ parent() }}
+  <script>
+    $(function(){
+      var $addStepButton = $('<a href="#" class="add_step_link"></a>').append($('<i class="glyphicon glyphicon-plus-sign"></i>'))
+      var $collectionHolder = $('#recipe_steps');
+      $collectionHolder.append($addStepButton);
+
+      $collectionHolder.data('index', $collectionHolder.find('> .form-group').length);
+
+      $addStepButton.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addStepForm($collectionHolder, $addStepButton);
+      });
+      function addStepForm($collectionHolder, $newLinkLi) {
+          var prototype = $collectionHolder.data('prototype');
+
+          // get the new index
+          var index = $collectionHolder.data('index');
+
+          // Replace '__name__' in the prototype's HTML to
+          // instead be a number based on how many items we have
+          var newForm = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
+
+          // increase the index with one for the next item
+          $collectionHolder.data('index', index + 1);
+
+          $newLinkLi.before(newForm);
+      }
+    });
+
+  </script>
+{%- endblock %}

@@ -1,0 +1,9 @@
+#main-container {
+  padding-top: 60px;
+}
+.modal.in {
+   display:block;
+}
+a {
+  color: #333!important;
+}

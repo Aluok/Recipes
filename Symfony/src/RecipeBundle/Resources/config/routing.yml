@@ -1,0 +1,41 @@
+
+
+recipe_new:
+    path:       /recipe/new
+    defaults:   { _controller: RecipeBundle:Recipe:add}
+    methods:  [GET, POST]
+
+recipe_edit:
+    path:       /recipe/{id}/edit
+    defaults:   { _controller: RecipeBundle:Recipe:add}
+    methods:  [GET, POST]
+
+recipe_delete:
+    path:       /recipe/{id}
+    defaults:   { _controller: RecipeBundle:Recipe:add}
+    methods:  [DELETE]
+
+recipe_list:
+    path:       /recipe/list/{sorter}
+    defaults:   { _controller: RecipeBundle:Recipe:list, sorter: alpha }
+
+recipe_view:
+    path:       /recipe/{id}
+    defaults:   { _controller: RecipeBundle:Recipe:show}
+    methods:  [GET]
+
+recipe_home:
+    path:       /
+    defaults:   { _controller: RecipeBundle:Default:index }
+
+my_recipes:
+    path:     /me/recipes
+    defaults: { _controller: RecipeBundle:User:recipes }
+
+my_ratings:
+    path:     /me/ratings
+    defaults: { _controller: RecipeBundle:User:ratings }
+
+my_reviews:
+    path:     /me/reviews
+    defaults: { _controller: RecipeBundle:User:reviews }
