@@ -14,8 +14,8 @@
                 <td>{{ recipe.category }}</td>
             </tr>
             <tr>
-                <th>Slug</th>
-                <td>{{ recipe.slug }}</td>
+                <th>Title</th>
+                <td>{{ recipe.title }}</td>
             </tr>
             <tr>
                 <th>Duration</th>
@@ -28,10 +28,6 @@
             <tr>
                 <th>Date</th>
                 <td>{% if recipe.date %}{{ recipe.date|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Version</th>
-                <td>{{ recipe.version }}</td>
             </tr>
             <tr>
                 <th>Reviews</th>

@@ -37,24 +37,13 @@ class Step
     private $image;
 
     /**
-     *
-     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="steps")
+     * Bidirectionnal - One Recipe has many steps. OWNER SIDE
+     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="steps", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug")
      */
      private $recipe;
 
-     /**
-      *
-      * @ORM\Column(name="step_order", type="integer", nullable=false)
-      */
-      private $order;
-
-      /**
-       * @ORM\OneToMany(targetEntity="Comment", mappedBy="step")
-       */
-      private $comments;
-
-      public function __construct()
+     public function __construct()
       {
         $this->comments = new ArrayCollection();
       }
@@ -118,37 +107,13 @@ class Step
     }
 
     /**
-     * Set comments
-     *
-     * @param \stdClass $comments
-     *
-     * @return Step
-     */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-
-        return $this;
-    }
-
-    /**
-     * Get comments
-     *
-     * @return \stdClass
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
      * Set recipe
      *
      * @param \stdClass $recipe
      *
      * @return Step
      */
-    public function setRecipe($recipe)
+    public function setRecipe(Recipe $recipe)
     {
         $this->recipe = $recipe;
 
@@ -165,51 +130,4 @@ class Step
         return $this->recipe;
     }
 
-    /**
-     * Set order
-     *
-     * @param \int $order
-     *
-     * @return Step
-     */
-    public function setOrder(int $order)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return \int
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
-     * Add comment
-     *
-     * @param \RecipeBundle\Entity\Comment $comment
-     *
-     * @return Step
-     */
-    public function addComment(\RecipeBundle\Entity\Comment $comment)
-    {
-        $this->comments[] = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Remove comment
-     *
-     * @param \RecipeBundle\Entity\Comment $comment
-     */
-    public function removeComment(\RecipeBundle\Entity\Comment $comment)
-    {
-        $this->comments->removeElement($comment);
-    }
 }

@@ -73,13 +73,6 @@ class Recipe
     private $date;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="version", type="integer")
-     */
-    private $version;
-
-    /**
      * @var \stdClass
      *
      * @ORM\Column(name="reviews", type="object", nullable=true)
@@ -101,12 +94,13 @@ class Recipe
     private $isPublished;
 
     /**
-     * @ORM\OneToMany(targetEntity="Step", mappedBy="recipe", cascade={"persist"})
+     * Bidirectionnal - One Recipe has many steps. INVERSE SIDE
+     * @ORM\OneToMany(targetEntity="Step", mappedBy="recipe", cascade={"persist", "remove"})
      */
     private $steps;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="recipe", cascade={"remove"})
      * @ORM\JoinColumn(name="comments_id", nullable=true)
      */
     private $comments;
@@ -115,6 +109,8 @@ class Recipe
     {
       $this->steps = new ArrayCollection();
       $this->comments = new ArrayCollection();
+      $this->setIsFinished(false)
+        ->setIsPublished(false);
     }
 
     /**
@@ -295,29 +291,6 @@ class Recipe
         return $this->date;
     }
 
-    /**
-     * Set version
-     *
-     * @param integer $version
-     *
-     * @return Recipe
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-
-        return $this;
-    }
-
-    /**
-     * Get version
-     *
-     * @return int
-     */
-    public function getVersion()
-    {
-        return $this->version;
-    }
 
     /**
      * Set reviews

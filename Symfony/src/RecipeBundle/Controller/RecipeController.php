@@ -46,13 +46,16 @@ class RecipeController extends Controller
             $recipe
                 ->setAuthor($this->get('security.token_storage')->getToken()->getUser())
                 ->setDate(new \DateTime())
-                ->generateSlug()
-                ->setIsFinished(false)
-                ->setIsPublished(false)
-                ->setVersion(1);
+                ->generateSlug();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
+
+            foreach($recipe->getSteps() as $step) {
+                $step->setRecipe($recipe);
+                $em->persist($step);
+            }
+
             $em->flush();
 
             return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
@@ -94,6 +97,12 @@ class RecipeController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
+
+            foreach($recipe->getSteps() as $step) {
+                $step->setRecipe($recipe);
+                $em->persist($step);
+            }
+
             $em->flush();
 
             return $this->redirectToRoute('recipe_edit', array('id' => $recipe->getId()));

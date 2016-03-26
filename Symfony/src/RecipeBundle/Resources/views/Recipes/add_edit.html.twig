@@ -20,13 +20,13 @@
             </a>
             <input type="submit" value="Create" class="btn btn-success btn-md col-md-offset-1 col-md-2" />
             <input type="Reset" value="Reset" class="btn btn-warning btn-md col-md-offset-1 col-md-2" />
-            {% if delete_form is defined %}
+            {#% if delete_form is defined %}
                 <div class="col-md-2 col-md-offset-1">
                     {{ form_start(delete_form) }}
                         <input type="submit" value="Delete" class="col-md-12 btn btn-danger btn-md">
                     {{ form_end(delete_form) }}
                 </div>
-            {% endif %}
+            {% endif %#}
         </div>
     {{ form_end(form) }}
 
