@@ -28,11 +28,9 @@
       <h2>5 top viewed recipes</h2>
       <p>
         <ul>
-          <li><a href="#">Crepes</a></li>
-          <li><a href="#">Crepes</a></li>
-          <li><a href="#">Crepes</a></li>
-          <li><a href="#">Crepes</a></li>
-          <li><a href="#">Crepes</a></li>
+            {% for recipe in most_viewed_recipe %}
+          <li><a href="{{ path('recipe_view', {'id': recipe.slug}) }}">{{ recipe.title }}</a></li>
+            {% endfor %}
         </ul>
       </p>
 

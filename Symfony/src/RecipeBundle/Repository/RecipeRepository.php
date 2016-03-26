@@ -10,6 +10,20 @@ namespace RecipeBundle\Repository;
  */
 class RecipeRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function find5mostViewed()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT r.title, r.slug
+                FROM RecipeBundle:recipe AS r
+                WHERE r.isPublished=1 AND r.isFinished=1
+                ORDER BY r.views DESC'
+            )
+            ->setMaxResults(5)
+            ->getResult();
+    }
+
     public function find5bestRated() {
         return $this->getEntityManager()
             ->createQuery(

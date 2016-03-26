@@ -79,6 +79,12 @@ class RecipeController extends Controller
         }
         $deleteForm = $this->createDeleteForm($recipe);
 
+        $recipe->setViews($recipe->getViews() + 1);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($recipe);
+        $em->flush();
+
         return $this->render('RecipeBundle:Recipes:show.html.twig', array(
             'recipe' => $recipe,
             'delete_form' => $deleteForm->createView(),

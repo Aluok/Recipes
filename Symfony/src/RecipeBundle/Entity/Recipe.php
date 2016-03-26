@@ -59,9 +59,9 @@ class Recipe
     private $duration;
 
     /**
-     * @var int
+     * @var decimal
      *
-     * @ORM\Column(name="rating", type="integer", nullable=true)
+     * @ORM\Column(name="rating", type="decimal", nullable=true)
      */
     private $rating;
 
@@ -98,6 +98,13 @@ class Recipe
      * @ORM\OneToMany(targetEntity="Step", mappedBy="recipe", cascade={"persist", "remove"})
      */
     private $steps;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="viewed", type="integer")
+     */
+    private $views = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="recipe", cascade={"remove"})
@@ -454,5 +461,43 @@ class Recipe
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Recipe
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Set views
+     *
+     * @param integer $views
+     *
+     * @return Recipe
+     */
+    public function setViews($views)
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    /**
+     * Get views
+     *
+     * @return integer
+     */
+    public function getViews()
+    {
+        return $this->views;
     }
 }
