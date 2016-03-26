@@ -4,6 +4,14 @@
 .modal.in {
    display:block;
 }
-a {
+a:not(nav > a) {
   color: #333!important;
+}
+.alert{
+    display: inline-block;
+    position: absolute;
+    top: 70px;
+    left: calc(100% - 350px);
+    width: 300px;
+    text-align: center;
 }
