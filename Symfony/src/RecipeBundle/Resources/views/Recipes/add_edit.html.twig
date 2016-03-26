@@ -14,11 +14,19 @@
         {{ form_widget(form) }}
 
         <div class="form-group">
-          <a href="{{ path('recipe_list') }}" class="btn btn-md btn-info col-md-offset-2 col-md-2">
-            <i class="glyphicon glyphicon-arrow-left"></i> Back to the list
-          </a>
-          <input type="submit" value="Create" class="btn btn-success btn-md col-md-offset-1 col-md-2" />
-          <input type="Reset" value="Reset" class="btn btn-warning btn-md col-md-offset-1 col-md-2" />
+            <a href="{{ path('recipe_list') }}" class="btn btn-md btn-info
+            {% if delete_form is defined %}col-md-offset-1{% else %}col-md-offset-2{% endif %} col-md-2">
+                <i class="glyphicon glyphicon-arrow-left"></i> Back to the list
+            </a>
+            <input type="submit" value="Create" class="btn btn-success btn-md col-md-offset-1 col-md-2" />
+            <input type="Reset" value="Reset" class="btn btn-warning btn-md col-md-offset-1 col-md-2" />
+            {% if delete_form is defined %}
+                <div class="col-md-2 col-md-offset-1">
+                    {{ form_start(delete_form) }}
+                        <input type="submit" value="Delete" class="col-md-12 btn btn-danger btn-md">
+                    {{ form_end(delete_form) }}
+                </div>
+            {% endif %}
         </div>
     {{ form_end(form) }}
 

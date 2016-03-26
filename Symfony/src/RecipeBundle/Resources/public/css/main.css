@@ -15,3 +15,16 @@ a:not(nav > a) {
     width: 300px;
     text-align: center;
 }
+td {
+    padding: 0px !important;
+}
+td > *{
+    margin: 8px;
+}
+td > a:not(.btn) {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    display: block;
+    padding: 8px;
+}

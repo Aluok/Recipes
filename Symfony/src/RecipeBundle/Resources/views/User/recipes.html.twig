@@ -14,10 +14,10 @@
         <tbody>
         {% for recipe in recipes %}
             <tr>
-                <td><a href="{{ path('recipe_view', { 'id': recipe.slug }) }}">{{ recipe.title }}</a></td>
-                <td>{{ recipe.category }}</td>
-                <td>{% if recipe.duration %}{{ recipe.duration|date('H:i') }}{% endif %}</td>
-                <td>{{ recipe.rating }}</td>
+                <td><a href="{{ path('recipe_edit', { 'id': recipe.slug }) }}">{{ recipe.title }}</a></td>
+                <td><a href="{{ path('recipe_edit', { 'id': recipe.slug }) }}">{{ recipe.category }}</a></td>
+                <td><a href="{{ path('recipe_edit', { 'id': recipe.slug }) }}">{% if recipe.duration %}{{ recipe.duration|date('H:i') }}{% endif %}</a></td>
+                <td><a href="{{ path('recipe_edit', { 'id': recipe.slug }) }}">{{ recipe.rating }}</a></td>
             </tr>
         {% endfor %}
         </tbody>

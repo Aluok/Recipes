@@ -58,7 +58,7 @@ class RecipeController extends Controller
             return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
         }
 
-        return $this->render('RecipeBundle:Recipes:new.html.twig', array(
+        return $this->render('RecipeBundle:Recipes:add_edit.html.twig', array(
             'recipe' => $recipe,
             'form' => $form->createView(),
         ));
@@ -99,9 +99,9 @@ class RecipeController extends Controller
             return $this->redirectToRoute('recipe_edit', array('id' => $recipe->getId()));
         }
 
-        return $this->render('RecipeBundle:Recipes:edit.html.twig', array(
+        return $this->render('RecipeBundle:Recipes:add_edit.html.twig', array(
             'recipe' => $recipe,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

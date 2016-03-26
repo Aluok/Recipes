@@ -7,7 +7,7 @@ recipe_new:
 
 recipe_edit:
     path:       /recipe/{id}/edit
-    defaults:   { _controller: RecipeBundle:Recipe:add}
+    defaults:   { _controller: RecipeBundle:Recipe:edit}
     methods:  [GET, POST]
 
 recipe_delete:
