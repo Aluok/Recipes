@@ -26,7 +26,7 @@ class Comment
      * @var \stdClass
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
-     * @ORM\JoinColumn(name="author", referencedColumnName="id")
+     * @ORM\JoinColumn(name="author", referencedColumnName="id", nullable=false)
      */
     private $author;
 
@@ -54,14 +54,14 @@ class Comment
      * @var \stdClass
      *
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="comments")
-     * @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug")
+     * @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug", nullable=false)
      */
     private $recipe;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="text", type="text")
+     * @ORM\Column(name="text", type="text", nullable=false)
      */
     private $text;
 
@@ -71,13 +71,6 @@ class Comment
      * @ORM\Column(name="lastUpdatedDate", type="datetime", nullable=true)
      */
     private $lastUpdatedDate;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="stale", type="boolean")
-     */
-    private $stale;
 
     public function __construct()
     {
@@ -236,30 +229,6 @@ class Comment
     public function getLastUpdatedDate()
     {
         return $this->lastUpdatedDate;
-    }
-
-    /**
-     * Set stale
-     *
-     * @param boolean $stale
-     *
-     * @return Comment
-     */
-    public function setStale($stale)
-    {
-        $this->stale = $stale;
-
-        return $this;
-    }
-
-    /**
-     * Get stale
-     *
-     * @return bool
-     */
-    public function getStale()
-    {
-        return $this->stale;
     }
 
     /**

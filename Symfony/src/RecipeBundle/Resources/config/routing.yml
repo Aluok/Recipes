@@ -24,6 +24,16 @@ recipe_view:
     defaults:   { _controller: RecipeBundle:Recipe:show}
     methods:  [GET]
 
+recipe_comment:
+    path:       /comment/{id}
+    defaults:   { _controller: RecipeBundle:Recipe:comment}
+    methods:  [GET, POST]
+
+recipe_review:
+    path:       /review/{id}
+    defaults:   { _controller: RecipeBundle:Recipe:review}
+    methods:  [GET, POST]
+
 recipe_home:
     path:       /
     defaults:   { _controller: RecipeBundle:Default:index }

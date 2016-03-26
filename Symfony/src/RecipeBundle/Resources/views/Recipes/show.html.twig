@@ -43,21 +43,27 @@
         </ul>
 
     </div>
+
     <div class="row">
-        <div class="col-md-6 thumbnail" id="comments">
+        <a href="{{ path('recipe_comment', {'id': recipe.slug}) }}" class="btn btn-info col-md-2 col-md-offset-3">Comment</a>
+        <a href="{{ path('recipe_review', {'id': recipe.slug}) }}" class="btn btn-info col-md-2 col-md-offset-2">Rate/review</a>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-5 thumbnail" id="comments">
             <h3>Comments</h3>
-            {% for step in 1..10 %}
+            {% for comment in recipe.comments %}
                 <div class="comment">
                     <p>
-                        Thank you, saved my date!
+                        {{ comment.text }}
                     </p>
                     <p class="info">
-                        By AZERTYUOP the 12/12/1212
+                        By {{ comment.author }} the {% if comment.date %}{{ comment.date|date('Y-m-d') }}{% endif %}
                     </p>
                 </div>
             {% endfor %}
         </div>
-        <div class="col-md-6 thumbnail" id="reviews">
+        <div class="col-md-5 col-md-offset-2 thumbnail" id="reviews">
             <h3>Reviews</h3>
             {% for step in 1..10 %}
                 <div class="review">

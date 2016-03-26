@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use RecipeBundle\Entity\Recipe;
 use RecipeBundle\Entity\Step;
+use RecipeBundle\Entity\Comment;
 use RecipeBundle\Form\RecipeType;
 
 /**
@@ -24,7 +25,7 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $recipes = $em->getRepository('RecipeBundle:Recipe')->findAll();
+        $recipes = $em->getRepository('RecipeBundle:Recipe')->findByIsPublished(1);
 
         return $this->render('RecipeBundle:Recipes:list.html.twig', array(
             'recipes' => $recipes,
@@ -111,7 +112,7 @@ class RecipeController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('recipe_edit', array('id' => $recipe->getId()));
+            return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
         }
 
         return $this->render('RecipeBundle:Recipes:add_edit.html.twig', array(
@@ -136,6 +137,32 @@ class RecipeController extends Controller
         }
 
         return $this->redirectToRoute('recipe_index');
+    }
+
+    /**
+     * Comment a Recipe
+     */
+    public function commentAction(Request $request, Recipe $recipe) {
+        $comment = new Comment();
+        $form = $this->createForm('RecipeBundle\Form\CommentType', $comment);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $comment
+                ->setAuthor($this->get('security.token_storage')->getToken()->getUser())
+                ->setDate(new \DateTime())
+                ->setRecipe($recipe)
+                ;
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+
+            return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
+        }
+        return $this->render('RecipeBundle:Utils:generic_form.html.twig', array(
+            'form' => $form->createView(),
+            'title' => 'Comment ' . $recipe->getTitle(),
+        ));
     }
 
     /**
