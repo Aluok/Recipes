@@ -55,11 +55,9 @@
       <h2>5 top writers</h2>
       <p>
         <ul>
-          <li><a href="#">I</a></li>
-          <li><a href="#">You</a></li>
-          <li><a href="#">He</a></li>
-          <li><a href="#">We</a></li>
-          <li><a href="#">They</a></li>
+            {% for author in best_authors %}
+          <li><a href="#">{{ author.username }}</a></li>
+            {% endfor %}
         </ul>
       </p>
 

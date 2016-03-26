@@ -9,7 +9,12 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('RecipeBundle:Default:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $best_authors = $em->getRepository('RecipeBundle:User')->find5best();
+        return $this->render('RecipeBundle:Default:index.html.twig', array(
+            'best_authors' => $best_authors,
+
+        ));
     }
 
     public function listRecipesAction($sorter) {
