@@ -6,39 +6,45 @@
 
 {% block content %}
     <div id="recipe_infos">
-        <h2>{{ recipe.title }} <small>({{ recipe.rating }})</small></h2>
         <div class="row">
-            <div class="col-md-8">
-                <div class="col-md-2">
-                    {{ recipe.category }}
+            <h2 class="col-md-8">{{ recipe.title }} <small>({% if recipe.rating %}{{ recipe.rating }}{% else %}0{% endif %})</small></h2>
+            <div class="col-md-3 col-md-offset-1 thumbnail">
+                <div>
+                    Category: {{ recipe.category }}
                 </div>
-                <div class="col-md-offset-1 col-md-2">
-                    {{ recipe.duration|date('H:i') }}
+                <div>
+                    Duration: {{ recipe.duration|date('H:i') }}
                 </div>
-                <div class="col-md-offset-1 col-md-2">
-                    {% if recipe.date %}{{ recipe.date|date('Y-m-d') }}{% endif %}
-                </div>
-
-                <div class="col-md-offset-1 col-md-2">
+                <div>
+                    The {% if recipe.date %}{{ recipe.date|date('Y-m-d') }}{% endif %}
                     By {% if recipe.author %}{{ recipe.author.username }}{% endif %}
                 </div>
             </div>
         </div>
     </div>
-    <div id="ingredients">
-        <h3>You will need:</h3>
-        {{ recipe.ingredients }}
+    <div id="ingredients" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">You will need:</h3>
+        </div>
+        <div class="panel-body">
+            {{ recipe.ingredients }}
+        </div>
     </div>
-    <div id="steps">
-        {% for step in 1..10 %}
-            <div class="step">
-                Blalala
-            </div>
-        {% endfor %}
+    <div id="steps" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Steps</h3>
+        </div>
+        <ul class="list-group">
+            {% for step in recipe.steps %}
+                <li class="step list-group-item">
+                    {{ step.text }}
+                </li>
+            {% endfor %}
+        </ul>
 
     </div>
     <div class="row">
-        <div class="col-md-6" id="comments">
+        <div class="col-md-6 thumbnail" id="comments">
             <h3>Comments</h3>
             {% for step in 1..10 %}
                 <div class="comment">
@@ -51,7 +57,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="col-md-6" id="reviews">
+        <div class="col-md-6 thumbnail" id="reviews">
             <h3>Reviews</h3>
             {% for step in 1..10 %}
                 <div class="review">
