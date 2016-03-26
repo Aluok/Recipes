@@ -11,9 +11,10 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $best_authors = $em->getRepository('RecipeBundle:User')->find5best();
+        $best_recipes = $em->getRepository('RecipeBundle:Recipe')->find5bestRated();
         return $this->render('RecipeBundle:Default:index.html.twig', array(
             'best_authors' => $best_authors,
-
+            'best_recipes' => $best_recipes,
         ));
     }
 

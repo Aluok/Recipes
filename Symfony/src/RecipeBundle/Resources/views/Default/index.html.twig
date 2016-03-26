@@ -42,11 +42,9 @@
       <h2>5 top rated recipes</h2>
       <p>
         <ul>
-          <li><a href="#">Crepes</a></li>
-          <li><a href="#">Crepes</a></li>
-          <li><a href="#">Crepes</a></li>
-          <li><a href="#">Crepes</a></li>
-          <li><a href="#">Crepes</a></li>
+            {% for recipe in best_recipes %}
+          <li><a href="{{ path('recipe_view', {'id': recipe.slug}) }}">{{ recipe.title }}</a></li>
+            {% endfor %}
         </ul>
       </p>
 
