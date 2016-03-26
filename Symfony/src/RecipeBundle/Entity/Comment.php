@@ -59,14 +59,6 @@ class Comment
     private $recipe;
 
     /**
-     * @var \stdClass
-     *
-     * @ORM\ManyToOne(targetEntity="Step", inversedBy="comments")
-     * @ORM\JoinColumn(name="steps", referencedColumnName="id", nullable=true)
-     */
-    private $step;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="text", type="text")
@@ -196,30 +188,6 @@ class Comment
     public function getRecipe()
     {
         return $this->recipe;
-    }
-
-    /**
-     * Set step
-     *
-     * @param \stdClass $step
-     *
-     * @return Comment
-     */
-    public function setStep($step)
-    {
-        $this->step = $step;
-
-        return $this;
-    }
-
-    /**
-     * Get step
-     *
-     * @return \stdClass
-     */
-    public function getStep()
-    {
-        return $this->step;
     }
 
     /**

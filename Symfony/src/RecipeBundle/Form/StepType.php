@@ -16,7 +16,6 @@ class StepType extends AbstractType
     {
         $builder
             ->add('text')
-            ->add('order')
             ->add('image')
         ;
     }
