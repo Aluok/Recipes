@@ -73,9 +73,8 @@ class Recipe
     private $date;
 
     /**
-     * @var \stdClass
-     *
-     * @ORM\Column(name="reviews", type="object", nullable=true)
+     * Bidirectionnal - One Recipe has many reviews. INVERSE SIDE
+     * @ORM\OneToMany(targetEntity="Rating", mappedBy="recipe", cascade={"persist", "remove"})
      */
     private $reviews;
 
@@ -116,6 +115,8 @@ class Recipe
     {
       $this->steps = new ArrayCollection();
       $this->comments = new ArrayCollection();
+      $this->reviews = new ArrayCollection();
+
       $this->setIsFinished(false)
         ->setIsPublished(false);
     }

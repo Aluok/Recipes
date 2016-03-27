@@ -24,18 +24,10 @@ class Rating
     /**
      * @var \stdClass
      *
-     * @ORM\ManyToOne(targetEntity="Recipe")
-     * @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug")
+     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="reviews")
+     * @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug", nullable=false)
      */
     private $recipe;
-
-    /**
-     * @var \stdClass
-     *
-     * @ORM\ManyToOne(targetEntity="Step")
-     * @ORM\JoinColumn(name="steps", referencedColumnName="id", nullable=true)
-     */
-    private $step;
 
     /**
      * @var int
@@ -52,6 +44,19 @@ class Rating
      */
     private $author;
 
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="text", type="text")
+     */
+    private $text;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
 
     /**
      * Get id
@@ -85,30 +90,6 @@ class Rating
     public function getRecipe()
     {
         return $this->recipe;
-    }
-
-    /**
-     * Set step
-     *
-     * @param \stdClass $step
-     *
-     * @return Rating
-     */
-    public function setStep($step)
-    {
-        $this->step = $step;
-
-        return $this;
-    }
-
-    /**
-     * Get step
-     *
-     * @return \stdClass
-     */
-    public function getStep()
-    {
-        return $this->step;
     }
 
     /**
@@ -157,5 +138,53 @@ class Rating
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     *
+     * @return Rating
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Rating
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

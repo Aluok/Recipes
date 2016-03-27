@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use RecipeBundle\Entity\Recipe;
 use RecipeBundle\Entity\Step;
 use RecipeBundle\Entity\Comment;
+use RecipeBundle\Entity\Rating;
 use RecipeBundle\Form\RecipeType;
 
 /**
@@ -162,6 +163,33 @@ class RecipeController extends Controller
         return $this->render('RecipeBundle:Utils:generic_form.html.twig', array(
             'form' => $form->createView(),
             'title' => 'Comment ' . $recipe->getTitle(),
+        ));
+    }
+
+    /**
+     *
+     */
+    public function reviewAction(Request $request, Recipe $recipe)
+    {
+        $rating = new Rating();
+        $form = $this->createForm('RecipeBundle\Form\RatingType', $rating);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $rating
+                ->setAuthor($this->get('security.token_storage')->getToken()->getUser())
+                ->setDate(new \DateTime())
+                ->setRecipe($recipe)
+                ;
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($rating);
+            $em->flush();
+
+            return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
+        }
+        return $this->render('RecipeBundle:Utils:generic_form.html.twig', array(
+            'form' => $form->createView(),
+            'title' => 'Review ' . $recipe->getTitle(),
         ));
     }
 
