@@ -59,9 +59,9 @@ class Recipe
     private $duration;
 
     /**
-     * @var decimal
+     * @var float
      *
-     * @ORM\Column(name="rating", type="decimal", nullable=true)
+     * @ORM\Column(name="rating", type="float", nullable=true)
      */
     private $rating;
 
