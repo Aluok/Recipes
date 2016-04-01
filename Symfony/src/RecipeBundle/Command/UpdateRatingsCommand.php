@@ -38,7 +38,7 @@ class UpdateRatingsCommand extends ContainerAwareCommand
                 }
                 $rating = $score / count($reviews);
             }
-            if ($rating >= 2 )
+            if ($rating >= 2 && count($reviews) > 4)
                 $recipe->setIsPublished(true);
             else
                 $recipe->setIsPublished(false);
