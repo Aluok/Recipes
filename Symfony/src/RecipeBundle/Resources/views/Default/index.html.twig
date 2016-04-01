@@ -34,7 +34,7 @@
         </ul>
       </p>
 
-      <p><a class="btn btn-default" href="#" role="button">More »</a></p>
+      <p><a class="btn btn-default" href="{{ path('recipe_list', {'sorter': 'views'}) }}" role="button">More »</a></p>
     </div>
     <div class="col-md-4">
       <h2>5 top rated recipes</h2>
@@ -46,7 +46,7 @@
         </ul>
       </p>
 
-      <p><a class="btn btn-default" href="#" role="button">More »</a></p>
+      <p><a class="btn btn-default" href="{{ path('recipe_list', {'sorter': 'ratings'}) }}" role="button">More »</a></p>
     </div><div class="col-md-4">
       <h2>5 top writers</h2>
       <p>
@@ -57,7 +57,7 @@
         </ul>
       </p>
 
-      <p><a class="btn btn-default" href="#" role="button">More »</a></p>
+      {#}<p><a class="btn btn-default" href="#" role="button">More »</a></p>#}
     </div>
   </div>
 

@@ -35,4 +35,15 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults(5)
             ->getResult();
     }
+
+    public function getListPublished($filters) {
+
+        $query = $this->createQueryBuilder('r');
+        $query->add('where', $query->expr()->in('r.category', '?1'))
+            ->setParameter('1', $filters);
+        return $query
+            ->andWhere('r.isPublished = 1')
+            ->getQuery()
+            ->getResult();
+    }
 }

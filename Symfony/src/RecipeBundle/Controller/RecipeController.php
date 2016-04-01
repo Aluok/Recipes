@@ -22,15 +22,42 @@ class RecipeController extends Controller
      * Lists all Recipe entities.
      *
      */
-    public function listAction()
+    public function listAction($sorter, $page, $filters)
     {
         $em = $this->getDoctrine()->getManager();
+        if ($filters != "") {
+            $filters = explode("/", $filters);
 
-        $recipes = $em->getRepository('RecipeBundle:Recipe')->findByIsPublished(1);
+            $recipes = $em->getRepository('RecipeBundle:Recipe')->getListPublished($filters);
+        } else {
+            $recipes = $em->getRepository('RecipeBundle:Recipe')->findByIsPublished(1);
+        }
+        for ($i = 0; $i < count($filters);$i++ ) {
+            $this->get('logger')->info($filters[$i]);
+        }
+        switch($sorter) {
+            case 'views':
+                $this->objSort($recipes, 'getViews', SORT_DESC);
+                break;
+            case 'ratings':
+                $this->objSort($recipes, 'getRating', SORT_DESC);
+                break;
+            case 'alpha':
+                $this->objSort($recipes, 'getTitle', SORT_ASC);
+                break;
+        }
 
         return $this->render('RecipeBundle:Recipes:list.html.twig', array(
             'recipes' => $recipes,
         ));
+    }
+
+    private function objSort(&$objArray,$indexFunction,$sort_flags=0) {
+        $indices = array();
+        foreach($objArray as $obj) {
+            $indeces[] = $obj->$indexFunction();
+        }
+        return array_multisort($indeces,$sort_flags, $objArray);
     }
 
     /**
