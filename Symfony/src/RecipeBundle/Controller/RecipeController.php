@@ -122,9 +122,6 @@ class RecipeController extends Controller
      */
     public function showAction(Recipe $recipe)
     {
-        //TODO is there a real use?
-        $deleteForm = $this->createDeleteForm($recipe);
-
         $recipe->setViews($recipe->getViews() + 1);
 
         $em = $this->getDoctrine()->getManager();
@@ -133,7 +130,6 @@ class RecipeController extends Controller
 
         return $this->render('RecipeBundle:Recipes:show.html.twig', array(
             'recipe' => $recipe,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
