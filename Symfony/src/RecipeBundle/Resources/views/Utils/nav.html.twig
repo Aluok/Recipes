@@ -14,6 +14,7 @@
         <li class=""><a href="{{ path('recipe_list') }}">All Recipes</a></li>
         {% if not is_granted("IS_AUTHENTICATED_REMEBERED") %}
           <li class=""><a href="{{ path('recipe_new') }}">New Recipe</a></li>
+          <li class=""><a href="{{ path('recipe_list_for_reviews') }}">Reviews recipes</a></li>
         {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">

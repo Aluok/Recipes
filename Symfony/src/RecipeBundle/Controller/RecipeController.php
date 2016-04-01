@@ -32,9 +32,7 @@ class RecipeController extends Controller
         } else {
             $recipes = $em->getRepository('RecipeBundle:Recipe')->findByIsPublished(1);
         }
-        for ($i = 0; $i < count($filters);$i++ ) {
-            $this->get('logger')->info($filters[$i]);
-        }
+
         switch($sorter) {
             case 'views':
                 $this->objSort($recipes, 'getViews', SORT_DESC);
@@ -52,7 +50,29 @@ class RecipeController extends Controller
         ));
     }
 
+    public function listReviewsAction($sorter, $page) {
+        $em = $this->getDoctrine()->getManager();
+        $recipes = $em->getRepository('RecipeBundle:Recipe')->findByIsPublished(0);
+        switch($sorter) {
+            case 'author':
+                $this->objSort($recipes, 'getAuthor', SORT_ASC);
+                break;
+            case 'date':
+                $this->objSort($recipes, 'getDate', SORT_DESC);
+                break;
+            case 'alpha':
+                $this->objSort($recipes, 'getTitle', SORT_ASC);
+                break;
+        }
+        return $this->render('RecipeBundle:Recipes:list.html.twig', array(
+            'recipes' => $recipes,
+            'sorters' => array('author', 'date', 'alpha'),
+        ));
+    }
+
     private function objSort(&$objArray,$indexFunction,$sort_flags=0) {
+        if ($objArray == null || count($objArray) == 0)
+            return;
         $indices = array();
         foreach($objArray as $obj) {
             $indeces[] = $obj->$indexFunction();
@@ -102,10 +122,7 @@ class RecipeController extends Controller
      */
     public function showAction(Recipe $recipe)
     {
-        if (! $recipe->getIsPublished()) {
-          $this->addFlash('error', 'This recipe doesn\'t exists');
-          return $this->redirectToRoute('recipe_list');
-        }
+        //TODO is there a real use?
         $deleteForm = $this->createDeleteForm($recipe);
 
         $recipe->setViews($recipe->getViews() + 1);

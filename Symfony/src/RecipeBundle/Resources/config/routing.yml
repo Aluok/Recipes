@@ -23,6 +23,13 @@ recipe_list:
         sorter: "alpha|views|ratings"
         filters: .*
 
+recipe_list_for_reviews:
+    path:       /reviews/list/{sorter}/{page}
+    defaults:   { _controller: RecipeBundle:Recipe:listReviews, sorter: date, page: 0}
+    requirements:
+        page:  \d+
+        sorter: "alpha|author|date"
+
 recipe_view:
     path:       /recipe/{id}
     defaults:   { _controller: RecipeBundle:Recipe:show}
