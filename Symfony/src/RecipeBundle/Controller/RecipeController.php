@@ -175,6 +175,10 @@ class RecipeController extends Controller
      */
     public function deleteAction(Request $request, Recipe $recipe)
     {
+        if ($this->get('security.token_storage')->getToken()->getUser() != $recipe->getAuthor()) {
+            $this->get('session')->getFlashBag()->add('error', 'You do not have the right to update this recipe');
+            return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
+        }
         $form = $this->createDeleteForm($recipe);
         $form->handleRequest($request);
 
