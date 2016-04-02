@@ -128,8 +128,11 @@ class RecipeController extends Controller
         $em->persist($recipe);
         $em->flush();
 
+        $isAuthor = $this->get('security.token_storage')->getToken()->getUser() == $recipe->getAuthor();
+
         return $this->render('RecipeBundle:Recipes:show.html.twig', array(
             'recipe' => $recipe,
+            'isEditable' => $isAuthor,
         ));
     }
 
@@ -138,6 +141,10 @@ class RecipeController extends Controller
      */
     public function editAction(Request $request, Recipe $recipe)
     {
+        if ($this->get('security.token_storage')->getToken()->getUser() != $recipe->getAuthor()) {
+            $this->get('session')->getFlashBag()->add('error', 'You do not have the right to update this recipe');
+            return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
+        }
         $deleteForm = $this->createDeleteForm($recipe);
         $editForm = $this->createForm('RecipeBundle\Form\RecipeType', $recipe);
         $editForm->handleRequest($request);
@@ -153,7 +160,7 @@ class RecipeController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
+            return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
         }
 
         return $this->render('RecipeBundle:Recipes:add_edit.html.twig', array(

@@ -7,8 +7,15 @@
 {% block content %}
     <div id="recipe_infos">
         <div class="row">
-            <h2 class="col-md-8">{{ recipe.title }} <small>({% if recipe.rating %}{{ recipe.rating }}{% else %}0{% endif %})</small></h2>
-            <div class="col-md-3 col-md-offset-1 thumbnail">
+            <h2 class="col-md-6">
+                {{ recipe.title }} <small>({% if recipe.rating %}{{ recipe.rating }}{% else %}0{% endif %})</small>
+            </h2>
+            {% if isEditable %}
+                <div class="col-md-1 col-md-offset-1">
+                    <a href="{{ path('recipe_edit', {'id': recipe.slug}) }}" class="btn btn-sm btn-info">Edit</a>
+                </div>
+            {% endif %}
+            <div class="col-md-3 {% if isEditable %}col-md-offset-1{% else %}col-md-offset-3{% endif %} thumbnail">
                 <div>
                     Category: {{ recipe.category }}
                 </div>
