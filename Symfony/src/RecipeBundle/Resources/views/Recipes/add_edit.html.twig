@@ -5,7 +5,7 @@
 
 {% block content -%}
     <h1>Recipe creation</h1>
-    {{ form_start(form) }}
+    {{ form_start(form, {"attr": {"novalidate": "novalidate"}}) }}
         {{ form_row(form.title) }}
         {{ form_row(form.ingredients) }}
         {{ form_row(form.category) }}

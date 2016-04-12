@@ -4,6 +4,8 @@ namespace RecipeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints;
 
 /**
  * Recipe
@@ -45,9 +47,7 @@ class Recipe
 
     /**
      * @var string
-     *
-     * @ORM\Id
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     *umn(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
@@ -113,12 +113,22 @@ class Recipe
 
     public function __construct()
     {
-      $this->steps = new ArrayCollection();
-      $this->comments = new ArrayCollection();
-      $this->reviews = new ArrayCollection();
+        $this->steps = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
 
-      $this->setIsFinished(false)
-        ->setIsPublished(false);
+        $this->setIsFinished(false)
+            ->setIsPublished(false);
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('title', new Constraints\NotBlank());
+        $metadata->addPropertyConstraint('title', new Constraints\Length(["min" => 3, "max" => 15]));
+        $metadata->addPropertyConstraint('title', new Constraints\Regex("#[a-zA-Z]{3,15}#",
+            "This value should contain a title of 3 to 15 characters (a-z)"));
+        //TODO Figure best way
+        // $metadata->addPropertyConstraint('ingredients', new Constraints\NotBlank());
     }
 
     /**
