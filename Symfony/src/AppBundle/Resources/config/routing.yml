@@ -1,0 +1,62 @@
+
+
+recipe_new:
+    path:       /recipe/new
+    defaults:   { _controller: AppBundle:Recipe:add}
+    methods:  [GET, POST]
+
+recipe_edit:
+    path:       /recipe/{id}/edit
+    defaults:   { _controller: AppBundle:Recipe:edit}
+    methods:  [GET, POST]
+
+recipe_delete:
+    path:       /recipe/{id}
+    defaults:   { _controller: AppBundle:Recipe:add}
+    methods:  [DELETE]
+
+recipe_list:
+    path:       /recipe/list/{sorter}/{page}/{filters}
+    defaults:   { _controller: AppBundle:Recipe:list, sorter: alpha, page: 0, filters: ""}
+    requirements:
+        page:  \d+
+        sorter: "alpha|views|ratings"
+        filters: .*
+
+recipe_list_for_reviews:
+    path:       /reviews/list/{sorter}/{page}
+    defaults:   { _controller: AppBundle:Recipe:listReviews, sorter: date, page: 0}
+    requirements:
+        page:  \d+
+        sorter: "alpha|author|date"
+
+recipe_view:
+    path:       /recipe/{id}
+    defaults:   { _controller: AppBundle:Recipe:show}
+    methods:  [GET]
+
+recipe_comment:
+    path:       /comment/{id}
+    defaults:   { _controller: AppBundle:Recipe:comment}
+    methods:  [GET, POST]
+
+recipe_review:
+    path:       /review/{id}
+    defaults:   { _controller: AppBundle:Recipe:review}
+    methods:  [GET, POST]
+
+recipe_home:
+    path:       /
+    defaults:   { _controller: AppBundle:Default:index }
+
+my_recipes:
+    path:     /me/recipes
+    defaults: { _controller: AppBundle:User:recipes }
+
+my_ratings:
+    path:     /me/ratings
+    defaults: { _controller: AppBundle:User:ratings }
+
+my_reviews:
+    path:     /me/reviews
+    defaults: { _controller: AppBundle:User:reviews }

@@ -1,5 +1,5 @@
 recipe:
-    resource: "@RecipeBundle/Resources/config/routing.yml"
+    resource: "@AppBundle/Resources/config/routing.yml"
     prefix:   /
 
 fos_user:
