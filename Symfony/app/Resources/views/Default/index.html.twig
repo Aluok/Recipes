@@ -52,7 +52,7 @@
       <p>
         <ul>
             {% for author in best_authors %}
-          <li><a href="#">{{ author.username }}</a></li>
+          <li><a href="{{ path('show_profile', {'id': author.id}) }}">{{ author.username }}</a></li>
             {% endfor %}
         </ul>
       </p>

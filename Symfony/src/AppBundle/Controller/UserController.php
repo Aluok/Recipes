@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\User;
 
 class UserController extends Controller
 {
@@ -40,6 +41,17 @@ class UserController extends Controller
     {
         return $this->render('User/reviews.html.twig', array(
             // ...
+        ));
+    }
+
+    /**
+     * List an user reviews
+     * @Route("/user/{id}", name="show_profile")
+     */
+    public function showProfile(User $user)
+    {
+        return $this->render('User/show_profile.html.twig', array(
+            'user' => $user
         ));
     }
 }

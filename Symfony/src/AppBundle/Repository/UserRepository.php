@@ -14,7 +14,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT u.username, SUM(r.rating) AS ratings
+                'SELECT u.username, u.id, SUM(r.rating) AS ratings
                 FROM AppBundle:User AS u
                 JOIN AppBundle:recipe AS r WHERE r.author=u.id
 
