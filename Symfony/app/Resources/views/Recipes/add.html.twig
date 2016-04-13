@@ -2,36 +2,19 @@
 
 {%- form_theme form 'bootstrap_3_horizontal_layout.html.twig' -%}
 
-
 {% block content -%}
     <h1>Recipe creation</h1>
     {{ form_start(form, {"attr": {"novalidate": "novalidate"}}) }}
-        {{ form_row(form.title) }}
-        {{ form_row(form.ingredients) }}
-        {{ form_row(form.category) }}
-        {{ form_row(form.duration) }}
-        {{ form_row(form.steps) }}
         {{ form_widget(form) }}
 
         <div class="form-group">
-            <a href="{{ path('recipe_list') }}" class="btn btn-md btn-info
-            {% if delete_form is defined %}col-md-offset-1{% else %}col-md-offset-2{% endif %} col-md-2">
+            <a href="{{ path('recipe_list') }}" class="btn btn-md btn-info col-md-offset-2 col-md-2">
                 <i class="glyphicon glyphicon-arrow-left"></i> Back to the list
             </a>
             <input type="submit" value="Create" class="btn btn-success btn-md col-md-offset-1 col-md-2" />
             <input type="Reset" value="Reset" class="btn btn-warning btn-md col-md-offset-1 col-md-2" />
-            {#% if delete_form is defined %}
-                <div class="col-md-2 col-md-offset-1">
-                    {{ form_start(delete_form) }}
-                        <input type="submit" value="Delete" class="col-md-12 btn btn-danger btn-md">
-                    {{ form_end(delete_form) }}
-                </div>
-            {% endif %#}
         </div>
     {{ form_end(form) }}
-
-
-
 {%- endblock %}
 
 {% block javascripts -%}

@@ -122,7 +122,7 @@ class RecipeController extends Controller
             return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
         }
 
-        return $this->render('Recipes/add_edit.html.twig', array(
+        return $this->render('Recipes/add.html.twig', array(
             'recipe' => $recipe,
             'form' => $form->createView(),
         ));
@@ -178,7 +178,7 @@ class RecipeController extends Controller
             return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
         }
 
-        return $this->render('Recipes/add_edit.html.twig', array(
+        return $this->render('Recipes/edit.html.twig', array(
             'recipe' => $recipe,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -217,7 +217,7 @@ class RecipeController extends Controller
         $form = $this->createForm('AppBundle\Form\CommentType', $comment);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $comment
                 ->setAuthor($this->get('security.token_storage')->getToken()->getUser())
                 ->setDate(new \DateTime())
@@ -245,7 +245,7 @@ class RecipeController extends Controller
         $form = $this->createForm('AppBundle\Form\RatingType', $rating);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $rating
                 ->setAuthor($this->get('security.token_storage')->getToken()->getUser())
                 ->setDate(new \DateTime())
