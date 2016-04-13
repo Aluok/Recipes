@@ -27,22 +27,22 @@ class UpdateRatingsCommand extends ContainerAwareCommand
 
         $text = "";
 
-        foreach ( $recipes as $recipe){
+        foreach ($recipes as $recipe) {
             $score = 0;
             $reviews = $recipe->getReviews();
-            if (count($reviews) == 0)
+            if (count($reviews) == 0) {
                 $rating = 0;
-            else {
-                foreach ($recipe->getReviews() as $rating){
+            } else {
+                foreach ($recipe->getReviews() as $rating) {
                     $score += $rating->getRating();
                 }
                 $rating = $score / count($reviews);
             }
-            if ($rating >= 2 && count($reviews) > 4)
+            if ($rating >= 2 && count($reviews) > 4) {
                 $recipe->setIsPublished(true);
-            else
+            } else {
                 $recipe->setIsPublished(false);
-
+            }
             $recipe->setRating($rating);
             $output->writeln($recipe->getTitle() . ' : ' . $rating . '   ');
             $em->persist($recipe);

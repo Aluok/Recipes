@@ -10,7 +10,8 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function find5best() {
+    public function find5best()
+    {
         return $this->getEntityManager()
             ->createQuery(
                 'SELECT u.username, SUM(r.rating) AS ratings

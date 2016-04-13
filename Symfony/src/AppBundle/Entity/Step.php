@@ -13,14 +13,14 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Step
 {
-  /**
-   * @var int
-   *
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
      * @var string
@@ -41,12 +41,12 @@ class Step
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="steps", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug")
      */
-     private $recipe;
+    private $recipe;
 
-     public function __construct()
-      {
+    public function __construct()
+    {
         $this->comments = new ArrayCollection();
-      }
+    }
 
     /**
      * Get id
@@ -129,5 +129,4 @@ class Step
     {
         return $this->recipe;
     }
-
 }

@@ -14,11 +14,8 @@ class UserController extends Controller
     public function recipesAction()
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-
         $em = $this->getDoctrine()->getManager();
-
         $recipes = $em->getRepository('AppBundle:Recipe')->findByAuthor($user);
-
         return $this->render('User/recipes.html.twig', array(
             'recipes' => $recipes,
         ));
@@ -45,5 +42,4 @@ class UserController extends Controller
             // ...
         ));
     }
-
 }

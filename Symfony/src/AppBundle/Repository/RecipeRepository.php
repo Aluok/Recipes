@@ -24,7 +24,8 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function find5bestRated() {
+    public function find5bestRated()
+    {
         return $this->getEntityManager()
             ->createQuery(
                 'SELECT r.title, r.slug
@@ -36,7 +37,8 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getListPublished($categories) {
+    public function getListPublished($categories)
+    {
 
         $query = $this->createQueryBuilder('r');
         $query->add('where', $query->expr()->in('r.category', '?1'))

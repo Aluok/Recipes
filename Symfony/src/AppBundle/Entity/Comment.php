@@ -74,7 +74,7 @@ class Comment
 
     public function __construct()
     {
-      $this->responses = new ArrayCollection();
+        $this->responses = new ArrayCollection();
     }
 
     /**

@@ -28,14 +28,14 @@ class Recipe
     *
     * @ORM\Column(name="title", type="string", length=255)
     */
-   private $title;
+    private $title;
 
    /**
     * @var string
     *
     * @ORM\Column(name="category", type="string", length=255)
     */
-   private $category;
+    private $category;
 
     /**
      * @var \stdClass
@@ -126,8 +126,10 @@ class Recipe
     {
         $metadata->addPropertyConstraint('title', new Constraints\NotBlank());
         $metadata->addPropertyConstraint('title', new Constraints\Length(["min" => 3, "max" => 15]));
-        $metadata->addPropertyConstraint('title', new Constraints\Regex("#[a-zA-Z]{3,15}#",
-            "This value should contain a title of 3 to 15 characters (a-z)"));
+        $metadata->addPropertyConstraint('title', new Constraints\Regex(
+            "#[a-zA-Z]{3,15}#",
+            "This value should contain a title of 3 to 15 characters (a-z)"
+        ));
         //TODO Figure best way
         // $metadata->addPropertyConstraint('ingredients', new Constraints\NotBlank());
     }

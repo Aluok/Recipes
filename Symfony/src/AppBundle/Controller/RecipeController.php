@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +37,7 @@ class RecipeController extends Controller
             $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(1);
         }
 
-        switch($sorter) {
+        switch ($sorter) {
             case 'views':
                 $this->objSort($recipes, 'getViews', SORT_DESC);
                 break;
@@ -62,10 +61,11 @@ class RecipeController extends Controller
      *  requirements={"sorter": "alpha|author|date", "page": "\d+"},
      *  name="recipe_list_for_reviews")
      */
-    public function listReviewsAction($sorter, $page) {
+    public function listReviewsAction($sorter, $page)
+    {
         $em = $this->getDoctrine()->getManager();
         $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(0);
-        switch($sorter) {
+        switch ($sorter) {
             case 'author':
                 $this->objSort($recipes, 'getAuthor', SORT_ASC);
                 break;
@@ -82,14 +82,16 @@ class RecipeController extends Controller
         ));
     }
 
-    private function objSort(&$objArray,$indexFunction,$sort_flags=0) {
-        if ($objArray == null || count($objArray) == 0)
+    private function objSort(&$objArray, $indexFunction, $sort_flags = 0)
+    {
+        if ($objArray == null || count($objArray) == 0) {
             return;
+        }
         $indices = array();
-        foreach($objArray as $obj) {
+        foreach ($objArray as $obj) {
             $indeces[] = $obj->$indexFunction();
         }
-        return array_multisort($indeces,$sort_flags, $objArray);
+        return array_multisort($indeces, $sort_flags, $objArray);
     }
 
     /**
@@ -112,7 +114,7 @@ class RecipeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
 
-            foreach($recipe->getSteps() as $step) {
+            foreach ($recipe->getSteps() as $step) {
                 $step->setRecipe($recipe);
                 $em->persist($step);
             }
@@ -168,7 +170,7 @@ class RecipeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
 
-            foreach($recipe->getSteps() as $step) {
+            foreach ($recipe->getSteps() as $step) {
                 $step->setRecipe($recipe);
                 $em->persist($step);
             }
@@ -212,7 +214,8 @@ class RecipeController extends Controller
      * Comment a Recipe
      * @Route("/comment/{id}", name="recipe_comment")
      */
-    public function commentAction(Request $request, Recipe $recipe) {
+    public function commentAction(Request $request, Recipe $recipe)
+    {
         $comment = new Comment();
         $form = $this->createForm('AppBundle\Form\CommentType', $comment);
         $form->handleRequest($request);
