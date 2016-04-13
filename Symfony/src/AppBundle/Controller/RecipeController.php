@@ -50,7 +50,7 @@ class RecipeController extends Controller
                 break;
         }
 
-        return $this->render('AppBundle:Recipes:list.html.twig', array(
+        return $this->render('Recipes/list.html.twig', array(
             'recipes' => $recipes,
         ));
     }
@@ -76,7 +76,7 @@ class RecipeController extends Controller
                 $this->objSort($recipes, 'getTitle', SORT_ASC);
                 break;
         }
-        return $this->render('AppBundle:Recipes:list.html.twig', array(
+        return $this->render('Recipes/list.html.twig', array(
             'recipes' => $recipes,
             'sorters' => array('author', 'date', 'alpha'),
         ));
@@ -122,7 +122,7 @@ class RecipeController extends Controller
             return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
         }
 
-        return $this->render('AppBundle:Recipes:add_edit.html.twig', array(
+        return $this->render('Recipes/add_edit.html.twig', array(
             'recipe' => $recipe,
             'form' => $form->createView(),
         ));
@@ -143,7 +143,7 @@ class RecipeController extends Controller
 
         $isAuthor = $this->get('security.token_storage')->getToken()->getUser() == $recipe->getAuthor();
 
-        return $this->render('AppBundle:Recipes:show.html.twig', array(
+        return $this->render('Recipes/show.html.twig', array(
             'recipe' => $recipe,
             'isEditable' => $isAuthor,
         ));
@@ -178,7 +178,7 @@ class RecipeController extends Controller
             return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
         }
 
-        return $this->render('AppBundle:Recipes:add_edit.html.twig', array(
+        return $this->render('Recipes/add_edit.html.twig', array(
             'recipe' => $recipe,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -229,7 +229,7 @@ class RecipeController extends Controller
 
             return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
         }
-        return $this->render('AppBundle:Utils:generic_form.html.twig', array(
+        return $this->render('Utils/generic_form.html.twig', array(
             'form' => $form->createView(),
             'title' => 'Comment ' . $recipe->getTitle(),
         ));
@@ -257,7 +257,7 @@ class RecipeController extends Controller
 
             return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
         }
-        return $this->render('AppBundle:Utils:generic_form.html.twig', array(
+        return $this->render('Utils/generic_form.html.twig', array(
             'form' => $form->createView(),
             'title' => 'Review ' . $recipe->getTitle(),
         ));

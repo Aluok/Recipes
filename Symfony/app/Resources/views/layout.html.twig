@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends "base.html.twig" %}
 
 
 {% block title %}Julien's Recipes{% endblock %}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-  {% include('AppBundle:Utils:nav.html.twig') %}
+  {% include('Utils/nav.html.twig') %}
 
   {% for flashMessage in app.session.flashbag.get('error') %}
 

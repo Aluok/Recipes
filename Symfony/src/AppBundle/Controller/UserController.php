@@ -19,7 +19,7 @@ class UserController extends Controller
 
         $recipes = $em->getRepository('AppBundle:Recipe')->findByAuthor($user);
 
-        return $this->render('AppBundle:User:recipes.html.twig', array(
+        return $this->render('User/recipes.html.twig', array(
             'recipes' => $recipes,
         ));
     }
@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function ratingsAction()
     {
-        return $this->render('AppBundle:User:ratings.html.twig', array(
+        return $this->render('User/ratings.html.twig', array(
             // ...
         ));
     }
@@ -41,7 +41,7 @@ class UserController extends Controller
      */
     public function reviewsAction()
     {
-        return $this->render('AppBundle:User:reviews.html.twig', array(
+        return $this->render('User/reviews.html.twig', array(
             // ...
         ));
     }
