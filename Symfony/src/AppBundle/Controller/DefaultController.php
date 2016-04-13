@@ -22,13 +22,4 @@ class DefaultController extends Controller
             'most_viewed_recipe' => $most_viewed_recipe,
         ));
     }
-
-    public function listRecipesAction($sorter) {
-      return $this->render('AppBundle:Recipes:list.html.twig');
-    }
-
-    public function viewRecipeAction()
-    {
-        return $this->render('AppBundle:Recipes:recipe.html.twig');
-    }
 }
