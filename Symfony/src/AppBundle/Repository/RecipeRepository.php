@@ -36,11 +36,11 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getListPublished($filters) {
+    public function getListPublished($categories) {
 
         $query = $this->createQueryBuilder('r');
         $query->add('where', $query->expr()->in('r.category', '?1'))
-            ->setParameter('1', $filters);
+            ->setParameter('1', $categories);
         return $query
             ->andWhere('r.isPublished = 1')
             ->getQuery()

@@ -3,9 +3,14 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class UserController extends Controller
 {
+    /**
+     * List an user recipes
+     * @Route("/me/recipes", name="my_recipes")
+     */
     public function recipesAction()
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -19,6 +24,10 @@ class UserController extends Controller
         ));
     }
 
+    /**
+     * Lists an User ratings
+     * @Route("/me/ratings", name="my_ratings")
+     */
     public function ratingsAction()
     {
         return $this->render('AppBundle:User:ratings.html.twig', array(
@@ -26,6 +35,10 @@ class UserController extends Controller
         ));
     }
 
+    /**
+     * List an user reviews
+     * @Route("/me/reviews", name="my_reviews")
+     */
     public function reviewsAction()
     {
         return $this->render('AppBundle:User:reviews.html.twig', array(

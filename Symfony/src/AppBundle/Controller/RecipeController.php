@@ -19,16 +19,21 @@ use AppBundle\Form\RecipeType;
 class RecipeController extends Controller
 {
     /**
-     * Lists all Recipe entities.
+     * Lists all Recipes.
+     *
+     * @Route("/recipe/list/{sorter}/{page}/{categories}",
+     *  defaults={"sorter": "alpha", "page": 0, "categories": ""},
+     *  requirements={"sorter": "alpha|views|ratings", "page": "\d+", "categories": ".*"},
+     *  name="recipe_list")
      *
      */
-    public function listAction($sorter, $page, $filters)
+    public function listAction($sorter, $page, $categories)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($filters != "") {
-            $filters = explode("/", $filters);
+        if ($categories != "") {
+            $filters = explode("/", $categories);
 
-            $recipes = $em->getRepository('AppBundle:Recipe')->getListPublished($filters);
+            $recipes = $em->getRepository('AppBundle:Recipe')->getListPublished($categories);
         } else {
             $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(1);
         }
@@ -50,6 +55,13 @@ class RecipeController extends Controller
         ));
     }
 
+    /**
+     *
+     * @Route("/reviews/list/{sorter}/{page}",
+     *  defaults={"sorter": "date", "page": 0},
+     *  requirements={"sorter": "alpha|author|date", "page": "\d+"},
+     *  name="recipe_list_for_reviews")
+     */
     public function listReviewsAction($sorter, $page) {
         $em = $this->getDoctrine()->getManager();
         $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(0);
@@ -81,8 +93,8 @@ class RecipeController extends Controller
     }
 
     /**
-     * Creates a new Recipe entity.
-     *
+     * @Route("/recipe/new", name="recipe_new")
+     * @Method({"GET","POST"})
      */
     public function addAction(Request $request)
     {
@@ -117,8 +129,9 @@ class RecipeController extends Controller
     }
 
     /**
-     * Finds and displays a Recipe entity.
-     *
+     * Finds and displays a Recipe.
+     * @Route("/recipe/{id}", name="recipe_view")
+     * @Method({"GET"})
      */
     public function showAction(Recipe $recipe)
     {
@@ -138,6 +151,8 @@ class RecipeController extends Controller
 
     /**
      * Displays a form to edit an existing Recipe entity.
+     * @Route("/recipe/{id}/edit", name="recipe_edit")
+     * @Method({"GET","POST"})
      */
     public function editAction(Request $request, Recipe $recipe)
     {
@@ -171,7 +186,9 @@ class RecipeController extends Controller
     }
 
     /**
-     * Deletes a Recipe entity.
+     * Deletes a Recipe:
+     * @Route("/recipe/{id}", name="recipe_delete")
+     * @Method({"DELETE"})
      */
     public function deleteAction(Request $request, Recipe $recipe)
     {
@@ -193,6 +210,7 @@ class RecipeController extends Controller
 
     /**
      * Comment a Recipe
+     * @Route("/comment/{id}", name="recipe_comment")
      */
     public function commentAction(Request $request, Recipe $recipe) {
         $comment = new Comment();
@@ -218,7 +236,8 @@ class RecipeController extends Controller
     }
 
     /**
-     *
+     * Review a Recipe
+     * @Route("/review/{id}", name="recipe_review")
      */
     public function reviewAction(Request $request, Recipe $recipe)
     {
