@@ -18,7 +18,7 @@ class Recipe
     /**
      * @var string
      *
-     * @ORM\Column(name="ingredients", type="string", length=255)
+     * @ORM\OneToMany(targetEntity="Ingredient", mappedBy="recipe", cascade={"persist", "remove"})
      */
     private $ingredients;
 
@@ -117,6 +117,7 @@ class Recipe
         $this->steps = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->ingredients = new ArrayCollection();
 
         $this->setIsFinished(false)
             ->setIsPublished(false);
@@ -142,20 +143,6 @@ class Recipe
     public function getId()
     {
         return $this->slug;
-    }
-
-    /**
-     * Set ingredients
-     *
-     * @param string $ingredients
-     *
-     * @return Recipe
-     */
-    public function setIngredients($ingredients)
-    {
-        $this->ingredients = $ingredients;
-
-        return $this;
     }
 
     /**
@@ -394,6 +381,7 @@ class Recipe
      */
     public function addStep(\AppBundle\Entity\Step $step)
     {
+        $step->setRecipe($this);
         $this->steps[] = $step;
 
         return $this;
@@ -513,5 +501,54 @@ class Recipe
     public function getViews()
     {
         return $this->views;
+    }
+
+    /**
+     * Add ingredient
+     *
+     * @param \AppBundle\Entity\Ingredient $ingredient
+     *
+     * @return Recipe
+     */
+    public function addIngredient(\AppBundle\Entity\Ingredient $ingredient)
+    {
+        $ingredient->setRecipe($this);
+        $this->ingredients[] = $ingredient;
+
+        return $this;
+    }
+
+    /**
+     * Remove ingredient
+     *
+     * @param \AppBundle\Entity\Ingredient $ingredient
+     */
+    public function removeIngredient(\AppBundle\Entity\Ingredient $ingredient)
+    {
+        $this->ingredients->removeElement($ingredient);
+    }
+
+    /**
+     * Add review
+     *
+     * @param \AppBundle\Entity\Rating $review
+     *
+     * @return Recipe
+     */
+    public function addReview(\AppBundle\Entity\Rating $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * Remove review
+     *
+     * @param \AppBundle\Entity\Rating $review
+     */
+    public function removeReview(\AppBundle\Entity\Rating $review)
+    {
+        $this->reviews->removeElement($review);
     }
 }

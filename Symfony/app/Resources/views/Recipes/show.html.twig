@@ -34,7 +34,11 @@
             <h3 class="panel-title">You will need:</h3>
         </div>
         <div class="panel-body">
-            {{ recipe.ingredients }}
+            <ul>
+                {% for ingredient in recipe.ingredients %}
+                    <li>{{ ingredient.quantity }} {{ ingredient.quantityUnit }} {{ ingredient.name }}</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
     <div id="steps" class="panel panel-default">

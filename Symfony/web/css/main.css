@@ -29,3 +29,7 @@ td > a:not(.btn) {
     display: block;
     padding: 8px;
 }
+
+.bulletless {
+    list-style-type: none;
+}

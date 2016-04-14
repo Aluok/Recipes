@@ -1,10 +1,42 @@
 {%- extends "layout.html.twig" -%}
 
-{%- form_theme form 'bootstrap_3_horizontal_layout.html.twig' -%}
+{%- block collection_row -%}
+
+{%- endblock collection_row -%}
+
 
 {% block content -%}
     <h1>Recipe creation</h1>
     {{ form_start(form, {"attr": {"novalidate": "novalidate"}}) }}
+    <!-- TODO debug -->
+        {{ form_row(form.title) }}
+
+        {{ form_label(form.ingredients) }}
+
+        <div class="">
+            <a href="#" class="add_ingredient_link"><i class="glyphicon glyphicon-plus-sign"></i></a>
+        </div>
+
+        <div id="recipe_ingredients"  class="col-md-10" data-prototype="
+             {% filter escape %}
+                 {{ include('Utils/ingredients_form.html.twig', { 'form': form.ingredients.vars.prototype }) }}
+             {% endfilter %}">
+             {% for ingredient in form.ingredients %}
+                 {{ include('Utils/ingredients_form.html.twig', { 'form': ingredient }) }}
+             {% endfor %}
+        </div>
+
+
+        {{ form_row(form.category) }}
+        {{ form_row(form.duration) }}
+        {{ form_row(form.steps) }}
+        <div class="">
+            <a href="#" class="add_ingredient_link"><i class="glyphicon glyphicon-plus-sign"></i></a>
+        </div>
+        {{ form_row(form.isPublished) }}
+        {{ form_row(form.title) }}
+
+
         {{ form_widget(form) }}
 
         <div class="form-group">
@@ -21,20 +53,27 @@
   {{ parent() }}
   <script>
     $(function(){
-      var $addStepButton = $('<a href="#" class="add_step_link"></a>').append($('<i class="glyphicon glyphicon-plus-sign"></i>'))
-      var $collectionHolder = $('#recipe_steps');
-      $collectionHolder.append($addStepButton);
+      var $collectionStepHolder = $('#recipe_steps');
+      var $collectionIngredientHolder = $("#recipe_ingredients");
 
-      $collectionHolder.data('index', $collectionHolder.find('> .form-group').length);
+      $collectionStepHolder.data('index', $collectionStepHolder.find('> .form-group').length);
+      $collectionIngredientHolder.data('index', $collectionIngredientHolder.find('> .form-group').length);
 
-      $addStepButton.on('click', function(e) {
+      $('.add_step_link').on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
         // add a new tag form (see next code block)
-        addStepForm($collectionHolder, $addStepButton);
+        addStepForm($collectionStepHolder);
       });
-      function addStepForm($collectionHolder, $newLinkLi) {
+      $('.add_ingredient_link').on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addStepForm($collectionIngredientHolder);
+      });
+      function addStepForm($collectionHolder) {
           var prototype = $collectionHolder.data('prototype');
 
           // get the new index
@@ -47,7 +86,7 @@
           // increase the index with one for the next item
           $collectionHolder.data('index', index + 1);
 
-          $newLinkLi.before(newForm);
+          $collectionHolder.append(newForm);
       }
     });
 

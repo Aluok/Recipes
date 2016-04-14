@@ -9,6 +9,7 @@ use AppBundle\Entity\Recipe;
 use AppBundle\Entity\Step;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Rating;
+use AppBundle\Entity\Ingredient;
 use AppBundle\Form\RecipeType;
 
 /**
@@ -31,7 +32,6 @@ class RecipeController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($categories != "") {
             $filters = explode("/", $categories);
-
             $recipes = $em->getRepository('AppBundle:Recipe')->getListPublished($categories);
         } else {
             $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(1);
@@ -101,7 +101,12 @@ class RecipeController extends Controller
     public function addAction(Request $request)
     {
         $recipe = new Recipe();
-
+        if (count($recipe->getIngredients()) == 0) {
+            $recipe->addIngredient(new Ingredient());
+        }
+        if (count($recipe->getSteps()) == 0) {
+            $recipe->addStep(new Step());
+        }
         $form = $this->createForm('AppBundle\Form\RecipeType', $recipe);
         $form->handleRequest($request);
 
@@ -114,16 +119,10 @@ class RecipeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
 
-            foreach ($recipe->getSteps() as $step) {
-                $step->setRecipe($recipe);
-                $em->persist($step);
-            }
-
             $em->flush();
 
             return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
         }
-
         return $this->render('Recipes/add.html.twig', array(
             'recipe' => $recipe,
             'form' => $form->createView(),

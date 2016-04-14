@@ -19,7 +19,10 @@ class RecipeType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('ingredients')
+            ->add('ingredients', CollectionType::class, array(
+              'entry_type' => IngredientType::class,
+              'allow_add' => true,
+              'by_reference' => false,))
             ->add('category')
             ->add('duration', TimeType::class)
             ->add('steps', CollectionType::class, array(
