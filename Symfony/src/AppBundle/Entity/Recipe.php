@@ -15,6 +15,12 @@ use Symfony\Component\Validator\Constraints;
  */
 class Recipe
 {
+    const CATEGORIES = array(
+        'breakfast' => 'breakfast',
+        'lunch' => 'lunch',
+        'diner' => 'diner',
+        'snacks' => 'snacks'
+    );
     /**
      * @var string
      *
@@ -33,7 +39,7 @@ class Recipe
    /**
     * @var string
     *
-    * @ORM\Column(name="category", type="string", length=255)
+    * @ORM\Column(name="category", type="string", length=255, nullable=true)
     */
     private $category;
 
@@ -164,7 +170,11 @@ class Recipe
      */
     public function setCategory($category)
     {
-        $this->category = $category;
+        if (in_array($category, self::CATEGORIES)) {
+            $this->category = $category;
+        } else {
+            $this->category = null;
+        }
 
         return $this;
     }

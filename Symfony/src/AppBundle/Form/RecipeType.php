@@ -7,7 +7,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use AppBundle\Form\StepType;
+use AppBundle\Entity\Recipe;
 
 class RecipeType extends AbstractType
 {
@@ -23,7 +26,9 @@ class RecipeType extends AbstractType
               'entry_type' => IngredientType::class,
               'allow_add' => true,
               'by_reference' => false,))
-            ->add('category')
+            ->add('category', ChoiceType::class, array(
+                'choices' => Recipe::CATEGORIES,
+            ))
             ->add('duration', TimeType::class)
             ->add('steps', CollectionType::class, array(
               'entry_type' => StepType::class,
