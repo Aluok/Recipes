@@ -64,7 +64,9 @@ class Ingredient
     {
         $metadata->addPropertyConstraint('name', new Constraints\NotBlank());
         $metadata->addPropertyConstraint('quantity', new Constraints\NotBlank());
-        $metadata->addPropertyConstraint('quantity', new Constraints\Type(array()));//TODO only accept integers
+        $metadata->addPropertyConstraint('quantity', new Constraints\Type(
+            array("type" => 'integer')
+        ));
         $metadata->addPropertyConstraint('quantityUnit', new Constraints\NotBlank());
     }
 
