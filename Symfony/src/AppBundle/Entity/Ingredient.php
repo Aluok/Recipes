@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints;
 
 /**
  * Ingredient
@@ -58,6 +60,14 @@ class Ingredient
      **/
     private $recipe;
 
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('name', new Constraints\NotBlank());
+        $metadata->addPropertyConstraint('quantity', new Constraints\NotBlank());
+        $metadata->addPropertyConstraint('quantity', new Constraints\Type(array()));//TODO only accept integers
+        $metadata->addPropertyConstraint('quantityUnit', new Constraints\NotBlank());
+    }
+
     /**
      * Get id
      *
@@ -101,6 +111,11 @@ class Ingredient
      */
     public function setQuantityUnit($quantityUnit)
     {
+        if (! in_array($quantityUnit, self::MESUREMENT_UNIT)) {
+            throw new InvalidArgumentException(
+                "The unit of the quantity needs to be in the allowed value"
+            );
+        }
         $this->quantityUnit = $quantityUnit;
 
         return $this;

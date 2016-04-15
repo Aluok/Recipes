@@ -138,7 +138,7 @@ class Recipe
             "This value should contain a title of 3 to 15 characters (a-z)"
         ));
         //TODO Figure best way
-        // $metadata->addPropertyConstraint('ingredients', new Constraints\NotBlank());
+        $metadata->addPropertyConstraint('category', new Constraints\NotBlank());
     }
 
     /**
