@@ -11,6 +11,7 @@ use AppBundle\Entity\Comment;
 use AppBundle\Entity\Rating;
 use AppBundle\Entity\Ingredient;
 use AppBundle\Form\RecipeType;
+use AppBundle\Utils\ListUtils;
 
 /**
  * Recipe controller.
@@ -31,21 +32,20 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         if ($categories != "") {
-            $filters = explode("/", $categories);
-            $recipes = $em->getRepository('AppBundle:Recipe')->getListPublished($categories);
+            $recipes = $em->getRepository('AppBundle:Recipe')->getListPublished(ListUtils::getCategoriesFilters($categories));
         } else {
             $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(1);
         }
 
         switch ($sorter) {
             case 'views':
-                $this->objSort($recipes, 'getViews', SORT_DESC);
+                ListUtils::objSort($recipes, 'getViews', SORT_DESC);
                 break;
             case 'ratings':
-                $this->objSort($recipes, 'getRating', SORT_DESC);
+                ListUtils::objSort($recipes, 'getRating', SORT_DESC);
                 break;
             case 'alpha':
-                $this->objSort($recipes, 'getTitle', SORT_ASC);
+                ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
                 break;
         }
 
@@ -53,6 +53,8 @@ class RecipeController extends Controller
             'recipes' => $recipes,
         ));
     }
+
+
 
     /**
      *
@@ -67,13 +69,13 @@ class RecipeController extends Controller
         $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(0);
         switch ($sorter) {
             case 'author':
-                $this->objSort($recipes, 'getAuthor', SORT_ASC);
+                ListUtils::objSort($recipes, 'getAuthor', SORT_ASC);
                 break;
             case 'date':
-                $this->objSort($recipes, 'getDate', SORT_DESC);
+                ListUtils::objSort($recipes, 'getDate', SORT_DESC);
                 break;
             case 'alpha':
-                $this->objSort($recipes, 'getTitle', SORT_ASC);
+                ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
                 break;
         }
         return $this->render('Recipes/list.html.twig', array(
@@ -82,17 +84,6 @@ class RecipeController extends Controller
         ));
     }
 
-    private function objSort(&$objArray, $indexFunction, $sort_flags = 0)
-    {
-        if ($objArray == null || count($objArray) == 0) {
-            return;
-        }
-        $indices = array();
-        foreach ($objArray as $obj) {
-            $indeces[] = $obj->$indexFunction();
-        }
-        return array_multisort($indeces, $sort_flags, $objArray);
-    }
 
     /**
      * @Route("/recipe/new", name="recipe_new")
