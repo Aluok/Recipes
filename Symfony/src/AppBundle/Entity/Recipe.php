@@ -192,7 +192,7 @@ class Recipe
     /**
      * Set author
      *
-     * @param \stdClass $author
+     * @param App\User $author
      *
      * @return Recipe
      */
@@ -206,7 +206,7 @@ class Recipe
     /**
      * Get author
      *
-     * @return \stdClass
+     * @return App\User
      */
     public function getAuthor()
     {

@@ -26,7 +26,6 @@ class RecipeController extends Controller
      *  defaults={"sorter": "alpha", "page": 0, "categories": ""},
      *  requirements={"sorter": "alpha|views|ratings", "page": "\d+", "categories": ".*"},
      *  name="recipe_list")
-     *
      */
     public function listAction($sorter, $page, $categories)
     {
@@ -48,13 +47,10 @@ class RecipeController extends Controller
                 ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
                 break;
         }
-
         return $this->render('Recipes/list.html.twig', array(
             'recipes' => $recipes,
         ));
     }
-
-
 
     /**
      *
@@ -83,7 +79,6 @@ class RecipeController extends Controller
             'sorters' => array('author', 'date', 'alpha'),
         ));
     }
-
 
     /**
      * @Route("/recipe/new", name="recipe_new")
@@ -127,6 +122,8 @@ class RecipeController extends Controller
      */
     public function showAction(Recipe $recipe)
     {
+    	$this->denyAccessUnlessGranted('view', $recipe);
+    	
         $recipe->setViews($recipe->getViews() + 1);
 
         $em = $this->getDoctrine()->getManager();
@@ -148,10 +145,8 @@ class RecipeController extends Controller
      */
     public function editAction(Request $request, Recipe $recipe)
     {
-        if ($this->get('security.token_storage')->getToken()->getUser() != $recipe->getAuthor()) {
-            $this->get('session')->getFlashBag()->add('error', 'You do not have the right to update this recipe');
-            return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
-        }
+    	$this->denyAccessUnlessGranted('edit', $recipe);
+    	
         $deleteForm = $this->createDeleteForm($recipe);
         $editForm = $this->createForm('AppBundle\Form\RecipeType', $recipe);
         $editForm->handleRequest($request);
@@ -184,10 +179,8 @@ class RecipeController extends Controller
      */
     public function deleteAction(Request $request, Recipe $recipe)
     {
-        if ($this->get('security.token_storage')->getToken()->getUser() != $recipe->getAuthor()) {
-            $this->get('session')->getFlashBag()->add('error', 'You do not have the right to update this recipe');
-            return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
-        }
+    	$this->denyAccessUnlessGranted('edit', $recipe);
+    	
         $form = $this->createDeleteForm($recipe);
         $form->handleRequest($request);
 
