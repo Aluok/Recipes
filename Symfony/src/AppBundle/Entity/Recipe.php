@@ -223,7 +223,7 @@ class Recipe
     public function generateSlug()
     {
         $this->slug = preg_replace("/ /i", "_", $this->title . " by " . $this->author);
-
+	//FIXME transform in a service
         return $this;
     }
 
@@ -308,6 +308,16 @@ class Recipe
     {
         return $this->date;
     }
+    
+    /**
+     * Get date timmestamp
+     *
+     * @return \DateTime
+     */
+    public function getDateTimestamp()
+    {
+    	return $this->date->getTimestamp();
+    }  
 
 
     /**

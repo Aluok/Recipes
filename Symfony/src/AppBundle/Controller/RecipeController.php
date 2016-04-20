@@ -22,33 +22,12 @@ class RecipeController extends Controller
     /**
      * Lists all Recipes.
      *
-     * @Route("/recipe/list/{sorter}/{page}/{categories}",
-     *  defaults={"sorter": "alpha", "page": 0, "categories": ""},
-     *  requirements={"sorter": "alpha|views|ratings", "page": "\d+", "categories": ".*"},
-     *  name="recipe_list")
+     * @Route("/recipe/list", name="recipe_list")
      */
-    public function listAction($sorter, $page, $categories)
+    public function listAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        if ($categories != "") {
-            $recipes = $em->getRepository('AppBundle:Recipe')->getListPublished(ListUtils::getCategoriesFilters($categories));
-        } else {
-            $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(1);
-        }
-
-        switch ($sorter) {
-            case 'views':
-                ListUtils::objSort($recipes, 'getViews', SORT_DESC);
-                break;
-            case 'ratings':
-                ListUtils::objSort($recipes, 'getRating', SORT_DESC);
-                break;
-            case 'alpha':
-                ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
-                break;
-        }
         return $this->render('Recipes/list.html.twig', array(
-            'recipes' => $recipes,
+            'uri' => $this->generateUrl("recipe_api_list", array('action' => 'recipe')),
         ));
     }
 
@@ -61,22 +40,23 @@ class RecipeController extends Controller
      */
     public function listReviewsAction($sorter, $page)
     {
-        $em = $this->getDoctrine()->getManager();
-        $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(0);
-        switch ($sorter) {
-            case 'author':
-                ListUtils::objSort($recipes, 'getAuthor', SORT_ASC);
-                break;
-            case 'date':
-                ListUtils::objSort($recipes, 'getDate', SORT_DESC);
-                break;
-            case 'alpha':
-                ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
-                break;
-        }
+//         $em = $this->getDoctrine()->getManager();
+//         $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(0);
+//         switch ($sorter) {
+//             case 'author':
+//                 ListUtils::objSort($recipes, 'getAuthor', SORT_ASC);
+//                 break;
+//             case 'date':
+//                 ListUtils::objSort($recipes, 'getDateTimestamp', SORT_DESC, $this->get('logger'));
+//                 break;
+//             case 'alpha':
+//                 ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
+//                 break;
+//         }
         return $this->render('Recipes/list.html.twig', array(
-            'recipes' => $recipes,
-            'sorters' => array('author', 'date', 'alpha'),
+        		'uri' => $this->generateUrl("recipe_api_list", array('action' => 'review')),
+//             'recipes' => $recipes,
+//             'sorters' => array('author', 'date', 'alpha'),
         ));
     }
 

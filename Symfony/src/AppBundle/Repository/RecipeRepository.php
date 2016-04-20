@@ -39,12 +39,27 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
 
     public function getListPublished($categories)
     {
-
-        $query = $this->createQueryBuilder('r');
-        $query->add('where', $query->expr()->in('r.category', '?1'))
-            ->setParameter('1', $categories);
+    	$query = $this->createQueryBuilder('r');
+    	if ($categories != null) {
+    		$query->add('where', $query->expr()->in('r.category', '?1'))
+    		->setParameter('1', $categories);
+    	}
+    	return $query
+    	->andWhere('r.isPublished = 1')
+    	->getQuery()
+    	->getResult();
+    }
+    
+    public function getListForReview($categories)
+    {
+    	$query = $this->createQueryBuilder('r');
+        if ($categories != null) {
+	        $query->add('where', $query->expr()->in('r.category', '?1'))
+	            ->setParameter('1', $categories);
+        }
         return $query
-            ->andWhere('r.isPublished = 1')
+            ->andWhere('r.isPublished = 0')
+            ->andWhere('r.isFinished = 1')
             ->getQuery()
             ->getResult();
     }
