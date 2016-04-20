@@ -37,30 +37,36 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getListPublished($categories)
+    public function getListPublished($categories, int $page, $sorter)
     {
-    	$query = $this->createQueryBuilder('r');
-    	if ($categories != null) {
-    		$query->add('where', $query->expr()->in('r.category', '?1'))
-    		->setParameter('1', $categories);
-    	}
-    	return $query
-    	->andWhere('r.isPublished = 1')
-    	->getQuery()
-    	->getResult();
+    	return $this->getList($categories, $page)
+	    	->andWhere('r.isPublished = 1')
+	    	->setFirstResult(($page - 1) * 10)
+	    	->setMaxResults($page * 10)
+	    	->orderBy('r.' . $sorter)
+	    	->getQuery()
+	    	->getResult();
     }
     
-    public function getListForReview($categories)
+    public function getListForReview($categories, int $page, $sorter)
+    {
+        return $this->getList($categories, $page)
+            ->andWhere('r.isPublished = 0')
+            ->andWhere('r.isFinished = 1')
+	    	->setFirstResult(($page - 1) * 3)
+	    	->setMaxResults($page * 3)
+	    	->orderBy('r.' . $sorter)
+            ->getQuery()
+            ->getResult();
+    }
+    
+    private function getList($categories)
     {
     	$query = $this->createQueryBuilder('r');
         if ($categories != null) {
 	        $query->add('where', $query->expr()->in('r.category', '?1'))
 	            ->setParameter('1', $categories);
         }
-        return $query
-            ->andWhere('r.isPublished = 0')
-            ->andWhere('r.isFinished = 1')
-            ->getQuery()
-            ->getResult();
+        return $query;
     }
 }

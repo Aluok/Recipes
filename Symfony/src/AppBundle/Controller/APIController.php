@@ -20,28 +20,32 @@ class APIController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		
 		if ($action == "recipe") {
-			$recipes = $em->getRepository('AppBundle:Recipe')->getListPublished(ListUtils::getCategoriesFilters($categories));
+			$recipes = $em
+				->getRepository('AppBundle:Recipe')
+				->getListPublished(ListUtils::getCategoriesFilters($categories), $page, $sorter);
 		} else if ($action == "review") {
-			$recipes = $em->getRepository('AppBundle:Recipe')->getListForReview(ListUtils::getCategoriesFilters($categories));
+			$recipes = $em
+				->getRepository('AppBundle:Recipe')
+				->getListForReview(ListUtils::getCategoriesFilters($categories), $page, $sorter);
 		}
 		
-		switch ($sorter) {
-			case 'date':
-				ListUtils::objSort($recipes, 'getDateTimestamp', SORT_DESC);
-				break;
-			case 'rating':
-				ListUtils::objSort($recipes, 'getRating', SORT_DESC);
-				break;
-			case 'title':
-				ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
-				break;
-			case 'category':
-				ListUtils::objSort($recipes, 'getCategory', SORT_ASC);
-				break;
-			case 'duration':
-				ListUtils::objSort($recipes, 'getDurationTimestamp', SORT_DESC);
-				break;
-		}
+// 		switch ($sorter) {
+// 			case 'date':
+// 				ListUtils::objSort($recipes, 'getDateTimestamp', SORT_DESC);
+// 				break;
+// 			case 'rating':
+// 				ListUtils::objSort($recipes, 'getRating', SORT_DESC);
+// 				break;
+// 			case 'title':
+// 				ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
+// 				break;
+// 			case 'category':
+// 				ListUtils::objSort($recipes, 'getCategory', SORT_ASC);
+// 				break;
+// 			case 'duration':
+// 				ListUtils::objSort($recipes, 'getDurationTimestamp', SORT_DESC);
+// 				break;
+// 		}
 		return new JsonResponse($this->generateJSONResponse($recipes));
 	}
 	
