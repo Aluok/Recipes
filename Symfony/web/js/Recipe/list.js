@@ -4,17 +4,45 @@
 $(function() {
 	var page = 1;;
 	var categories = "All";
-	var sorter = "alpha";
+	var sorter = "title";
 	
 	var uri = $("#body-list").data("uri");
 	var uriShow = $("#body-list").data("uri-show").split('0')[1];
-	var $layer = $("#layer-recipe-item")
-	$.get(uri + "/" + sorter + '/' + page + '/' + categories, function(data) {
-		console.log(data);
+	var $layer = $("#layer-recipe-item");
+	
+	$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+	
+	$('#title-recipe').on('click', function() {
+		sorter = "title";
+		clean_list(); 
+		$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+	});
+	$('#category-recipe').on('click', function() {
+		sorter = "category";
+		clean_list(); 
+		$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+	});
+	$('#duration-recipe').on('click', function() {
+		sorter = "duration";
+		clean_list(); 
+		$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+	});
+	$('#rating-recipe').on('click', function() {
+		sorter = "rating";
+		clean_list(); 
+		$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+	});
+	
+	function clean_list() {
+		$("#body-list").find('tr.recipe-item').remove();
+	}
+	
+	function update_list(data) {
 		var recipes = data.recipes;
 		for (var i = 0; i < recipes.length; i++) {
 			var $item = $layer.clone();
-			$item.attr('id', "recipe-item-" + i);
+			$item.attr('id', "recipe-item-" + i)
+				.attr('class', 'recipe-item');
 			$item.find(".recipe-title > a")
 				.text(recipes[i].title)
 				.attr("href", uriShow + recipes[i].slug);
@@ -27,5 +55,6 @@ $(function() {
 				.text(recipes[i].rating);
 			$("#body-list").append($item);
 		}
-	})
+		
+	}
 });

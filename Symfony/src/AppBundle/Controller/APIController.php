@@ -11,8 +11,9 @@ class APIController extends Controller
 {
 	/**
 	 * @Route("/api/list/{action}/{sorter}/{page}/{categories}", name="recipe_api_list",
-	 * 		defaults={"sorter": "alpha", "page": 1, "categories": "All"},
-     * 		requirements={"action": "recipe|review", "sorter": "alpha|views|ratings", "page": "\d+", "categories": ".*"})
+	 * 		defaults={"sorter": "date", "page": 1, "categories": "All"},
+     * 		requirements={"action": "recipe|review", 
+     * 			"sorter": "date|title|category|duration|rating", "page": "\d+", "categories": ".*"})
 	 * @Method("GET")
 	 */
 	public function listAction($action, $sorter, $page, $categories) {
@@ -25,14 +26,20 @@ class APIController extends Controller
 		}
 		
 		switch ($sorter) {
-			case 'views':
-				ListUtils::objSort($recipes, 'getViews', SORT_DESC);
+			case 'date':
+				ListUtils::objSort($recipes, 'getDateTimestamp', SORT_DESC);
 				break;
-			case 'ratings':
+			case 'rating':
 				ListUtils::objSort($recipes, 'getRating', SORT_DESC);
 				break;
-			case 'alpha':
+			case 'title':
 				ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
+				break;
+			case 'category':
+				ListUtils::objSort($recipes, 'getCategory', SORT_ASC);
+				break;
+			case 'duration':
+				ListUtils::objSort($recipes, 'getDurationTimestamp', SORT_DESC);
 				break;
 		}
 		return new JsonResponse($this->generateJSONResponse($recipes));
