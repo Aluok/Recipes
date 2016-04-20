@@ -35,7 +35,7 @@ class RecipeType extends AbstractType
               'allow_add' => true,
               'by_reference' => false,
             ))
-            ->add('isPublished')
+            ->add('isFinished')
         ;
     }
 
