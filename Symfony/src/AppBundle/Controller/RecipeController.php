@@ -26,8 +26,12 @@ class RecipeController extends Controller
      */
     public function listAction()
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$total_recipes = $em->getRepository('AppBundle:Recipe')->getCount();
         return $this->render('Recipes/list.html.twig', array(
             'uri' => $this->generateUrl("recipe_api_list", array('action' => 'recipe')),
+        	'this_route' => 'recipe_list',
+        	'nb_recipe' => $total_recipes,
         ));
     }
 
@@ -54,7 +58,8 @@ class RecipeController extends Controller
 //                 break;
 //         }
         return $this->render('Recipes/list.html.twig', array(
-        		'uri' => $this->generateUrl("recipe_api_list", array('action' => 'review')),
+        	'uri' => $this->generateUrl("recipe_api_list", array('action' => 'review')),
+        	'this.route' => 'recipe_list_for_reviews',
 //             'recipes' => $recipes,
 //             'sorters' => array('author', 'date', 'alpha'),
         ));

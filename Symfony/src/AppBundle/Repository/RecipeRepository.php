@@ -69,4 +69,12 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
         }
         return $query;
     }
+    
+    public function getCount() 
+    {
+    	return $this->createQueryBuilder('r')
+    		->select('COUNT(r.title)')
+    		->where("r.isPublished = 1")
+    		->getQuery()->getOneOrNullResult()[1];
+    }
 }

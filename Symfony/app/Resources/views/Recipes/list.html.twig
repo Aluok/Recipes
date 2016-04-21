@@ -13,7 +13,8 @@
         </thead>
         <tbody id="body-list" 
         	data-uri="{{ uri }}" 
-        	data-uri-show="{{ path('recipe_view', { 'id': 0 }) }}">
+        	data-uri-show="{{ path('recipe_view', { 'id': 0 }) }}"
+        	>
             <tr id="layer-recipe-item">
                 <td class="recipe-title"><a href=""></a></td>
                 <td class="recipe-category"></td>
@@ -22,7 +23,31 @@
             </tr>
         </tbody>
     </table>
-
+	<nav class="text-center">
+	  <ul class="pagination collapse">
+	    <li class="disabled">
+	      <a href="{{ path(this_route) }}" aria-label="First" data-action="first">
+	        <span aria-hidden="true">&laquo;&laquo;</span>
+	      </a>
+	    </li>
+	    <li class="disabled">
+	      <a href="#" aria-label="Previous" data-action="previous">
+	      	<span aria-hidden="true">&laquo;</span>
+      	  </a>
+      	</li>
+	    <li class="active"><a href="#" class="current" data-page="1">1</a></li>
+	    <li>
+	      <a href="#" aria-label="Next" data-page="2" data-action="next">
+	        <span aria-hidden="true">&raquo;</span>
+	      </a>
+	    </li>
+	    <li>
+	      <a href="#" aria-label="Last" data-page="{{ (nb_recipe / 10)|round(0, 'ceil') }}" data-action="last">
+	        <span aria-hidden="true">&raquo;&raquo;</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
     <ul>
         <li>
             <a href="{{ path('recipe_new') }}">Create a new entry</a>
