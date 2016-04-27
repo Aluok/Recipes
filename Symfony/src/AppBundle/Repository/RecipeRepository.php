@@ -37,13 +37,16 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getListPublished($categories, int $page, $sorter)
+    public function getListPublished($categories, int $page, $sorter, string $direction = 'DESC')
     {
+        if ($direction != "ASC" && $direction != "DESC") {
+            throw new \InvalidArgumentException("Needs a correct direction to order");
+        }
         return $this->getList($categories, $page)
             ->andWhere('r.isPublished = 1')
             ->setFirstResult(($page - 1) * 10)
             ->setMaxResults($page * 10)
-            ->orderBy('r.' . $sorter)
+            ->orderBy('r.' . $sorter, $direction)
             ->getQuery()
             ->getResult();
     }
@@ -53,21 +56,21 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
         return $this->getList($categories, $page)
             ->andWhere('r.isPublished = 0')
             ->andWhere('r.isFinished = 1')
-            ->setFirstResult(($page - 1) * 3)
-            ->setMaxResults($page * 3)
             ->orderBy('r.' . $sorter)
             ->getQuery()
             ->getResult();
     }
 
-    private function getList($categories)
+    private function getList($categories, $page)
     {
         $query = $this->createQueryBuilder('r');
         if ($categories != null) {
             $query->add('where', $query->expr()->in('r.category', '?1'))
                 ->setParameter('1', $categories);
         }
-        return $query;
+        return $query
+            ->setFirstResult(($page - 1) * 3)
+            ->setMaxResults($page * 3);
     }
 
     public function getCount()

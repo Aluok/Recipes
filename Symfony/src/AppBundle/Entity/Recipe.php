@@ -132,12 +132,12 @@ class Recipe
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('title', new Constraints\NotBlank());
-        $metadata->addPropertyConstraint('title', new Constraints\Length(["min" => 3, "max" => 15]));
+        $metadata->addPropertyConstraint('title', new Constraints\Length(["min" => 3, "max" => 150]));
         $metadata->addPropertyConstraint('title', new Constraints\Regex(
-            "#[a-zA-Z]{3,15}#",
+            "#[a-zA-Z]{3,150}#",
             "This value should contain a title of 3 to 15 characters (a-z)"
         ));
-        //TODO Figure best way
+        //TODO Figure best way with a choice
         $metadata->addPropertyConstraint('category', new Constraints\NotBlank());
     }
 
@@ -223,7 +223,7 @@ class Recipe
     public function generateSlug()
     {
         $this->slug = preg_replace("/ /i", "_", $this->title . " by " . $this->author);
-	//FIXME transform in a service
+        //FIXME transform in a service
         return $this;
     }
 
@@ -308,7 +308,7 @@ class Recipe
     {
         return $this->date;
     }
-    
+
     /**
      * Get date timmestamp
      *
@@ -316,8 +316,8 @@ class Recipe
      */
     public function getDateTimestamp()
     {
-    	return $this->date->getTimestamp();
-    }  
+        return $this->date->getTimestamp();
+    }
 
 
     /**

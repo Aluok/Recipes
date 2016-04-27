@@ -52,7 +52,7 @@ class ListUtils
         $index_merged = 0;
         $j = 0;
         if ($direction == SORT_DESC) {
-            //TODO implementss
+            //TODO implements
         } elseif ($direction == SORT_ASC) {
             for ($i = 0; $i < $lenth1; $i++) {
                 if ($j == $lenth2) {

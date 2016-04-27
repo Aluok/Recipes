@@ -1,84 +1,66 @@
 /**
- * 
+ *
  */
 $(function() {
 	var page = 1;;
 	var categories = "All";
 	var sorter = "title";
-	
+    var direction = "ASC";
+
 	var uri = $("#body-list").data("uri");
 	var uriShow = $("#body-list").data("uri-show").split('0')[1];
 	var $layer = $("#layer-recipe-item");
 	var last_page = $('.pagination > li:last-child > a').data('page');
-	
-	$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+    var li_list = $('.pagination > li');
+	$.get(generateUri(), update_list);
+
 	update_pagination();
-	
+
 	$('.pagination > li > a').on('click', function(e) {
 		e.preventDefault();
 		var classname = $(this).closest('li').attr('class');
 		if (classname == undefined || classname.indexOf('disabled') == -1) {
-//			var page = $('.pagination > li > a.current').data('page');
 
-			console.log($(this));
 			switch ($(this).data('action')) {
 			case 'first':
-				console.log('f');
 				page = 1;
 				break;
 			case 'previous':
-				console.log('p');
 				page--;
 				break;
 			case 'next':
-				console.log('n');
-				page++; 
+				page++;
 				break;
 			case 'last':
-				console.log('l');
 				page = last_page;
 				break;
 			}
-			console.log(page);
-			li_list = $('.pagination > li');
-			
 
-//			$('.pagination > li > a.current').text(page).data('page', page);
+
+
 			clean_list();
 			$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
 		}
 	});
-	
+
 	$('#title-recipe').on('click', function() {
-		sorter = "title";
-		page = 1;
-		clean_list(); 
-		$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+        initialiseChangeSort("title");
 	});
 	$('#category-recipe').on('click', function() {
-		sorter = "category";
-		page = 1;
-		clean_list(); 
-		$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+        initialiseChangeSort("category");
 	});
 	$('#duration-recipe').on('click', function() {
-		sorter = "duration";
-		page = 1;
-		clean_list(); 
-		$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+        initialiseChangeSort("duration");
 	});
 	$('#rating-recipe').on('click', function() {
-		sorter = "rating";
-		page = 1;
-		clean_list(); 
-		$.get(uri + "/" + sorter + '/' + page + '/' + categories, update_list);
+        initialiseChangeSort("rating");
 	});
-	
-	
+
+
 	function clean_list() {
 		$("#body-list").find('tr.recipe-item').remove();
 	}
-	
+
 	function update_list(data) {
 		var recipes = data.recipes;
 		for (var i = 0; i < recipes.length; i++) {
@@ -116,10 +98,30 @@ $(function() {
 			$(li_list[4]).removeClass('disabled');
 		}
 	}
-	
+
 	function update_pagination() {
 		$('.pagination').show();
 		$('.pagination .current').text($("#body-list").data("page"));
 	}
-	
+
+    function generateUri() {
+        return uri +
+            '/' + sorter +
+            '/' + page +
+            '/' + direction +
+            '/' + categories
+        ;
+    }
+
+    function initialiseChangeSort(newSorter) {
+        if (direction != "ASC" || sorter != newSorter)
+            direction = "ASC";
+        else
+            direction = "DESC";
+        sorter = newSorter;
+		page = 1;
+		clean_list();
+		$.get(generateUri(), update_list);
+    }
+
 });
