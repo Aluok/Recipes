@@ -39,42 +39,42 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
 
     public function getListPublished($categories, int $page, $sorter)
     {
-    	return $this->getList($categories, $page)
-	    	->andWhere('r.isPublished = 1')
-	    	->setFirstResult(($page - 1) * 10)
-	    	->setMaxResults($page * 10)
-	    	->orderBy('r.' . $sorter)
-	    	->getQuery()
-	    	->getResult();
+        return $this->getList($categories, $page)
+            ->andWhere('r.isPublished = 1')
+            ->setFirstResult(($page - 1) * 10)
+            ->setMaxResults($page * 10)
+            ->orderBy('r.' . $sorter)
+            ->getQuery()
+            ->getResult();
     }
-    
+
     public function getListForReview($categories, int $page, $sorter)
     {
         return $this->getList($categories, $page)
             ->andWhere('r.isPublished = 0')
             ->andWhere('r.isFinished = 1')
-	    	->setFirstResult(($page - 1) * 3)
-	    	->setMaxResults($page * 3)
-	    	->orderBy('r.' . $sorter)
+            ->setFirstResult(($page - 1) * 3)
+            ->setMaxResults($page * 3)
+            ->orderBy('r.' . $sorter)
             ->getQuery()
             ->getResult();
     }
-    
+
     private function getList($categories)
     {
-    	$query = $this->createQueryBuilder('r');
+        $query = $this->createQueryBuilder('r');
         if ($categories != null) {
-	        $query->add('where', $query->expr()->in('r.category', '?1'))
-	            ->setParameter('1', $categories);
+            $query->add('where', $query->expr()->in('r.category', '?1'))
+                ->setParameter('1', $categories);
         }
         return $query;
     }
-    
-    public function getCount() 
+
+    public function getCount()
     {
-    	return $this->createQueryBuilder('r')
-    		->select('COUNT(r.title)')
-    		->where("r.isPublished = 1")
-    		->getQuery()->getOneOrNullResult()[1];
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r.title)')
+            ->where("r.isPublished = 1")
+            ->getQuery()->getOneOrNullResult()[1];
     }
 }

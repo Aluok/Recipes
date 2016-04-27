@@ -26,42 +26,25 @@ class RecipeController extends Controller
      */
     public function listAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$total_recipes = $em->getRepository('AppBundle:Recipe')->getCount();
+        $em = $this->getDoctrine()->getManager();
+        $total_recipes = $em->getRepository('AppBundle:Recipe')->getCount();
         return $this->render('Recipes/list.html.twig', array(
             'uri' => $this->generateUrl("recipe_api_list", array('action' => 'recipe')),
-        	'this_route' => 'recipe_list',
-        	'nb_recipe' => $total_recipes,
+            'this_route' => 'recipe_list',
+            'nb_recipe' => $total_recipes,
         ));
     }
 
     /**
      *
-     * @Route("/reviews/list/{sorter}/{page}",
-     *  defaults={"sorter": "date", "page": 0},
-     *  requirements={"sorter": "alpha|author|date", "page": "\d+"},
-     *  name="recipe_list_for_reviews")
+     * @Route("/reviews/list",name="recipe_list_for_reviews")
      */
-    public function listReviewsAction($sorter, $page)
+    public function listReviewsAction()
     {
-//         $em = $this->getDoctrine()->getManager();
-//         $recipes = $em->getRepository('AppBundle:Recipe')->findByIsPublished(0);
-//         switch ($sorter) {
-//             case 'author':
-//                 ListUtils::objSort($recipes, 'getAuthor', SORT_ASC);
-//                 break;
-//             case 'date':
-//                 ListUtils::objSort($recipes, 'getDateTimestamp', SORT_DESC, $this->get('logger'));
-//                 break;
-//             case 'alpha':
-//                 ListUtils::objSort($recipes, 'getTitle', SORT_ASC);
-//                 break;
-//         }
+        //TODO implements as per the changes done in list
         return $this->render('Recipes/list.html.twig', array(
-        	'uri' => $this->generateUrl("recipe_api_list", array('action' => 'review')),
-        	'this.route' => 'recipe_list_for_reviews',
-//             'recipes' => $recipes,
-//             'sorters' => array('author', 'date', 'alpha'),
+            'uri' => $this->generateUrl("recipe_api_list", array('action' => 'review')),
+            'this.route' => 'recipe_list_for_reviews',
         ));
     }
 
@@ -107,8 +90,8 @@ class RecipeController extends Controller
      */
     public function showAction(Recipe $recipe)
     {
-    	$this->denyAccessUnlessGranted('view', $recipe);
-    	
+        $this->denyAccessUnlessGranted('view', $recipe);
+
         $recipe->setViews($recipe->getViews() + 1);
 
         $em = $this->getDoctrine()->getManager();
@@ -130,8 +113,8 @@ class RecipeController extends Controller
      */
     public function editAction(Request $request, Recipe $recipe)
     {
-    	$this->denyAccessUnlessGranted('edit', $recipe);
-    	
+        $this->denyAccessUnlessGranted('edit', $recipe);
+
         $deleteForm = $this->createDeleteForm($recipe);
         $editForm = $this->createForm('AppBundle\Form\RecipeType', $recipe);
         $editForm->handleRequest($request);
@@ -164,8 +147,8 @@ class RecipeController extends Controller
      */
     public function deleteAction(Request $request, Recipe $recipe)
     {
-    	$this->denyAccessUnlessGranted('edit', $recipe);
-    	
+        $this->denyAccessUnlessGranted('edit', $recipe);
+
         $form = $this->createDeleteForm($recipe);
         $form->handleRequest($request);
 

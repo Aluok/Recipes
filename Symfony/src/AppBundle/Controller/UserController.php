@@ -28,6 +28,7 @@ class UserController extends Controller
      */
     public function ratingsAction()
     {
+        //TODO implements
         return $this->render('User/ratings.html.twig', array(
             // ...
         ));
@@ -39,6 +40,7 @@ class UserController extends Controller
      */
     public function reviewsAction()
     {
+        //TODO implements
         return $this->render('User/reviews.html.twig', array(
             // ...
         ));
