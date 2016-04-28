@@ -25,25 +25,19 @@ class APIController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         //TODO handle the exception to send back a nice error message
-        if ($action == "recipe") {
-            $recipes = $em
-                ->getRepository('AppBundle:Recipe')
-                ->getListPublished(
-                    ListUtils::getCategoriesFilters($categories),
-                    $page,
-                    $sorter,
-                    $direction
-                );
-        } elseif ($action == "review") {
-            $recipes = $em
-                ->getRepository('AppBundle:Recipe')
-                ->getListForReview(
-                    ListUtils::getCategoriesFilters($categories),
-                    $page,
-                    $sorter,
-                    $direction
-                );
+        if ($action == 'recipe') {
+            $method = 'getListPublished';
+        } elseif ($action == 'review') {
+            $method = 'getListForReview';
         }
+        $recipes = $em
+            ->getRepository('AppBundle:Recipe')
+            ->$method(
+                ListUtils::getCategoriesFilters($categories),
+                $page,
+                $sorter,
+                $direction
+            );
         return new JsonResponse($this->generateJSONResponse($recipes));
     }
 

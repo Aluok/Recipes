@@ -144,7 +144,6 @@ $(function() {
 		}
     }
 
-
     /*
      * Initialise the new sorting, by changing the direction if the sorter is the same as previously
      */

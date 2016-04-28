@@ -41,7 +41,6 @@ class RecipeController extends Controller
      */
     public function listReviewsAction()
     {
-        //TODO implements as per the changes done in list
         $em = $this->getDoctrine()->getManager();
         $total_recipes = $em->getRepository('AppBundle:Recipe')->getCount(false);
         return $this->render('Recipes/list.html.twig', array(
