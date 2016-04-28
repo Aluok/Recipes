@@ -13,7 +13,7 @@ class APIController extends Controller
      * @Route("/api/list/{action}/{sorter}/{page}/{direction}/{categories}", name="recipe_api_list",
      *      defaults={"sorter": "date", "page": 1, "categories": "All", "direction": "ASC"},
      *      requirements={"action": "recipe|review",
-     *          "sorter": "date|title|category|duration|rating",
+     *          "sorter": "date|title|category|duration|rating|views",
      *          "page": "\d+",
      *          "categories": ".*",
      *          "direction": "ASC|DESC"

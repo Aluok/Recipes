@@ -42,3 +42,7 @@ td > a:not(.btn) {
 #layer-recipe-item {
 	display: none;
 }
+.filter-list {
+    list-style-type: none;
+    padding-left: 5px;
+}

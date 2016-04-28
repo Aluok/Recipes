@@ -2,51 +2,116 @@
 
 {% block content %}
     <h1>Recipe list</h1>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>
-                    <a id="title-recipe" href="#">
-                        Title
-                        <i class="glyphicon glyphicon-menu-down"></i>
-                        <i class="glyphicon glyphicon-menu-up"></i>
-                    </a>
-                </th>
-                <th>
-                    <a id="category-recipe" href="#">
+    <div class="row">
+        <div id="menu-sort" class="col-md-3 thumbnail">
+            <div id="sorters">
+                <h4>Sort by:</h4>
+                <ul>
+                    <li>
+                        <a id="date-recipe" href="#" class="sort" data-sorter="date">
+                            Time of publication
+                            <i class="glyphicon glyphicon-menu-down"></i>
+                            <i class="glyphicon glyphicon-menu-up"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="views-recipe" href="#" class="sort" data-sorter="views">
+                            Number of views
+                            <i class="glyphicon glyphicon-menu-down"></i>
+                            <i class="glyphicon glyphicon-menu-up"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="filters">
+                <h4>Filter by:</h4>
+                <ul>
+                    <li>
+                        Ingredients
+                        <ul class="filter-list">
+                            <li>
+                                <input type="checkbox" value="Egg">Egg<br>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="Egg">Egg<br>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="Egg">Egg<br>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="Egg">Egg<br>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         Category
-                        <i class="glyphicon glyphicon-menu-down"></i>
-                        <i class="glyphicon glyphicon-menu-up"></i>
-                    </a>
-                </th>
-                <th>
-                    <a id="duration-recipe" href="#">
-                        Duration
-                        <i class="glyphicon glyphicon-menu-down"></i>
-                        <i class="glyphicon glyphicon-menu-up"></i>
-                    </a>
-                </th>
-                <th>
-                    <a id="rating-recipe" href="#">
-                        Rating
-                        <i class="glyphicon glyphicon-menu-down"></i>
-                        <i class="glyphicon glyphicon-menu-up"></i>
-                    </a>
-                </th>
-            </tr>
-        </thead>
-        <tbody id="body-list"
-        	data-uri="{{ uri }}"
-        	data-uri-show="{{ path('recipe_view', { 'id': 0 }) }}"
-        	>
-            <tr id="layer-recipe-item">
-                <td class="recipe-title"><a href=""></a></td>
-                <td class="recipe-category"></td>
-                <td class="recipe-duration"></td>
-                <td class="recipe-rating"></td>
-            </tr>
-        </tbody>
-    </table>
+                        <ul class="filter-list">
+                            <li>
+                                <input type="checkbox" value="Egg">Egg<br>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="Egg">Egg<br>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="Egg">Egg<br>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="Egg">Egg<br>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <a id="title-recipe" class="sort" data-sorter="title" href="#">
+                                Title
+                                <i class="glyphicon glyphicon-menu-down"></i>
+                                <i class="glyphicon glyphicon-menu-up"></i>
+                            </a>
+                        </th>
+                        <th>
+                            <a id="category-recipe"  class="sort" data-sorter="category" href="#">
+                                Category
+                                <i class="glyphicon glyphicon-menu-down"></i>
+                                <i class="glyphicon glyphicon-menu-up"></i>
+                            </a>
+                        </th>
+                        <th>
+                            <a id="duration-recipe"  class="sort" data-sorter="duration" href="#">
+                                Duration
+                                <i class="glyphicon glyphicon-menu-down"></i>
+                                <i class="glyphicon glyphicon-menu-up"></i>
+                            </a>
+                        </th>
+                        <th>
+                            <a id="rating-recipe"  class="sort" data-sorter="rating" href="#">
+                                Rating
+                                <i class="glyphicon glyphicon-menu-down"></i>
+                                <i class="glyphicon glyphicon-menu-up"></i>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="body-list"
+                	data-uri="{{ uri }}"
+                	data-uri-show="{{ path('recipe_view', { 'id': 0 }) }}"
+                	>
+                    <tr id="layer-recipe-item">
+                        <td class="recipe-title"><a href=""></a></td>
+                        <td class="recipe-category"></td>
+                        <td class="recipe-duration"></td>
+                        <td class="recipe-rating"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 	<nav class="text-center">
 	  <ul class="pagination collapse">
 	    <li class="disabled">
@@ -66,7 +131,7 @@
 	      </a>
 	    </li>
 	    <li>
-	      <a href="#" aria-label="Last" data-page="{{ (nb_recipe / 3)|round(0, 'ceil') }}" data-action="last">
+	      <a href="#" aria-label="Last" data-page="{{ (nb_recipe / 10)|round(0, 'ceil') }}" data-action="last">
 	        <span aria-hidden="true">&raquo;&raquo;</span>
 	      </a>
 	    </li>

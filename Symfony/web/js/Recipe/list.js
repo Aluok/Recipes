@@ -45,17 +45,8 @@ $(function() {
 	});
 
     //----------Events for sorting---------------------------------------------
-	$('#title-recipe').on('click', function() {
-        initialiseChangeSort("title");
-	});
-	$('#category-recipe').on('click', function() {
-        initialiseChangeSort("category");
-	});
-	$('#duration-recipe').on('click', function() {
-        initialiseChangeSort("duration");
-	});
-	$('#rating-recipe').on('click', function() {
-        initialiseChangeSort("rating");
+	$('.sort').on('click', function() {
+        initialiseChangeSort($(this).data('sorter'));
 	});
 
     /*
@@ -170,10 +161,7 @@ $(function() {
     }
 
     function show_sort_marker(marker) {
-    $('#category-recipe .glyphicon').hide();
-        $('#title-recipe .glyphicon').hide();
-        $('#duration-recipe .glyphicon').hide();
-        $('#rating-recipe .glyphicon').hide();
+        $('.sort .glyphicon').hide();
 
         if (direction == 'ASC')
             var className = 'glyphicon-menu-down';
