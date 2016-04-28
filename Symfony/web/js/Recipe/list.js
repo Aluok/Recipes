@@ -75,7 +75,6 @@ $(function() {
      * Adds the new items to the list
      */
 	function add_list_items(data) {
-        //TODO add an error handling and a loading.
 		var recipes = data.recipes;
 
 		for (var i = 0; i < recipes.length; i++) {

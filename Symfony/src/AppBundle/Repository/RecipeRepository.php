@@ -39,9 +39,6 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
 
     public function getListPublished($categories, int $page, $sorter, string $direction = 'ASC')
     {
-        if ($direction != "ASC" && $direction != "DESC") {
-            throw new \InvalidArgumentException("Needs a correct direction to order");
-        }
         return $this->getList($categories, $page)
             ->andWhere('r.isPublished = 1')
             ->orderBy('r.' . $sorter, $direction)

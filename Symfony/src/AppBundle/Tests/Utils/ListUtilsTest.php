@@ -16,16 +16,4 @@ class ListUtilsTest //TODO see to implement Phpunit test case
         assert($result[0] == 'breakfast');
         assert($result[1] == 'snacks');
     }
-    //TODO keep? decide with the function in ListUtils class
-    // public static function objSort(array &$objArray, string $indexFunction, $sort_flags = 0)
-    // {
-    //     if ($objArray == null || count($objArray) == 0) {
-    //         return;
-    //     }
-    //     $indices = array();
-    //     foreach ($objArray as $obj) {
-    //         $indices[] = $obj->$indexFunction();
-    //     }
-    //     return array_multisort($indices, $sort_flags, $objArray);
-    // }
 }

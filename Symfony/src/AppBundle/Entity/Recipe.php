@@ -137,8 +137,11 @@ class Recipe
             "#[a-zA-Z]{3,150}#",
             "This value should contain a title of 3 to 15 characters (a-z)"
         ));
-        //TODO Figure best way with a choice
-        $metadata->addPropertyConstraint('category', new Constraints\NotBlank());
+        $metadata->addPropertyConstraint('category', new Constraints\Choice(array(
+            'choices' => Recipe::CATEGORIES,
+            'message' => 'Choose a valid category.',
+            'multiple' => false,
+        )));
     }
 
     /**
@@ -214,7 +217,7 @@ class Recipe
     }
 
     /**
-     * Set slug
+     * Generate slug
      *
      * @param string $slug
      *
@@ -223,7 +226,6 @@ class Recipe
     public function generateSlug()
     {
         $this->slug = preg_replace("/ /i", "_", $this->title . " by " . $this->author);
-        //FIXME transform in a service
         return $this;
     }
 

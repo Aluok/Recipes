@@ -24,7 +24,6 @@ class APIController extends Controller
     public function listAction($action, $sorter, $page, $categories, $direction)
     {
         $em = $this->getDoctrine()->getManager();
-        //TODO handle the exception to send back a nice error message
         if ($action == 'recipe') {
             $method = 'getListPublished';
         } elseif ($action == 'review') {
