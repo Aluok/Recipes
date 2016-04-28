@@ -37,26 +37,24 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getListPublished($categories, int $page, $sorter, string $direction = 'DESC')
+    public function getListPublished($categories, int $page, $sorter, string $direction = 'ASC')
     {
         if ($direction != "ASC" && $direction != "DESC") {
             throw new \InvalidArgumentException("Needs a correct direction to order");
         }
         return $this->getList($categories, $page)
             ->andWhere('r.isPublished = 1')
-            ->setFirstResult(($page - 1) * 10)
-            ->setMaxResults($page * 10)
             ->orderBy('r.' . $sorter, $direction)
             ->getQuery()
             ->getResult();
     }
 
-    public function getListForReview($categories, int $page, $sorter)
+    public function getListForReview($categories, int $page, $sorter, string $direction = 'ASC')
     {
         return $this->getList($categories, $page)
             ->andWhere('r.isPublished = 0')
             ->andWhere('r.isFinished = 1')
-            ->orderBy('r.' . $sorter)
+            ->orderBy('r.' . $sorter, $direction)
             ->getQuery()
             ->getResult();
     }
@@ -69,15 +67,21 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('1', $categories);
         }
         return $query
-            ->setFirstResult(($page - 1) * 3)
-            ->setMaxResults($page * 3);
+            ->setFirstResult(($page - 1) * 10)
+            ->setMaxResults(10);
     }
 
-    public function getCount()
+    public function getCount($published)
     {
-        return $this->createQueryBuilder('r')
-            ->select('COUNT(r.title)')
-            ->where("r.isPublished = 1")
-            ->getQuery()->getOneOrNullResult()[1];
+        $query = $this
+            ->createQueryBuilder('r')
+            ->select('COUNT(r.title)');
+        if ($published) {
+            $query->where("r.isPublished = 1");
+        } else {
+            $query->where("r.isPublished = 0")
+                ->andWhere("r.isFinished = 1");
+        }
+        return $query->getQuery()->getOneOrNullResult()[1];
     }
 }

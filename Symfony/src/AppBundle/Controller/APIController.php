@@ -40,7 +40,8 @@ class APIController extends Controller
                 ->getListForReview(
                     ListUtils::getCategoriesFilters($categories),
                     $page,
-                    $sorter
+                    $sorter,
+                    $direction
                 );
         }
         return new JsonResponse($this->generateJSONResponse($recipes));

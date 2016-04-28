@@ -27,7 +27,7 @@ class RecipeController extends Controller
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $total_recipes = $em->getRepository('AppBundle:Recipe')->getCount();
+        $total_recipes = $em->getRepository('AppBundle:Recipe')->getCount(true);
         return $this->render('Recipes/list.html.twig', array(
             'uri' => $this->generateUrl("recipe_api_list", array('action' => 'recipe')),
             'this_route' => 'recipe_list',
@@ -42,9 +42,12 @@ class RecipeController extends Controller
     public function listReviewsAction()
     {
         //TODO implements as per the changes done in list
+        $em = $this->getDoctrine()->getManager();
+        $total_recipes = $em->getRepository('AppBundle:Recipe')->getCount(false);
         return $this->render('Recipes/list.html.twig', array(
             'uri' => $this->generateUrl("recipe_api_list", array('action' => 'review')),
-            'this.route' => 'recipe_list_for_reviews',
+            'this_route' => 'recipe_list_for_reviews',
+            'nb_recipe' => $total_recipes,
         ));
     }
 

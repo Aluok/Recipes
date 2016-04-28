@@ -11,8 +11,8 @@
                 <th><a id="rating-recipe" href="#">Rating</a></th>
             </tr>
         </thead>
-        <tbody id="body-list" 
-        	data-uri="{{ uri }}" 
+        <tbody id="body-list"
+        	data-uri="{{ uri }}"
         	data-uri-show="{{ path('recipe_view', { 'id': 0 }) }}"
         	>
             <tr id="layer-recipe-item">
@@ -42,7 +42,7 @@
 	      </a>
 	    </li>
 	    <li>
-	      <a href="#" aria-label="Last" data-page="{{ (nb_recipe / 10)|round(0, 'ceil') }}" data-action="last">
+	      <a href="#" aria-label="Last" data-page="{{ (nb_recipe / 3)|round(0, 'ceil') }}" data-action="last">
 	        <span aria-hidden="true">&raquo;&raquo;</span>
 	      </a>
 	    </li>
