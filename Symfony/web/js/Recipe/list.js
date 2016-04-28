@@ -18,7 +18,7 @@ $(function() {
     //---------Page loading Logic----------------------------------------------
     $.get(generateUri(), add_list_items);
 	update_pagination();
-
+    show_sort_marker('title');
     //----------Event for pagination------------------------------------------
 	$('.pagination > li > a').on('click', function(e) {
 		e.preventDefault();
@@ -154,6 +154,7 @@ $(function() {
         sorter = newSorter;
         page = 1;
         update_list();
+        show_sort_marker(newSorter);
     }
 
     /*
@@ -164,5 +165,21 @@ $(function() {
         $.get(generateUri(), add_list_items);
     }
 
+    function hide_sort_markers() {
 
+    }
+
+    function show_sort_marker(marker) {
+    $('#category-recipe .glyphicon').hide();
+        $('#title-recipe .glyphicon').hide();
+        $('#duration-recipe .glyphicon').hide();
+        $('#rating-recipe .glyphicon').hide();
+
+        if (direction == 'ASC')
+            var className = 'glyphicon-menu-down';
+        else
+            var className = 'glyphicon-menu-up';
+        console.log($('#' + marker + '-recipe .' + className));
+        $('#' + marker + '-recipe .' + className).show();
+    }
 });
