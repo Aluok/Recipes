@@ -29,18 +29,11 @@
                     <li>
                         Ingredients
                         <ul class="filter-list" data-filter="ingredients">
-                            <li>
-                                <input type="checkbox" value="Egg">Egg<br>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="Egg">Egg<br>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="Egg">Egg<br>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="Egg">Egg<br>
-                            </li>
+                            {% for item in ingredients %}
+                                <li>
+                                    <input type="checkbox" value="{{ item.name }}">{{ item.name }}<br>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </li>
                     <li>

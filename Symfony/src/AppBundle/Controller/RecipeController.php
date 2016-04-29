@@ -28,10 +28,12 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('AppBundle:Recipe')->getUniqueCategories();
+        $ingredients = $em->getRepository('AppBundle:Ingredient')->getUniqueNames(true);
         return $this->render('Recipes/list.html.twig', array(
             'uri' => $this->generateUrl("recipe_api_list", array('action' => 'recipe')),
             'this_route' => 'recipe_list',
             'categories' => $categories,
+            'ingredients' => $ingredients,
         ));
     }
 
@@ -43,10 +45,12 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('AppBundle:Recipe')->getUniqueCategories();
+        $ingredients = $em->getRepository('AppBundle:Ingredient')->getUniqueNames(false);
         return $this->render('Recipes/list.html.twig', array(
             'uri' => $this->generateUrl("recipe_api_list", array('action' => 'review')),
             'this_route' => 'recipe_list_for_reviews',
             'categories' => $categories,
+            'ingredients' => $ingredients,
         ));
     }
 

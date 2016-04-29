@@ -10,4 +10,20 @@ namespace AppBundle\Repository;
  */
 class IngredientRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getUniqueNames(bool $published)
+    {
+        $query = $this
+            ->createQueryBuilder('i')
+            ->select('i.name')
+            ->join('AppBundle\Entity\Recipe', 'r')
+            ->where('i.recipe = r.slug');
+        if ($published) {
+            $query->andWhere('r.isPublished = 1');
+        } else {
+            $query->andWhere('r.isPublished = 0')
+                ->andWhere('r.isFinished = 1');
+        }
+        return $query->groupBy('i.name')
+            ->getQuery()->getResult();
+    }
 }

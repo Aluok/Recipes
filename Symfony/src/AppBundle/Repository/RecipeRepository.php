@@ -60,9 +60,17 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->createQueryBuilder('r');
         if ($filters != null) {
-            foreach ($filters as $column => $filter) {
-                $query->add('where', $query->expr()->in('r.' . $column, '?1'))
-                    ->setParameter('1', $filter);
+            if (array_key_exists('category', $filters) && count($filters['category']) != 0) {
+                $query->add('where', $query->expr()->in('r.category', '?1'))
+                    ->setParameter('1', $filters['category']);
+            }
+            if (array_key_exists('ingredients', $filters) && count($filters['ingredients']) != 0) {
+                $query->join('AppBundle\Entity\Ingredient', 'i')
+                    ->add('where', $query->expr()->in('i.name', '?1'))
+                //
+                // $query->add('where', $query->expr()->in('r.category', '?1'))
+                    ->setParameter('1', $filters['ingredients'])
+                    ->andWhere('i.recipe = r.slug');
             }
         }
         return $query
@@ -82,9 +90,17 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere("r.isFinished = 1");
         }
         if ($filters != null) {
-            foreach ($filters as $column => $filter) {
-                $query->add('where', $query->expr()->in('r.' . $column, '?1'))
-                    ->setParameter('1', $filter);
+            if (array_key_exists('category', $filters) && count($filters['category']) != 0) {
+                $query->add('where', $query->expr()->in('r.category', '?1'))
+                    ->setParameter('1', $filters['category']);
+            }
+            if (array_key_exists('ingredients', $filters) && count($filters['ingredients']) != 0) {
+                $query->join('AppBundle\Entity\Ingredient', 'i')
+                    ->add('where', $query->expr()->in('i.name', '?1'))
+                //
+                // $query->add('where', $query->expr()->in('r.category', '?1'))
+                    ->setParameter('1', $filters['ingredients'])
+                    ->andWhere('i.recipe = r.slug');
             }
         }
         return $query->getQuery()->getOneOrNullResult()[1];
