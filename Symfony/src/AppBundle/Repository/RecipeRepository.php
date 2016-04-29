@@ -56,19 +56,21 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    private function getList($categories, $page)
+    private function getList($filters, $page)
     {
         $query = $this->createQueryBuilder('r');
-        if ($categories != null) {
-            $query->add('where', $query->expr()->in('r.category', '?1'))
-                ->setParameter('1', $categories);
+        if ($filters != null) {
+            foreach ($filters as $column => $filter) {
+                $query->add('where', $query->expr()->in('r.' . $column, '?1'))
+                    ->setParameter('1', $filter);
+            }
         }
         return $query
             ->setFirstResult(($page - 1) * 10)
             ->setMaxResults(10);
     }
 
-    public function getCount($published)
+    public function getCount($published, $filters)
     {
         $query = $this
             ->createQueryBuilder('r')
@@ -79,6 +81,21 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             $query->where("r.isPublished = 0")
                 ->andWhere("r.isFinished = 1");
         }
+        if ($filters != null) {
+            foreach ($filters as $column => $filter) {
+                $query->add('where', $query->expr()->in('r.' . $column, '?1'))
+                    ->setParameter('1', $filter);
+            }
+        }
         return $query->getQuery()->getOneOrNullResult()[1];
+    }
+
+    public function getUniqueCategories()
+    {
+        return $this
+            ->createQueryBuilder('r')
+            ->select('r.category')
+            ->groupBy('r.category')
+            ->getQuery()->getResult();
     }
 }

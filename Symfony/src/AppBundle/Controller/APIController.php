@@ -32,12 +32,17 @@ class APIController extends Controller
         $recipes = $em
             ->getRepository('AppBundle:Recipe')
             ->$method(
-                ListUtils::getCategoriesFilters($categories),
+                ListUtils::getFilters($categories),
                 $page,
                 $sorter,
                 $direction
             );
-        return new JsonResponse($this->generateJSONResponse($recipes));
+        $responseData = $this->generateJSONResponse($recipes);
+        $responseData['totalPages'] = ceil(
+            $em->getRepository('AppBundle:Recipe')
+                ->getCount($action == 'recipe', ListUtils::getFilters($categories)) / 10
+        );
+        return new JsonResponse($responseData);
     }
 
     private function generateJSONResponse($recipes)

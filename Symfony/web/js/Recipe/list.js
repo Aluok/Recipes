@@ -5,15 +5,29 @@
 $(function() {
     //------------Variable initialisation--------------------------------------
 	var page = 1;;
-	var categories = "All";
 	var sorter = "title";
     var direction = "ASC";
 
 	var uri = $("#body-list").data("uri");
 	var uriShow = $("#body-list").data("uri-show").split('0')[1];
 	var $layer = $("#layer-recipe-item");
-	var last_page = $('.pagination > li:last-child > a').data('page');
-    var li_list = $('.pagination > li');
+	var lastPage = $('.pagination > li:last-child > a').data('page');
+    var liList = $('.pagination > li');
+    var filters = {
+        'categories': [],
+        'ingredients': [],
+        'add': function(filter, value) {
+            if (this[filter].indexOf(value) == -1) {
+                this[filter].push(value);
+            }
+        },
+        'remove': function(filter, value) {
+            var index = this[filter].indexOf(value);
+            if (index != -1) {
+                this[filter].splice(index, 1);
+            }
+        },
+    }
 
     //---------Page loading Logic----------------------------------------------
     $.get(generateUri(), add_list_items);
@@ -36,7 +50,7 @@ $(function() {
 				page++;
 				break;
 			case 'last':
-				page = last_page;
+				page = lastPage;
 				break;
 			}
 
@@ -44,22 +58,39 @@ $(function() {
 		}
 	});
 
-    //----------Events for sorting---------------------------------------------
+    //----------Event for sorting---------------------------------------------
 	$('.sort').on('click', function() {
         initialiseChangeSort($(this).data('sorter'));
 	});
+
+    //----------Event for filtering--------------------------------------------
+    $('.filter-list input').on('change', function() {
+        initialiseChangeFilter($(this));
+    });
 
     /*
      * Generate the URI to call via AJAX.
      */
     function generateUri() {
-        console.log(uri + '/' + sorter + '/' + page + '/' + direction + '/' + categories);
-        return uri +
+        var url = uri +
             '/' + sorter +
             '/' + page +
-            '/' + direction +
-            '/' + categories
+            '/' + direction
         ;
+        var empty = true;
+        for (filter in filters) {
+            if (filter.length != 0)
+                empty = false;
+        }
+        if (empty)
+            url += '/All';
+        else {
+            if (filters.categories.length != 0)
+                url += '/category=' + filters.categories.join('_');
+            if (filters.ingredients.length != 0)
+                url += '/ingredients=' + filters.ingredients.join('_');
+        }
+        return url;
     }
 
     /*
@@ -72,8 +103,7 @@ $(function() {
             add_item_to_list(recipes[i], i);
 		}
 
-
-        update_pagination();
+        update_pagination(data.totalPages);
 	}
 
     /*
@@ -101,7 +131,8 @@ $(function() {
     /*
      * Update the pagination (disable/enable links, update the number of the page, show if hidden)
      */
-	function update_pagination() {
+	function update_pagination(nbPages) {
+        lastPage = nbPages;
         update_allowed_pagination();
 		$('.pagination').show();
         $('.pagination > li > a.current').text(page).data('page', page);
@@ -111,26 +142,26 @@ $(function() {
      * Updates the attribute disabled on the pagination link.
      */
     function update_allowed_pagination() {
-        if (last_page == 1) {
-            $(li_list[0]).addClass('disabled');
-			$(li_list[1]).addClass('disabled');
-			$(li_list[3]).addClass('disabled');
-			$(li_list[4]).addClass('disabled');
+        if (lastPage == 1) {
+            $(liList[0]).addClass('disabled');
+			$(liList[1]).addClass('disabled');
+			$(liList[3]).addClass('disabled');
+			$(liList[4]).addClass('disabled');
         } else if (page == 1) {
-			$(li_list[0]).addClass('disabled');
-			$(li_list[1]).addClass('disabled');
-			$(li_list[3]).removeClass('disabled');
-			$(li_list[4]).removeClass('disabled');
-		} else if (page == last_page) {
-			$(li_list[0]).removeClass('disabled');
-			$(li_list[1]).removeClass('disabled');
-			$(li_list[3]).addClass('disabled');
-			$(li_list[4]).addClass('disabled');
+			$(liList[0]).addClass('disabled');
+			$(liList[1]).addClass('disabled');
+			$(liList[3]).removeClass('disabled');
+			$(liList[4]).removeClass('disabled');
+		} else if (page == lastPage) {
+			$(liList[0]).removeClass('disabled');
+			$(liList[1]).removeClass('disabled');
+			$(liList[3]).addClass('disabled');
+			$(liList[4]).addClass('disabled');
 		} else {
-			$(li_list[0]).removeClass('disabled');
-			$(li_list[1]).removeClass('disabled');
-			$(li_list[3]).removeClass('disabled');
-			$(li_list[4]).removeClass('disabled');
+			$(liList[0]).removeClass('disabled');
+			$(liList[1]).removeClass('disabled');
+			$(liList[3]).removeClass('disabled');
+			$(liList[4]).removeClass('disabled');
 		}
     }
 
@@ -156,10 +187,6 @@ $(function() {
         $.get(generateUri(), add_list_items);
     }
 
-    function hide_sort_markers() {
-
-    }
-
     function show_sort_marker(marker) {
         $('.sort .glyphicon').hide();
 
@@ -167,7 +194,23 @@ $(function() {
             var className = 'glyphicon-menu-down';
         else
             var className = 'glyphicon-menu-up';
-        console.log($('#' + marker + '-recipe .' + className));
         $('#' + marker + '-recipe .' + className).show();
+    }
+    //TODO update last page.
+    //TODO include filter in pagination and sort
+
+    function initialiseChangeFilter($item) {
+        var filter = $item.closest('.filter-list').data('filter')
+        //We update the list of all current filters.
+        if ($item.prop('checked')) {
+            filters.add(filter, $item.val());
+        } else {
+            filters.remove(filter, $item.val());
+        }
+        //we keep the current sort, but get back to page 1.
+        page = 1;
+        //we send the request and update the list
+        update_list();
+        //We update the list
     }
 });
