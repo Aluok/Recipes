@@ -56,9 +56,20 @@ class RecipeController extends Controller
 
     /**
      * @Route("/recipe/new", name="recipe_new")
-     * @Method({"GET","POST"})
+     * @Method({"GET"})
      */
     public function addAction(Request $request)
+    {
+        return $this->render('Recipes/add.html.twig', array(
+        ));
+    }
+
+
+    /**
+     * @Route("/recipe/new/scratch", name="recipe_new_scratch")
+     * @Method({"GET","POST"})
+     */
+    public function addScratchAction(Request $request)
     {
         $recipe = new Recipe();
         if (count($recipe->getIngredients()) == 0) {
@@ -70,20 +81,61 @@ class RecipeController extends Controller
         $form = $this->createForm('AppBundle\Form\RecipeType', $recipe);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $recipe
-                ->setAuthor($this->get('security.token_storage')->getToken()->getUser())
-                ->setDate(new \DateTime())
-                ->generateSlug();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $recipe
+                    ->setAuthor($this->get('security.token_storage')->getToken()->getUser())
+                    ->setDate(new \DateTime())
+                    ->generateSlug();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($recipe);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($recipe);
 
-            $em->flush();
+                $em->flush();
 
-            return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
+                return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
+            }
+            //TODO include the logic if not valid
         }
-        return $this->render('Recipes/add.html.twig', array(
+        return $this->render('Forms/recipe_creation.html.twig', array(
+            'recipe' => $recipe,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/recipe/new/scratch", name="recipe_new_scratch")
+     * @Method({"GET","POST"})
+     */
+    public function addImportAction(Request $request)
+    {
+        $recipe = new Recipe();
+        if (count($recipe->getIngredients()) == 0) {
+            $recipe->addIngredient(new Ingredient());
+        }
+        if (count($recipe->getSteps()) == 0) {
+            $recipe->addStep(new Step());
+        }
+        $form = $this->createForm('AppBundle\Form\RecipeType', $recipe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $recipe
+                    ->setAuthor($this->get('security.token_storage')->getToken()->getUser())
+                    ->setDate(new \DateTime())
+                    ->generateSlug();
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($recipe);
+
+                $em->flush();
+
+                return $this->redirectToRoute('recipe_view', array('id' => $recipe->getId()));
+            }
+            //TODO include the logic if not valid
+        }
+        return $this->render('Forms/recipe_import.html.twig', array(
             'recipe' => $recipe,
             'form' => $form->createView(),
         ));

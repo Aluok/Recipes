@@ -7,54 +7,36 @@
 
 {% block content -%}
     <h1>Recipe creation</h1>
-    {{ form_start(form, {"attr": {"novalidate": "novalidate"}}) }}
-    <!-- TODO debug -->
-        {{ form_row(form.title) }}
-
-        {{ form_label(form.ingredients) }}
-        <div class="">
-            <a href="#" id="add_ingredient_link"><i class="glyphicon glyphicon-plus-sign"></i></a>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingExternal">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Create from an existing website
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingExternal">
+                <div class="panel-body">
+                    {{ render(controller('AppBundle:Recipe:addImport')) }}
+                </div>
+            </div>
         </div>
-        <div id="recipe_ingredients"  class="col-md-10" data-prototype="
-             {% filter escape %}
-                 {{ include('Utils/ingredients_form.html.twig', { 'form': form.ingredients.vars.prototype }) }}
-             {% endfilter %}">
-             {% for ingredient in form.ingredients %}
-                 {{ include('Utils/ingredients_form.html.twig', { 'form': ingredient }) }}
-             {% endfor %}
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingScratch">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseScratch" aria-expanded="false" aria-controls="collapseScratch">
+                        Create from scratch
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseScratch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingScratch">
+                <div class="panel-body">
+                    {{ render(controller('AppBundle:Recipe:addScratch')) }}
+                </div>
+            </div>
         </div>
-
-        {{ form_row(form.category) }}
-        {{ form_row(form.duration) }}
-
-        {{ form_label(form.steps) }}
-        <div class="">
-            <a href="#" id="add_step_link"><i class="glyphicon glyphicon-plus-sign"></i></a>
-        </div>
-        <div id="recipe_steps"  class="col-md-10" data-prototype="
-             {% filter escape %}
-                 {{ include('Utils/steps_form.html.twig', { 'form': form.steps.vars.prototype }) }}
-             {% endfilter %}">
-             {% for step in form.steps %}
-                 {{ include('Utils/steps_form.html.twig', { 'form': step }) }}
-             {% endfor %}
-        </div>
-
-
-        {{ form_row(form.isFinished) }}
-        {{ form_row(form.title) }}
-
-
-        {{ form_widget(form) }}
-
-        <div class="form-group">
-            <a href="{{ path('recipe_list') }}" class="btn btn-md btn-info col-md-offset-2 col-md-2">
-                <i class="glyphicon glyphicon-arrow-left"></i> Back to the list
-            </a>
-            <input type="submit" value="Create" class="btn btn-success btn-md col-md-offset-1 col-md-2" />
-            <input type="Reset" value="Reset" class="btn btn-warning btn-md col-md-offset-1 col-md-2" />
-        </div>
-    {{ form_end(form) }}
+    </div>
 {%- endblock %}
 
 {% block javascripts -%}
