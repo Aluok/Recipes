@@ -1,21 +1,20 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class UserControllerTest extends WebTestCase
 {
     /**
      * @dataProvider urlProvider
      */
      //TODO adds a selector and an element to check whether it is the right page
-    public function testRoutes($url, $text, $selector)
+    public function testRoutes($url)
     {
         $client = self::createClient();
-        $crawler = $client->request('GET', $url);
+        $client->request('GET', $url);
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertContains($text, $crawler->filter($selector)->text());
     }
 
     //---------------------Data providers-----------------------
@@ -23,7 +22,10 @@ class DefaultControllerTest extends WebTestCase
     public function urlProvider()
     {
         return array(
-            array('/', 'Julien\'s Recipe', '#main-container h1'),
+            array('/me/recipes'),
+            array('/me/ratings'),
+            array('/me/reviews'),
+            //TODO Add a fixture to show a profile
         );
     }
 }

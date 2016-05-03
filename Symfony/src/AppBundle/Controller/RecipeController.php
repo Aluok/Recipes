@@ -104,7 +104,7 @@ class RecipeController extends Controller
     }
 
     /**
-     * @Route("/recipe/new/scratch", name="recipe_new_scratch")
+     * @Route("/recipe/new/import", name="recipe_new_import")
      * @Method({"GET","POST"})
      */
     public function addImportAction(Request $request)
