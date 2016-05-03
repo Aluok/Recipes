@@ -5,8 +5,8 @@ class ListUtils
 {
     public static function getFilters(string $filters)
     {
+        //TODO See to implement it as a constant (to be implementerd in the annotation and tests too.
         if ($filters == "All") {
-            //TODO See to implement it as a constant (to be implementerd in the annotation too.
             return null;
         }
         $mainFilters = explode("/", $filters);
