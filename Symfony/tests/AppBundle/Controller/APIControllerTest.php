@@ -13,8 +13,10 @@ class APIControllerTest extends WebTestCase
     public function testRoutes($url)
     {
         $client = self::createClient();
-        $client->request('GET', $url);
+        $crawler = $client->request('GET', $url);
+
         $this->assertTrue($client->getResponse()->isSuccessful());
+        //TODO create a test on a JSON response
     }
 
     //---------------------Data providers-----------------------

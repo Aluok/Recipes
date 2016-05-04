@@ -23,18 +23,6 @@ class UserController extends Controller
     }
 
     /**
-     * Lists an User ratings
-     * @Route("/me/ratings", name="my_ratings")
-     */
-    public function ratingsAction()
-    {
-        //TODO implements
-        return $this->render('User/ratings.html.twig', array(
-            // ...
-        ));
-    }
-
-    /**
      * List an user reviews
      * @Route("/me/reviews", name="my_reviews")
      */

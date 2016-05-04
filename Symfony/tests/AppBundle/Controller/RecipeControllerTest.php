@@ -10,11 +10,14 @@ class RecipeControllerTest extends WebTestCase
      * @dataProvider urlProvider
      */
      //TODO adds a selector and an element to check whether it is the right page
-    public function testRoutes($url)
+    public function testRoutes($url, $text = null, $selector = null)
     {
         $client = self::createClient();
-        $client->request('GET', $url);
+        $crawler = $client->request('GET', $url);
         $this->assertTrue($client->getResponse()->isSuccessful());
+        if ($text != null && $selector != null) {
+            $this->assertContains($text, $crawler->filter($selector)->text());
+        }
     }
 
     //---------------------Data providers-----------------------
@@ -22,9 +25,9 @@ class RecipeControllerTest extends WebTestCase
     public function urlProvider()
     {
         return array(
-            array('/recipe/list'),
-            array('/reviews/list'),
-            array('/recipe/new'),
+            array('/recipe/list', 'Recipe list', '#main-container h1'),
+            array('/reviews/list', 'Recipe list', '#main-container h1'),
+            array('/recipe/new', 'Recipe creation', '#main-container h1'),
             array('/recipe/new/scratch'),
             array('/recipe/new/import'),
             //TODO Add a fixture for show, edit, delete, comment, review
