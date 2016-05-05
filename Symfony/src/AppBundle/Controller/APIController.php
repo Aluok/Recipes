@@ -6,9 +6,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Utils\ListUtils;
+use Doctrine\ORM\EntityManager;
 
+/**
+ * @Route(service="app.controller.api")
+ */
 class APIController extends Controller
 {
+    private $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route("/api/list/{action}/{sorter}/{page}/{direction}/{categories}", name="recipe_api_list",
      *      defaults={"sorter": "date", "page": 1, "categories": "All", "direction": "ASC"},
@@ -24,13 +35,12 @@ class APIController extends Controller
      */
     public function listAction($action, $sorter, $page, $categories, $direction)
     {
-        $em = $this->getDoctrine()->getManager();
         if ($action == 'recipe') {
             $method = 'getListPublished';
         } elseif ($action == 'review') {
             $method = 'getListForReview';
         }
-        $recipes = $em
+        $recipes = $this->em
             ->getRepository('AppBundle:Recipe')
             ->$method(
                 ListUtils::getFilters($categories),
@@ -39,7 +49,7 @@ class APIController extends Controller
                 $direction
             );
         $responseData = $this->generateJSONResponse($recipes);
-        $responseData['totalPages'] = $em->getRepository('AppBundle:Recipe')->getCount(
+        $responseData['totalPages'] = $this->em->getRepository('AppBundle:Recipe')->getCount(
             $action == 'recipe',
             ListUtils::getFilters($categories)
         );

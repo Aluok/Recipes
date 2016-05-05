@@ -1,4 +1,9 @@
 services:
+    app.controller.api:
+        class: AppBundle\Controller\APIController
+        public: true
+        arguments: ['@doctrine.orm.entity_manager']
+
 #    recipe.example:
 #        class: AppBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
