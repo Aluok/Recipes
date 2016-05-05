@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Recipe;
+
 /**
  * RecipeRepository
  *
@@ -74,8 +76,8 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             }
         }
         return $query
-            ->setFirstResult(($page - 1) * 10)
-            ->setMaxResults(10);
+            ->setFirstResult(($page - 1) * Recipe::NB_RECIPE_PAGE)
+            ->setMaxResults(Recipe::NB_RECIPE_PAGE);
     }
 
     public function getCount($published, $filters)
@@ -103,7 +105,7 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
                     ->andWhere('i.recipe = r.slug');
             }
         }
-        return $query->getQuery()->getOneOrNullResult()[1];
+        return ceil($query->getQuery()->getOneOrNullResult()[1] / Recipe::NB_RECIPE_PAGE);
     }
 
     public function getUniqueCategories()

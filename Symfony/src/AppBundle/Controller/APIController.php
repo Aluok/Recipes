@@ -39,9 +39,9 @@ class APIController extends Controller
                 $direction
             );
         $responseData = $this->generateJSONResponse($recipes);
-        $responseData['totalPages'] = ceil(
-            $em->getRepository('AppBundle:Recipe')
-                ->getCount($action == 'recipe', ListUtils::getFilters($categories)) / 10
+        $responseData['totalPages'] = $em->getRepository('AppBundle:Recipe')->getCount(
+            $action == 'recipe',
+            ListUtils::getFilters($categories)
         );
         return new JsonResponse($responseData);
     }

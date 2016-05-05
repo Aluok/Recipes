@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Constraints;
  */
 class Recipe
 {
+    const NB_RECIPE_PAGE = 10;
+
     const CATEGORIES = array(
         'breakfast' => 'breakfast',
         'lunch' => 'lunch',
