@@ -9,7 +9,6 @@ class RecipeControllerTest extends WebTestCase
     /**
      * @dataProvider urlProvider
      */
-     //TODO adds a selector and an element to check whether it is the right page
     public function testRoutes($url, $text = null, $selector = null)
     {
         $client = self::createClient();

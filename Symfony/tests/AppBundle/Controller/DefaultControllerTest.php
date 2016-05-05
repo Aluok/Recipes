@@ -9,7 +9,6 @@ class DefaultControllerTest extends WebTestCase
     /**
      * @dataProvider urlProvider
      */
-     //TODO adds a selector and an element to check whether it is the right page
     public function testRoutes($url, $text, $selector)
     {
         $client = self::createClient();
