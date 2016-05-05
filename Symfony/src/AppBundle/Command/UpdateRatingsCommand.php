@@ -5,7 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use RecipeBundle\Entity\Recipe;
+use AppBundle\Entity\Recipe;
 
 class UpdateRatingsCommand extends ContainerAwareCommand
 {
@@ -20,10 +20,7 @@ class UpdateRatingsCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-
-        $recipes = $em->getRepository('RecipeBundle:Recipe')->findByIsFinished(1);
-
-        $text = "";
+        $recipes = $em->getRepository('AppBundle:Recipe')->findByIsFinished(1);
 
         foreach ($recipes as $recipe) {
             $score = 0;
@@ -31,12 +28,12 @@ class UpdateRatingsCommand extends ContainerAwareCommand
             if (count($reviews) == 0) {
                 $rating = 0;
             } else {
-                foreach ($recipe->getReviews() as $rating) {
+                foreach ($reviews as $rating) {
                     $score += $rating->getRating();
                 }
                 $rating = $score / count($reviews);
             }
-            if ($rating >= 2 && count($reviews) > 4) {
+            if ($rating >= 2 && count($reviews) >= 4) {
                 $recipe->setIsPublished(true);
             } else {
                 $recipe->setIsPublished(false);
