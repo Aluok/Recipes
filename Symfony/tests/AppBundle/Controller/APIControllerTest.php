@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Controller;
+namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\Controller\APIController;
@@ -18,7 +18,7 @@ class APIControllerTest extends WebTestCase
         $this->repository = $this->getMockBuilder('AppBundle\\Repository\\RecipeRepository')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+        $this->entityManager = $this->getMockBuilder('Doctrine\\ORM\\EntityManager')
             ->disableOriginalConstructor()
             ->getMock();
         $this->recipeMock = $this->getMockBuilder('AppBundle\\Entity\\Recipe')
