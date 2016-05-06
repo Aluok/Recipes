@@ -9,7 +9,7 @@ $(function() {
     var direction = "ASC";
 
 	var uri = $("#body-list").data("uri");
-	var uriShow = $("#body-list").data("uri-show").split('0')[1];
+	var uriShow = $("#body-list").data("uriShow").split('0')[0];
 	var $layer = $("#layer-recipe-item");
 	var lastPage = $('.pagination > li:last-child > a').data('page');
     var liList = $('.pagination > li');
