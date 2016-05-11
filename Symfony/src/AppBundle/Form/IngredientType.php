@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use AppBundle\Entity\Ingredient;
 
 class IngredientType extends AbstractType
@@ -19,12 +20,15 @@ class IngredientType extends AbstractType
     {
         $builder
             ->add('quantity', IntegerType::class, array(
-                'label' => '',
+                'label' => false,
             ))
             ->add('quantityUnit', ChoiceType::class, array(
                 'choices' => Ingredient::MESUREMENT_UNIT,
+                'label' => false,
             ))
-            ->add('name')
+            ->add('name', TextType::class, array(
+                'label' => false,
+            ))
         ;
     }
 

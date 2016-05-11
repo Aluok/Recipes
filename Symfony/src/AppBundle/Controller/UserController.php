@@ -40,8 +40,9 @@ class UserController extends Controller
      */
     public function showProfile(User $user)
     {
-        return $this->render('User/show_profile.html.twig', array(
-            'user' => $user
+        return $this->render('FOSUserBundle:Profile:show.html.twig', array(
+            'user' => $user,
+            'self' => $user == $this->get('security.token_storage')->getToken()->getUser(),
         ));
     }
 }

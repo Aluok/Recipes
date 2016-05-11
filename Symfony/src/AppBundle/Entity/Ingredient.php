@@ -15,12 +15,12 @@ use Symfony\Component\Validator\Constraints;
 class Ingredient
 {
     const MESUREMENT_UNIT =
-        array('ml' => 'ml',
-            'dl' => 'dl',
-            'l' => 'l',
-            'g' => 'g',
-            'unit' => 'unit',
-            'coffee spoon' => 'coffee spoon'
+        array('choices.measurement.ml' => 'ml',
+            'choices.measurement.dl' => 'dl',
+            'choices.measurement.l' => 'l',
+            'choices.measurement.g' => 'g',
+            'choices.measurement.unit' => 'unit',
+            'choices.measurement.coffee_spoon' => 'coffee spoon',
         );
 
     /**
@@ -42,7 +42,7 @@ class Ingredient
     /**
      * @var int
      *
-     * @ORM\Column(name="quantityUnit", type="string", length=10)
+     * @ORM\Column(name="quantityUnit", type="string", length=255)
      */
     private $quantityUnit;
 

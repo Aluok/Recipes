@@ -18,14 +18,12 @@ class Recipe
     const NB_RECIPE_PAGE = 10;
 
     const CATEGORIES = array(
-        'breakfast' => 'breakfast',
-        'lunch' => 'lunch',
-        'diner' => 'diner',
-        'snacks' => 'snacks'
+        'choices.category.breakfast' => 'breakfast',
+        'choices.category.lunch' => 'lunch',
+        'choices.category.diner' => 'diner',
+        'choices.category.snacks' => 'snacks'
     );
     /**
-     * @var string
-     *
      * @ORM\OneToMany(targetEntity="Ingredient", mappedBy="recipe", cascade={"persist", "remove"})
      */
     private $ingredients;

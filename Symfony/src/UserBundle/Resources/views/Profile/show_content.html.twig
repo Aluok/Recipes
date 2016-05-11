@@ -1,9 +1,35 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<h1>My profile <a class="btn btn-md btn-primary" href="{{ path('fos_user_profile_edit') }}">Edit</a></h1>
+<h1>
+    {% if self is not defined or self == true %}
+        {% trans from 'app' %}title.user.profile{% endtrans %}
+    {% else %}
+        {% trans with {'%username%': user.username} from 'app'  %}title.user.other_profile{% endtrans %}
+    {% endif %}
+</h1>
 
-<div class="fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-    <p>Recipes: {{ user.recipes|length }}</p>
+<div class="fos_user_user_show row">
+    <div class="col-md-8 " id="user-info">
+        <h2>{{ 'profile.show.title.information'|trans }}</h2>
+        <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+        <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+        {% if user.firstName is not empty and user.lastName is not empty %}
+            <p>{{ 'profile.show.name'|trans }}: {{ user.firstName }} {{ user.lastName }}</p>
+        {% endif %}
+    </div>
+    <div class="col-md-4 thumbnail" id="user-stats">
+        <h2>{{ 'profile.show.title.stats'|trans }}</h2>
+        <p>{{ 'profile.show.recipe.count'|trans }}: {{ user.recipes|length }}</p>
+    </div>
 </div>
+
+{% if self is not defined or self == true %}
+<div class="row">
+    <a class="btn btn-md btn-primary col-md-3 col-md-offset-2" href="{{ path('fos_user_profile_edit') }}">
+        {{ 'profile.edit.submit'|trans }}
+    </a>
+    <a class="btn btn-md btn-primary col-md-3 col-md-offset-2" href="{{ path('fos_user_change_password') }}">
+        {{ 'change_password.submit'|trans }}
+    </a>
+</div>
+{% endif %}

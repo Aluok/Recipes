@@ -1,7 +1,8 @@
 {% extends "base.html.twig" %}
+{% trans_default_domain "app" %}
 
 
-{% block title %}Julien's Recipes{% endblock %}
+{% block title %}{{ 'app.title'|trans }}{% endblock %}
 {% block stylesheets %}
   <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
   <link href="{{ asset('css/main.css') }}" rel="stylesheet" />

@@ -1,22 +1,23 @@
 {% extends "layout.html.twig" %}
+{% trans_default_domain "app" %}
 
 {% block content %}
-    <h1>Recipe list</h1>
+    <h1>{{ 'title.recipe.list'|trans }}</h1>
     <div class="row">
         <div id="menu-sort" class="col-md-3 thumbnail">
             <div id="sorters">
-                <h4>Sort by:</h4>
+                <h4>{{ 'title.recipe.sortby'|trans }}</h4>
                 <ul>
                     <li>
                         <a id="date-recipe" href="#" class="sort" data-sorter="date">
-                            Time of publication
+                            {{ 'recipe.sorter.newest'|trans }}
                             <i class="glyphicon glyphicon-menu-down"></i>
                             <i class="glyphicon glyphicon-menu-up"></i>
                         </a>
                     </li>
                     <li>
                         <a id="views-recipe" href="#" class="sort" data-sorter="views">
-                            Number of views
+                            {{ 'recipe.sorter.view'|trans }}
                             <i class="glyphicon glyphicon-menu-down"></i>
                             <i class="glyphicon glyphicon-menu-up"></i>
                         </a>
@@ -24,10 +25,10 @@
                 </ul>
             </div>
             <div id="filters">
-                <h4>Filter by:</h4>
+                <h4>{{ 'title.recipe.filterby'|trans }}</h4>
                 <ul>
                     <li>
-                        Ingredients
+                        {{ 'recipe.filter.ingredient'|trans }}
                         <ul class="filter-list" data-filter="ingredients">
                             {% for item in ingredients %}
                                 <li>
@@ -37,11 +38,11 @@
                         </ul>
                     </li>
                     <li>
-                        Category
+                        {{ 'recipe.filter.category'|trans }}
                         <ul class="filter-list" data-filter="categories">
                             {% for item in categories %}
                                 <li>
-                                    <input type="checkbox" value="{{ item.category }}">{{ item.category }}<br>
+                                    <input type="checkbox" value="{{ item.category }}">{{ item.category|trans }}<br>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -56,28 +57,28 @@
                     <tr>
                         <th>
                             <a id="title-recipe" class="sort" data-sorter="title" href="#">
-                                Title
+                                {{ 'recipe.title.name'|trans }}
                                 <i class="glyphicon glyphicon-menu-down"></i>
                                 <i class="glyphicon glyphicon-menu-up"></i>
                             </a>
                         </th>
                         <th>
                             <a id="category-recipe"  class="sort" data-sorter="category" href="#">
-                                Category
+                                {{ 'recipe.title.category'|trans }}
                                 <i class="glyphicon glyphicon-menu-down"></i>
                                 <i class="glyphicon glyphicon-menu-up"></i>
                             </a>
                         </th>
                         <th>
                             <a id="duration-recipe"  class="sort" data-sorter="duration" href="#">
-                                Duration
+                                {{ 'recipe.title.duration'|trans }}
                                 <i class="glyphicon glyphicon-menu-down"></i>
                                 <i class="glyphicon glyphicon-menu-up"></i>
                             </a>
                         </th>
                         <th>
                             <a id="rating-recipe"  class="sort" data-sorter="rating" href="#">
-                                Rating
+                                {{ 'recipe.title.rating'|trans }}
                                 <i class="glyphicon glyphicon-menu-down"></i>
                                 <i class="glyphicon glyphicon-menu-up"></i>
                             </a>
@@ -125,12 +126,12 @@
 	</nav>
     <ul>
         <li>
-            <a href="{{ path('recipe_new') }}">Create a new entry</a>
+            <a href="{{ path('recipe_new') }}">{{ 'recipe.action.create'|trans }}</a>
         </li>
     </ul>
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('js/Recipe/list.js') }}" />
+	<script src="{{ asset('js/Recipe/list.js') }}"></script>
 {% endblock %}

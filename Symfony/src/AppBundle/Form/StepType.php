@@ -17,8 +17,12 @@ class StepType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', TextareaType::class)
-            ->add('image', FileType::class)
+            ->add('text', TextareaType::class, array(
+                'label' => false,
+            ))
+            ->add('image', FileType::class, array(
+                'label' => false,
+            ))
         ;
     }
 

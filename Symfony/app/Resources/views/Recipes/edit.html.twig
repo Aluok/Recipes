@@ -1,11 +1,11 @@
 {%- extends "layout.html.twig" -%}
+{% trans_default_domain "app" %}
 
 {%- form_theme form 'bootstrap_3_horizontal_layout.html.twig' -%}
 
 {% block content -%}
-    <h1>Update Recipe</h1>
-    {{ form_start(form, {"attr": {"novalidate": "novalidate"}}) }}
-    <!-- TODO debug -->
+    <h1>{{ 'title.recipe.update'|trans }}</h1>
+    {{ form_start(form) }}
         {{ form_row(form.title) }}
 
         {{ form_label(form.ingredients) }}
@@ -13,12 +13,12 @@
             <a href="#" id="add_ingredient_link"><i class="glyphicon glyphicon-plus-sign"></i></a>
         </div>
         <div id="recipe_ingredients"  class="col-md-10" data-prototype="
-             {% filter escape %}
-                 {{ include('Utils/ingredients_form.html.twig', { 'form': form.ingredients.vars.prototype }) }}
-             {% endfilter %}">
-             {% for ingredient in form.ingredients %}
-                 {{ include('Utils/ingredients_form.html.twig', { 'form': ingredient }) }}
-             {% endfor %}
+            {% filter escape %}
+                {{ include('Utils/ingredients_form.html.twig', { 'form': form.ingredients.vars.prototype }) }}
+            {% endfilter %}">
+            {% for ingredient in form.ingredients %}
+                {{ include('Utils/ingredients_form.html.twig', { 'form': ingredient }) }}
+            {% endfor %}
         </div>
 
         {{ form_row(form.category) }}
@@ -29,14 +29,13 @@
             <a href="#" id="add_step_link"><i class="glyphicon glyphicon-plus-sign"></i></a>
         </div>
         <div id="recipe_steps"  class="col-md-10" data-prototype="
-             {% filter escape %}
-                 {{ include('Utils/steps_form.html.twig', { 'form': form.steps.vars.prototype }) }}
-             {% endfilter %}">
-             {% for step in form.steps %}
-                 {{ include('Utils/steps_form.html.twig', { 'form': step }) }}
-             {% endfor %}
+            {% filter escape %}
+                {{ include('Utils/steps_form.html.twig', { 'form': form.steps.vars.prototype }) }}
+            {% endfilter %}">
+            {% for step in form.steps %}
+                {{ include('Utils/steps_form.html.twig', { 'form': step }) }}
+            {% endfor %}
         </div>
-
 
         {{ form_row(form.isFinished) }}
         {{ form_row(form.title) }}
@@ -46,10 +45,10 @@
         <div class="form-group">
             <a href="{{ path('recipe_list') }}" class="btn btn-md btn-info
             {% if delete_form is defined %}col-md-offset-1{% else %}col-md-offset-2{% endif %} col-md-2">
-                <i class="glyphicon glyphicon-arrow-left"></i> Back to the list
+                <i class="glyphicon glyphicon-arrow-left"></i> {{ 'recipe.action.back'|trans }}
             </a>
-            <input type="submit" value="Update" class="btn btn-success btn-md col-md-offset-1 col-md-2" />
-            <input type="Reset" value="Reset" class="btn btn-warning btn-md col-md-offset-1 col-md-2" />
+            <input type="submit" value="{{ 'recipe.action.submit.update'|trans }}" class="btn btn-success btn-md col-md-offset-1 col-md-2" />
+            <input type="Reset" value="{{ 'recipe.action.reset'|trans }}" class="btn btn-warning btn-md col-md-offset-1 col-md-2" />
             {#% if delete_form is defined %}
                 <div class="col-md-2 col-md-offset-1">
                     {{ form_start(delete_form) }}
@@ -59,9 +58,6 @@
             {% endif %#}
         </div>
     {{ form_end(form) }}
-
-
-
 {%- endblock %}
 
 {% block javascripts -%}

@@ -1,69 +1,84 @@
 {% extends "layout.html.twig" %}
 
-
-{% block stylesheets %}
-  {{ parent() }}
-{% endblock %}
+{% trans_default_domain "app" %}
 
 {% block header %}
 <div class="jumbotron">
   <div class="container">
-    <h1>Julien's Recipe</h1>
+    <h1>{{ 'app.title'|trans }}</h1>
     <p>
-      Lets discover recipes easy to make
+      {{ 'app.description'|trans }}
     </p>
-    <p><a class="btn btn-primary btn-lg" href="{{ path('recipe_list') }}" role="button">Browse »</a></p>
+    <p>
+        <a class="btn btn-primary btn-lg" href="{{ path('recipe_list') }}" role="button">
+            {{ 'button.recipe.browse'|trans }}
+        </a>
+    </p>
   </div>
 </div>
 {% endblock %}
 
 {% block content %}  <!-- Example row of columns -->
-  {% for flash_message in app.session.flashbag.get('notice') %}
-  <div class="flash-message">
-    {{ flash_message }}
-  </div>
-  {% endfor %}
-  <div class="row">
-    <div class="col-md-4">
-      <h2>5 top viewed recipes</h2>
-      <p>
-        <ul>
-            {% for recipe in most_viewed_recipe %}
-          <li><a href="{{ path('recipe_view', {'id': recipe.slug}) }}">{{ recipe.title }}</a></li>
-            {% endfor %}
-        </ul>
-      </p>
+    {% for flash_message in app.session.flashbag.get('notice') %}
+        <div class="flash-message">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-4">
+            <h2>{{ 'title.top.views'|trans }}</h2>
+            <p>
+                <ul>
+                    {% for recipe in most_viewed_recipe %}
+                        <li>
+                            <a href="{{ path('recipe_view', {'id': recipe.slug}) }}">
+                                {{ recipe.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </p>
 
-      <p><a class="btn btn-default" href="{{ path('recipe_list', {'sorter': 'views'}) }}" role="button">More »</a></p>
+            <p>
+                <a class="btn btn-default" href="{{ path('recipe_list', {'sorter': 'views'}) }}" role="button">
+                    {{ 'button.recipe.more'|trans }}
+                </a>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>{{ 'title.top.ratings'|trans }}</h2>
+            <p>
+                <ul>
+                    {% for recipe in best_recipes %}
+                        <li>
+                            <a href="{{ path('recipe_view', {'id': recipe.slug}) }}">
+                                {{ recipe.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </p>
+
+            <p>
+                <a class="btn btn-default" href="{{ path('recipe_list', {'sorter': 'ratings'}) }}"
+                    role="button">
+                    {{ 'button.recipe.more'|trans }}
+                </a>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>{{ 'title.top.writers'|trans }}</h2>
+            <p>
+                <ul>
+                    {% for author in best_authors %}
+                        <li>
+                            <a href="{{ path('show_profile', {'id': author.id}) }}">
+                                {{ author.username }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </p>
+        </div>
     </div>
-    <div class="col-md-4">
-      <h2>5 top rated recipes</h2>
-      <p>
-        <ul>
-            {% for recipe in best_recipes %}
-          <li><a href="{{ path('recipe_view', {'id': recipe.slug}) }}">{{ recipe.title }}</a></li>
-            {% endfor %}
-        </ul>
-      </p>
-
-      <p><a class="btn btn-default" href="{{ path('recipe_list', {'sorter': 'ratings'}) }}" role="button">More »</a></p>
-    </div><div class="col-md-4">
-      <h2>5 top writers</h2>
-      <p>
-        <ul>
-            {% for author in best_authors %}
-          <li><a href="{{ path('show_profile', {'id': author.id}) }}">{{ author.username }}</a></li>
-            {% endfor %}
-        </ul>
-      </p>
-
-      {#}<p><a class="btn btn-default" href="#" role="button">More »</a></p>#}
-    </div>
-  </div>
-
-
-{% endblock %}
-
-{% block javascripts %}
-{{ parent() }}
 {% endblock %}

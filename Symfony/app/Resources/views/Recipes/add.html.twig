@@ -1,18 +1,15 @@
 {%- extends "layout.html.twig" -%}
-
-{%- block collection_row -%}
-
-{%- endblock collection_row -%}
-
+{% trans_default_domain "app" %}
 
 {% block content -%}
-    <h1>Recipe creation</h1>
+    <h1>{{ 'title.recipe.create'|trans }}</h1>
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingExternal">
                 <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Create from an existing website
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        {{ 'recipe.title.create.import'|trans }}
                     </a>
                 </h4>
             </div>
@@ -25,8 +22,9 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingScratch">
                 <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseScratch" aria-expanded="false" aria-controls="collapseScratch">
-                        Create from scratch
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseScratch"
+                        aria-expanded="false" aria-controls="collapseScratch">
+                        {{ 'recipe.title.create.scratch'|trans }}
                     </a>
                 </h4>
             </div>
