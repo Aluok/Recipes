@@ -25,7 +25,10 @@ class Rating
      * @var \stdClass
      *
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="reviews")
-     * @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug", nullable=false)
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug", nullable=false),
+     *      @ORM\JoinColumn(name="recipe_lang", referencedColumnName="language", nullable=false)
+     * })
      */
     private $recipe;
 

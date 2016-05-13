@@ -54,7 +54,10 @@ class Comment
      * @var \stdClass
      *
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="comments")
-     * @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug", nullable=false)
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug", nullable=false),
+     *      @ORM\JoinColumn(name="recipe_lang", referencedColumnName="language", nullable=false)
+     * })
      */
     private $recipe;
 
@@ -71,6 +74,7 @@ class Comment
      * @ORM\Column(name="lastUpdatedDate", type="datetime", nullable=true)
      */
     private $lastUpdatedDate;
+
 
     public function __construct()
     {

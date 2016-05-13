@@ -55,10 +55,27 @@ class Ingredient
 
     /**
      * @var object
-     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="ingredients")
-     * @ORM\JoinColumn(name="recipe", referencedColumnName="slug")
+     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="ingredients", cascade={"persist", "remove"})
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug", nullable=false),
+     *      @ORM\JoinColumn(name="recipe_lang", referencedColumnName="language", nullable=false)
+     * })
      **/
     private $recipe;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="recipe_lang", type="string", length=4)
+     */
+    private $language;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="recipe_slug", type="string", length=255)
+     */
+    private $recipe_slug;
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {

@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Utils\ListUtils;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Translation\DataCollectorTranslator;
 
 /**
  * @Route(service="app.controller.api")
@@ -14,10 +15,12 @@ use Doctrine\ORM\EntityManager;
 class APIController extends Controller
 {
     private $em;
+    private $translator;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, DataCollectorTranslator $trans)
     {
         $this->em = $em;
+        $this->translator = $trans;
     }
 
     /**
@@ -63,9 +66,13 @@ class APIController extends Controller
             $recipes_sent[] = array(
                 'title' => $recipe->getTitle(),
                 'slug' => $recipe->getSlug(),
-                'category' => $recipe->getCategory(),
+                'category' => $this->translator->trans($recipe->getCategory(), array(), 'app'),
                 'duration' => $recipe->getDuration(),
                 'rating' => $recipe->getRating(),
+                'languages' => array(
+                    $recipe->getLanguage(),
+                ),
+                //TODO only one for the moment, should be able to group recipes with same slug
             );
         }
         return array('recipes' => $recipes_sent);

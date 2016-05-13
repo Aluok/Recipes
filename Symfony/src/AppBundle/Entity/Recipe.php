@@ -54,7 +54,7 @@ class Recipe
     /**
      * @var string
      * @ORM\Id
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255)
      */
     private $slug;
 
@@ -117,6 +117,12 @@ class Recipe
      * @ORM\JoinColumn(name="comments_id", nullable=true)
      */
     private $comments;
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="language", type="string", length=4)
+     */
+    private $language;
 
     public function __construct()
     {
@@ -572,5 +578,29 @@ class Recipe
     public function removeReview(\AppBundle\Entity\Rating $review)
     {
         $this->reviews->removeElement($review);
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     *
+     * @return Recipe
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }

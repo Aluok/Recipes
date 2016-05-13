@@ -41,7 +41,10 @@ class Step
     /**
      * Bidirectionnal - One Recipe has many steps. OWNER SIDE
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="steps", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug", nullable=false),
+     *      @ORM\JoinColumn(name="recipe_lang", referencedColumnName="language", nullable=false)
+     * })
      */
     private $recipe;
 

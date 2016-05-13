@@ -2,7 +2,7 @@ services:
     app.controller.api:
         class: AppBundle\Controller\APIController
         public: true
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager', '@translator']
 
 #    recipe.example:
 #        class: AppBundle\Example

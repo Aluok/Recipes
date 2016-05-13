@@ -10,6 +10,10 @@ $(function() {
 
 	var uri = $("#body-list").data("uri");
 	var uriShow = $("#body-list").data("uriShow").split('0')[0];
+    var imgSrc = $("#layer-recipe-item > .recipe-title  .languages > img").attr('src').split('/');
+    imgSrc.pop();
+    imgSrc = imgSrc.join('/');
+    console.log(imgSrc);
 	var $layer = $("#layer-recipe-item");
 	var lastPage = $('.pagination > li:last-child > a').data('page');
     var liList = $('.pagination > li');
@@ -125,7 +129,15 @@ $(function() {
             .text(time[0] + ' h ' + time[1]);
         $item.find(".recipe-rating")
             .text(recipe.rating);
+        $languages = $item.find('.recipe-title > .languages');
+        for (index in recipe.languages) {
+            $languages.append(generateImageFor(recipe.languages[index]));
+        }
         $("#body-list").append($item);
+    }
+
+    function generateImageFor(language) {
+        return $('<img>').attr('src', imgSrc + '/' + language + '.gif').attr('alt', language);
     }
 
     /*

@@ -24,11 +24,11 @@ class RecipeController extends Controller
      *
      * @Route("/recipe/list", name="recipe_list")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('AppBundle:Recipe')->getUniqueCategories();
-        $ingredients = $em->getRepository('AppBundle:Ingredient')->getUniqueNames(true);
+        $ingredients = $em->getRepository('AppBundle:Ingredient')->getUniqueNames(true, $request->getLocale());
         return $this->render('Recipes/list.html.twig', array(
             'uri' => $this->generateUrl("recipe_api_list", array('action' => 'recipe')),
             'this_route' => 'recipe_list',
