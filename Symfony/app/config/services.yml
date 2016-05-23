@@ -9,6 +9,11 @@ services:
         tags:
             - { name: security.voter }
         public: false
+    app.controller.api:
+        class: AppBundle\Controller\APIController
+        public: true
+        arguments: ['@doctrine.orm.entity_manager', '@translator']
+
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
