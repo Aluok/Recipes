@@ -2,23 +2,10 @@
 namespace UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 
 class RegistrationController extends BaseController
 {
-    public function registerAction(Request $request)
-    {
-        $response = parent::registerAction($request);
-        return $response;
-    // if ($response instanceof RedirectResponse) {
-    //   return $this->redirect('RecipeBundle:Default:index.html.twig');
-    // }
-    //  return $this->render('RecipeBundle:Default:index.html.twig',
-    //     array('form' => $form->createView(),
-    //     'modal_opened' => 'register'));
-
-    }
 
     public function confirmedAction()
     {

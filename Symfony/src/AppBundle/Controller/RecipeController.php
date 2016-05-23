@@ -11,7 +11,6 @@ use AppBundle\Entity\Comment;
 use AppBundle\Entity\Rating;
 use AppBundle\Entity\Ingredient;
 use AppBundle\Form\Type\RecipeType;
-use AppBundle\Utils\ListUtils;
 
 /**
  * Recipe controller.

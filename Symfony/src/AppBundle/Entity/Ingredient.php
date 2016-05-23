@@ -197,4 +197,52 @@ class Ingredient
     {
         return $this->recipe;
     }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     *
+     * @return Ingredient
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set recipeSlug
+     *
+     * @param string $recipeSlug
+     *
+     * @return Ingredient
+     */
+    public function setRecipeSlug($recipeSlug)
+    {
+        $this->recipe_slug = $recipeSlug;
+
+        return $this;
+    }
+
+    /**
+     * Get recipeSlug
+     *
+     * @return string
+     */
+    public function getRecipeSlug()
+    {
+        return $this->recipe_slug;
+    }
 }

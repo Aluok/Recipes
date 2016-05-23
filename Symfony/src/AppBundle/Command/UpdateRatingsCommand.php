@@ -5,8 +5,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use AppBundle\Entity\Recipe;
-
 class UpdateRatingsCommand extends ContainerAwareCommand
 {
     protected function configure()
