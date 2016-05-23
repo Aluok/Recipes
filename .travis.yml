@@ -2,6 +2,10 @@ language: php
 php:
   - '7.0'
   - nightly
+
+env:
+    - SYMFONY_VERSION=origin/master
+
 before_script:
   - cd ./Symfony
   - composer install
