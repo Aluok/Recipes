@@ -9,9 +9,10 @@ env:
 before_script:
   - cd ./Symfony
   - cp app/config/parameters.yml.travis app/config/parametrs.yml
+  - composer install
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
-  - composer install
+
 
 script:
   - phpunit --coverage-text
