@@ -4,7 +4,7 @@ php:
   - nightly
 
 env:
-    - SYMFONY_VERSION=origin/master
+    - SYMFONY_VERSION="origin/master" DB="symfony"
 
 before_script:
   - cd ./Symfony
