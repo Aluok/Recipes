@@ -1,6 +1,6 @@
 imports:
     - { resource: config_dev.yml }
-    - { resource: parameters.yml }
+    - { resource: parameters_tests.yml }
 
 framework:
     test: ~
@@ -18,4 +18,4 @@ swiftmailer:
 
 doctrine:
     dbal:
-        dbname:   test_recipes
+        dbname:    "%database_name%"
