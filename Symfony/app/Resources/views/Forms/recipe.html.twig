@@ -25,6 +25,6 @@
         {{ include('Utils/steps_form.html.twig', { 'form': step }) }}
     {% endfor %}
 </div>
-{{ form_row(form.isFinished) }}
+{{ form_row(form.finished) }}
 {{ form_row(form.title) }}
 {{ form_widget(form) }}

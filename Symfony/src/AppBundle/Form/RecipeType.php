@@ -58,9 +58,10 @@ class RecipeType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
             ))
-            ->add('isFinished', CheckboxType::class, array(
+            ->add('finished', CheckboxType::class, array(
                 'label' => 'recipe.title.isfinished',
                 'translation_domain' => 'app',
+                'required' => false
             ))
             ->setAction($this->router->generate('recipe_new_scratch'))
         ;

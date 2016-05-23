@@ -22,6 +22,7 @@ class StepType extends AbstractType
             ))
             ->add('image', FileType::class, array(
                 'label' => false,
+                'required' => false,
             ))
         ;
     }

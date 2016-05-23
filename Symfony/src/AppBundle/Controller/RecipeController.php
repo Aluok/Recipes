@@ -86,6 +86,7 @@ class RecipeController extends Controller
                 $recipe
                     ->setAuthor($this->get('security.token_storage')->getToken()->getUser())
                     ->setDate(new \DateTime())
+                    ->setLanguage($request->getLocale())
                     ->generateSlug();
 
                 $em = $this->getDoctrine()->getManager();
