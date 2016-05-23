@@ -1,12 +1,14 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class RatingType extends AbstractType
+class StepType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,8 +17,13 @@ class RatingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('rating')
-            ->add('text')
+            ->add('text', TextareaType::class, array(
+                'label' => false,
+            ))
+            ->add('image', FileType::class, array(
+                'label' => false,
+                'required' => false,
+            ))
         ;
     }
 
@@ -26,7 +33,7 @@ class RatingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Rating'
+            'data_class' => 'AppBundle\Entity\Step'
         ));
     }
 }

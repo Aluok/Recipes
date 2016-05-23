@@ -14,7 +14,7 @@ services:
         public: true
         arguments: ['@doctrine.orm.entity_manager', '@translator']
     app.form.type.recipe:
-        class: AppBundle\Form\RecipeType
+        class: AppBundle\Form\Type\RecipeType
         arguments: ['@router']
         tags:
             - { name: form.type }

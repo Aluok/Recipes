@@ -10,7 +10,7 @@ use AppBundle\Entity\Step;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Rating;
 use AppBundle\Entity\Ingredient;
-use AppBundle\Form\RecipeType;
+use AppBundle\Form\Type\RecipeType;
 use AppBundle\Utils\ListUtils;
 
 /**
