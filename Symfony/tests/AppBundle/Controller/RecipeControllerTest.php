@@ -24,11 +24,11 @@ class RecipeControllerTest extends WebTestCase
     public function urlProvider()
     {
         return array(
-            array('/recipe/list', 'Recipe list', '#main-container h1'),
-            array('/reviews/list', 'Recipe list', '#main-container h1'),
-            array('/recipe/new', 'Recipe creation', '#main-container h1'),
-            array('/recipe/new/scratch'),
-            array('/recipe/new/import'),
+            array('en/recipe/list', 'Recipe list', '#main-container h1'),
+            array('en/reviews/list', 'Recipe list', '#main-container h1'),
+            array('en/recipe/new', 'Recipe creation', '#main-container h1'),
+            array('en/recipe/new/scratch'),
+            array('en/recipe/new/import'),
             //TODO Add a fixture for show, edit, delete, comment, review
         );
     }

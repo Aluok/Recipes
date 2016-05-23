@@ -22,8 +22,8 @@ class UserControllerTest extends WebTestCase
     public function urlProvider()
     {
         return array(
-            array('/me/recipes', 'My Recipes', '#main-container h1'),
-            array('/me/reviews', 'My Reviews', '#main-container h1'),
+            array('en/me/recipes', 'My Recipes', '#main-container h1'),
+            array('en/me/reviews', 'My Reviews', '#main-container h1'),
             //TODO Add a fixture to show a profile
         );
     }

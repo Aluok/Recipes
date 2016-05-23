@@ -31,9 +31,11 @@ class APIControllerAvailabilityTest extends WebTestCase
     public function urlProvider()
     {
         return array(
-            array('/api/list/recipe'),
-            array('/api/list/review'),
+            array('en/api/list/recipe'),
+            array('en/api/list/review'),
             //TODO Add a fixture for list
+            array('fr/api/list/recipe'),
+            array('fr/api/list/review'),
         );
     }
 }
