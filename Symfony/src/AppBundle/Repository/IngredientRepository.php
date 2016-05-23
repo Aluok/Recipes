@@ -19,10 +19,10 @@ class IngredientRepository extends \Doctrine\ORM\EntityRepository
             ->where('i.recipe_slug = r.slug')
             ->andWhere("r.language = '$locale'");
         if ($published) {
-            $query->andWhere('r.isPublished = 1');
+            $query->andWhere('r.published = 1');
         } else {
-            $query->andWhere('r.isPublished = 0')
-                ->andWhere('r.isFinished = 1');
+            $query->andWhere('r.published = 0')
+                ->andWhere('r.finished = 1');
         }
         $query = $query->groupBy('i.name')
             ->getQuery();

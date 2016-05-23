@@ -19,7 +19,7 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT r.title, r.slug
                 FROM AppBundle:recipe AS r
-                WHERE r.isPublished=1 AND r.isFinished=1
+                WHERE r.published=1 AND r.finished=1
                 ORDER BY r.views DESC'
             )
             ->setMaxResults(5)
@@ -32,7 +32,7 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT r.title, r.slug
                 FROM AppBundle:recipe AS r
-                WHERE r.isPublished=1 AND r.isFinished=1
+                WHERE r.published=1 AND r.finished=1
                 ORDER BY r.rating DESC'
             )
             ->setMaxResults(5)
@@ -42,7 +42,7 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
     public function getListPublished($categories, int $page, $sorter, string $direction = 'ASC')
     {
         return $this->getList($categories, $page)
-            ->andWhere('r.isPublished = 1')
+            ->andWhere('r.published = 1')
             ->orderBy('r.' . $sorter, $direction)
             ->getQuery()
             ->getResult();
@@ -51,8 +51,8 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
     public function getListForReview($categories, int $page, $sorter, string $direction = 'ASC')
     {
         return $this->getList($categories, $page)
-            ->andWhere('r.isPublished = 0')
-            ->andWhere('r.isFinished = 1')
+            ->andWhere('r.published = 0')
+            ->andWhere('r.finished = 1')
             ->orderBy('r.' . $sorter, $direction)
             ->getQuery()
             ->getResult();
@@ -61,7 +61,7 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
     private function getList($filters, $page)
     {
         $query = $this->createQueryBuilder('r');
-        if ($filters != null) {
+        if ($filters !== null) {
             if (array_key_exists('category', $filters) && count($filters['category']) != 0) {
                 $query->add('where', $query->expr()->in('r.category', '?1'))
                     ->setParameter('1', $filters['category']);
@@ -86,12 +86,12 @@ class RecipeRepository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder('r')
             ->select('COUNT(r.title)');
         if ($published) {
-            $query->where("r.isPublished = 1");
+            $query->where("r.published = 1");
         } else {
-            $query->where("r.isPublished = 0")
-                ->andWhere("r.isFinished = 1");
+            $query->where("r.published = 0")
+                ->andWhere("r.finished = 1");
         }
-        if ($filters != null) {
+        if ($filters !== null) {
             if (array_key_exists('category', $filters) && count($filters['category']) != 0) {
                 $query->add('where', $query->expr()->in('r.category', '?1'))
                     ->setParameter('1', $filters['category']);

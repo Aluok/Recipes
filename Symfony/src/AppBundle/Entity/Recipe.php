@@ -90,14 +90,14 @@ class Recipe
      *
      * @ORM\Column(name="isFinished", type="boolean")
      */
-    private $isFinished;
+    private $finished;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="isPublished", type="boolean")
      */
-    private $isPublished;
+    private $published;
 
     /**
      * Bidirectionnal - One Recipe has many steps. INVERSE SIDE
@@ -131,8 +131,8 @@ class Recipe
         $this->reviews = new ArrayCollection();
         $this->ingredients = new ArrayCollection();
 
-        $this->setIsFinished(false)
-            ->setIsPublished(false);
+        $this->setFinished(false)
+            ->setPublished(false);
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -355,13 +355,13 @@ class Recipe
     /**
      * Set isFinished
      *
-     * @param boolean $isFinished
+     * @param boolean $finished
      *
      * @return Recipe
      */
-    public function setIsFinished($isFinished)
+    public function setFinished($finished)
     {
-        $this->isFinished = $isFinished;
+        $this->finished = $finished;
 
         return $this;
     }
@@ -371,21 +371,21 @@ class Recipe
      *
      * @return bool
      */
-    public function getIsFinished()
+    public function isFinished()
     {
-        return $this->isFinished;
+        return $this->finished;
     }
 
     /**
      * Set isPublished
      *
-     * @param boolean $isPublished
+     * @param boolean $published
      *
      * @return Recipe
      */
-    public function setIsPublished($isPublished)
+    public function setPublished($published)
     {
-        $this->isPublished = $isPublished;
+        $this->published = $published;
 
         return $this;
     }
@@ -395,9 +395,9 @@ class Recipe
      *
      * @return bool
      */
-    public function getIsPublished()
+    public function isPublished()
     {
-        return $this->isPublished;
+        return $this->published;
     }
 
     /**

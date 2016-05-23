@@ -90,7 +90,7 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array()));
         $recipeMock
             ->expects($this->once())
-            ->method('setIsPublished')
+            ->method('setPublished')
             ->with($this->equalTo(false));
         $recipeMock
             ->expects($this->once())
@@ -122,7 +122,7 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array($reviewMock, $reviewMock)));
         $recipeMock
             ->expects($this->once())
-            ->method('setIsPublished')
+            ->method('setPublished')
             ->with(false);
         $recipeMock
             ->expects($this->once())
@@ -154,7 +154,7 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array($reviewMock, $reviewMock)));
         $recipeMock
             ->expects($this->once())
-            ->method('setIsPublished')
+            ->method('setPublished')
             ->with(false);
         $recipeMock
             ->expects($this->once())
@@ -186,7 +186,7 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array($reviewMock, $reviewMock, $reviewMock, $reviewMock)));
         $recipeMock
             ->expects($this->once())
-            ->method('setIsPublished')
+            ->method('setPublished')
             ->with(false);
         $recipeMock
             ->expects($this->once())
@@ -218,7 +218,7 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array($reviewMock, $reviewMock, $reviewMock, $reviewMock)));
         $recipeMock
             ->expects($this->once())
-            ->method('setIsPublished')
+            ->method('setPublished')
             ->with(true);
         $recipeMock
             ->expects($this->once())
@@ -247,7 +247,7 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array($reviewMock, $reviewMock, $reviewMock, $reviewMock)));
         $recipeMock
             ->expects($this->exactly(3))
-            ->method('setIsPublished')
+            ->method('setPublished')
             ->with(true);
         $recipeMock
             ->expects($this->exactly(3))

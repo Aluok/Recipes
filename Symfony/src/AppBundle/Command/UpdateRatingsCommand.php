@@ -20,7 +20,7 @@ class UpdateRatingsCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $recipes = $em->getRepository('AppBundle:Recipe')->findByIsFinished(1);
+        $recipes = $em->getRepository('AppBundle:Recipe')->findByFinished(1);
 
         foreach ($recipes as $recipe) {
             $score = 0;
@@ -34,9 +34,9 @@ class UpdateRatingsCommand extends ContainerAwareCommand
                 $rating = $score / count($reviews);
             }
             if ($rating >= 2 && count($reviews) >= 4) {
-                $recipe->setIsPublished(true);
+                $recipe->setPublished(true);
             } else {
-                $recipe->setIsPublished(false);
+                $recipe->setPublished(false);
             }
             $recipe->setRating($rating);
             $output->writeln($recipe->getTitle() . ' : ' . $rating . '   ');
