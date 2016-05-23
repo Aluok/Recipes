@@ -1,4 +1,11 @@
 parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: test_recipes
     database_user: travis
     database_password: ~
-    database_name: test_recipes
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: b027126dbb7da58837659e873be5ce71c45140f0
