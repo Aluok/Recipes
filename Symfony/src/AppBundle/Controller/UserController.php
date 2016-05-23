@@ -38,7 +38,7 @@ class UserController extends Controller
      * List an user reviews
      * @Route("/user/{id}", name="show_profile")
      */
-    public function showProfile(User $user)
+    public function showProfileAction(User $user)
     {
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
