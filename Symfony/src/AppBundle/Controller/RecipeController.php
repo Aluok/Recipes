@@ -41,11 +41,11 @@ class RecipeController extends Controller
      *
      * @Route("/reviews/list",name="recipe_list_for_reviews")
      */
-    public function listReviewsAction()
+    public function listReviewsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('AppBundle:Recipe')->getUniqueCategories();
-        $ingredients = $em->getRepository('AppBundle:Ingredient')->getUniqueNames(false);
+        $ingredients = $em->getRepository('AppBundle:Ingredient')->getUniqueNames(false, $request->getLocale());
         return $this->render('Recipes/list.html.twig', array(
             'uri' => $this->generateUrl("recipe_api_list", array('action' => 'review')),
             'this_route' => 'recipe_list_for_reviews',
@@ -78,7 +78,7 @@ class RecipeController extends Controller
         if (count($recipe->getSteps()) == 0) {
             $recipe->addStep(new Step());
         }
-        $form = $this->createForm('AppBundle\Form\RecipeType', $recipe);
+        $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -116,7 +116,7 @@ class RecipeController extends Controller
         if (count($recipe->getSteps()) == 0) {
             $recipe->addStep(new Step());
         }
-        $form = $this->createForm('AppBundle\Form\RecipeType', $recipe);
+        $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

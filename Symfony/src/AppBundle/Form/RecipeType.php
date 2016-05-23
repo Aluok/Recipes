@@ -13,9 +13,17 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 use AppBundle\Form\StepType;
 use AppBundle\Entity\Recipe;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 class RecipeType extends AbstractType
 {
+    private $router;
+
+    public function __construct(Router $router)
+    {
+        $this->router = $router;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -54,6 +62,7 @@ class RecipeType extends AbstractType
                 'label' => 'recipe.title.isfinished',
                 'translation_domain' => 'app',
             ))
+            ->setAction($this->router->generate('recipe_new_scratch'))
         ;
     }
 

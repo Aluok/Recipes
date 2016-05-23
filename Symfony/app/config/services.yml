@@ -13,7 +13,11 @@ services:
         class: AppBundle\Controller\APIController
         public: true
         arguments: ['@doctrine.orm.entity_manager', '@translator']
-
+    app.form.type.recipe:
+        class: AppBundle\Form\RecipeType
+        arguments: ['@router']
+        tags:
+            - { name: form.type }
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
