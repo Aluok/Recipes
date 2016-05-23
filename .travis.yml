@@ -11,5 +11,9 @@ before_install:
   - cp app/config/parameters.yml.travis app/config/parameters_tests.yml
   - composer install
 
+before_script:
+  - php bin/console doctrine:database:create --env=test
+  - php bin/console doctrine:schema:create --env=test 
+
 script:
   - phpunit --coverage-text
