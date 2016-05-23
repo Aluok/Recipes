@@ -10,6 +10,7 @@ class APIControllerTest extends WebTestCase
 {
     protected $repository;
     protected $entityManager;
+    protected $translator;
     protected $recipeMock;
 
     public function setUp()
@@ -19,6 +20,9 @@ class APIControllerTest extends WebTestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->entityManager = $this->getMockBuilder('Doctrine\\ORM\\EntityManager')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->translator = $this->getMockBuilder('Symfony\\Component\\Translation\\DataCollectorTranslator')
             ->disableOriginalConstructor()
             ->getMock();
         $this->recipeMock = $this->getMockBuilder('AppBundle\\Entity\\Recipe')
@@ -76,7 +80,7 @@ class APIControllerTest extends WebTestCase
             )
             ->will($this->returnValue(5));
 
-        $controller = new APIController($this->entityManager);
+        $controller = new APIController($this->entityManager, $this->translator);
         $response = $controller->listAction($action, $sorter, $page, $categories, $direction);
         $this->assertRegExp('/^{"recipes":\[{.*},{.*},{.*}\],"totalPages":5}$/', $response->getContent());
 
