@@ -1,0 +1,8 @@
+profile:
+    show:
+        title:
+            information: Infos
+            stats: Stats
+        name: Nom
+        recipe:
+            count: 'Recettes créées'

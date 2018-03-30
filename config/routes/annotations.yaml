@@ -1,0 +1,7 @@
+controllers:
+    resource: ../../src/Controller/
+    type: annotation
+    requirements:
+        _locale: en|fr|de
+    defaults:
+        _locale: en

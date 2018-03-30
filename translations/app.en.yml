@@ -1,0 +1,95 @@
+nav:
+    recipe:
+        list: 'All Recipes'
+        reviews: 'Reviews'
+        new: 'Create'
+    user:
+        recipes: 'My recipes'
+        reviews: 'My reviews'
+        profile: 'Profile'
+        logout: 'Log out'
+        signin: 'Sign in'
+        signup: 'Sign up'
+title:
+    recipe:
+        list: 'Recipe list'
+        create: 'Recipe creation'
+        update: 'Update Recipe'
+        sortby: 'Sort by:'
+        filterby: 'Filter by:'
+    modal:
+        signin: 'Signing in'
+        signup: 'Signing up'
+    user:
+        recipes: 'My Recipes'
+        reviews: 'My Reviews'
+        profile: 'My Profile'
+        other_profile: '%username% profile'
+    top:
+        views: '5 top viewed recipes'
+        ratings: '5 top rated recipes'
+        writers: '5 top writers'
+app:
+    title: "Julien's Recipes"
+    description: 'Lets discover recipes easy to make'
+button:
+    recipe:
+        browse: 'Browse »'
+        more: 'More »'
+recipe:
+    action:
+        create: "Create a new recipe"
+        back: "Back to the list"
+        reset: Reset
+        edit: Edit
+        comment: Comment
+        review: 'Rate/review'
+        submit:
+            import: Import
+            create: Create
+            update: Update
+
+    sorter:
+        newest: 'Time of publication'
+        view: 'Number of views'
+    filter:
+        ingredient: Ingredients
+        category: Categories
+    title:
+        name: Name
+        category: Category
+        duration: Duration
+        rating: Rating
+        ingredient: Ingredients
+        step: Steps
+        isfinished: 'Send for reviews?'
+        create:
+            import: Import
+            scratch: Create
+    desc:
+        date: 'The %date%'
+        author: 'by %author%%'
+        title:
+            ingredients: 'You will need:'
+            steps: 'Steps:'
+            comments: Comments
+            reviews: Reviews
+
+choices:
+    category:
+        breakfast: Breakfast
+        lunch: Lunch
+        diner: Diner
+        snacks: Snacks
+    measurement:
+        ml: ml
+        dl: dl
+        l: l
+        g: g
+        unit: unit
+        coffee_spoon: c
+img:
+    locale: 'img/locale/en.jpg'
+#Those are to remove the missing translation message. (they are not displayed, WorkAround)
+__name__label__: __name__label__
+0: 0
