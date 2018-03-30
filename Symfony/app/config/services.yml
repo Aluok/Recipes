@@ -18,6 +18,8 @@ services:
         arguments: ['@router']
         tags:
             - { name: form.type }
+    UserBundle\Controller\RegistrationController:
+        arguments: ['@event_dispatcher', '@fos_user.registration.form.factory', '@fos_user.user_manager', '@security.token_storage']
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
