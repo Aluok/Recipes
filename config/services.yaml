@@ -24,4 +24,4 @@ services:
         class: App\Security\RecipeVoter
         tags:
             - { name: security.voter }
-        public: false
+        public: falseori

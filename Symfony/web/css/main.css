@@ -1,0 +1,51 @@
+#main-container {
+  padding-top: 60px;
+}
+.modal.in {
+   display:block;
+}
+a:not(nav > a) {
+  color: #333!important;
+}
+.alert{
+    display: inline-block;
+    position: absolute;
+    top: 70px;
+    left: calc(100% - 350px);
+    width: 300px;
+    text-align: center;
+    z-index: 10;
+}
+td {
+    padding: 0px !important;
+}
+td > *{
+    margin: 8px;
+}
+td > a:not(.btn) {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    display: block;
+    padding: 8px;
+}
+
+.bulletless {
+    list-style-type: none;
+}
+
+#recipe_ingredients{
+    padding-left: 5px;
+    padding-right:0px;
+}
+
+#layer-recipe-item {
+	display: none;
+}
+.filter-list {
+    list-style-type: none;
+    padding-left: 5px;
+}
+.recipe-title > a {
+    display: inline !important;
+}

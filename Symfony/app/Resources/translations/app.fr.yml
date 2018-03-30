@@ -1,0 +1,93 @@
+nav:
+    recipe:
+        list: 'Les recettes'
+        reviews: 'Critiques'
+        new: 'Créer'
+    user:
+        recipes: 'Mes recettes'
+        reviews: 'Mes critiques'
+        profile: 'Profil'
+        logout: 'Déconnexion'
+        signin: 'Connexion'
+        signup: 'Créer un compte'
+title:
+    recipe:
+        list: 'Liste des recettes'
+        create: "Création d'une recette"
+        update: "Modification d'une recette"
+        sortby: 'Trier par :'
+        filterby: 'Filtrer par :'
+    modal:
+        signin: 'Connexion'
+        signup: 'Enregistrement'
+    user:
+        recipes: 'Mes recettes'
+        reviews: 'Mes critiques'
+        profile: 'Mon profil'
+        other_profile: 'Profil de %username%'
+    top:
+        views: 'Les 5 recettes les plus vues'
+        ratings: 'Les 5 recettes les mieux notées'
+        writers: 'Les 5 meilleurs rédacteurs'
+app:
+    title: "Les recettes de Julien"
+    description: 'Découvrons des recettes simples à faire'
+button:
+    recipe:
+        browse: 'Voir »'
+        more: 'Voir »'
+recipe:
+    action:
+        create: "Créer une recette"
+        back: "Retour à la liste"
+        reset: Reinitialiser
+        edit: Modifier
+        comment: Commenter
+        review: 'Noter/critiquer'
+        submit:
+            import: Importer
+            create: Créer
+            update: Modifier
+    sorter:
+        newest: 'Date de publication'
+        view: 'Nombre de vues'
+    filter:
+        ingredient: Ingrédients
+        category: Catégories
+    title:
+        name: Nom
+        category: Catégorie
+        duration: Durée
+        rating: Note
+        ingredient: Ingrédients
+        step: Étapes
+        isfinished: 'Prête pour critique?'
+        create:
+            import: Importer
+            scratch: Créer
+    desc:
+        date: 'Le %date%'
+        author: 'par %author%'
+        title:
+            ingredients: 'Vous aurez besoin de :'
+            steps: 'Étapes :'
+            comments: Commentaires
+            reviews: Critiques
+choices:
+    category:
+        breakfast: 'Petit déjeuner'
+        lunch: Déjeuner
+        diner: Diner
+        snacks: En-cas
+    measurement:
+        ml: ml
+        dl: dl
+        l: l
+        g: g
+        unit: unité
+        coffee_spoon: 'cuillère à café'
+img:
+    locale: 'img/locale/fr.gif'
+#Those are to remove the missing translation message. (they are not displayed, WorkAround)
+__name__label__: __name__label__
+0: 0

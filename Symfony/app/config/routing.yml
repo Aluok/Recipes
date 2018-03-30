@@ -1,0 +1,21 @@
+index:
+    path: /
+    defaults: { _controller: AppBundle:Default:index }
+
+app:
+    resource: '@AppBundle/Controller/'
+    prefix: /{_locale}
+    type:
+        annotation
+    requirements:
+        _locale: en|fr|de
+    defaults:
+        _locale: en
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    prefix: /{_locale}
+    requirements:
+        _locale: en|fr|de
+    defaults:
+        _locale: en

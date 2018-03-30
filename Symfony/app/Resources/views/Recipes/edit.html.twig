@@ -1,0 +1,105 @@
+{%- extends "layout.html.twig" -%}
+{% trans_default_domain "app" %}
+
+{%- form_theme form 'bootstrap_3_horizontal_layout.html.twig' -%}
+
+{% block content -%}
+    <h1>{{ 'title.recipe.update'|trans }}</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+
+        {{ form_label(form.ingredients) }}
+        <div class="">
+            <a href="#" id="add_ingredient_link"><i class="glyphicon glyphicon-plus-sign"></i></a>
+        </div>
+        <div id="recipe_ingredients"  class="col-md-10" data-prototype="
+            {% filter escape %}
+                {{ include('Utils/ingredients_form.html.twig', { 'form': form.ingredients.vars.prototype }) }}
+            {% endfilter %}">
+            {% for ingredient in form.ingredients %}
+                {{ include('Utils/ingredients_form.html.twig', { 'form': ingredient }) }}
+            {% endfor %}
+        </div>
+
+        {{ form_row(form.category) }}
+        {{ form_row(form.duration) }}
+
+        {{ form_label(form.steps) }}
+        <div class="">
+            <a href="#" id="add_step_link"><i class="glyphicon glyphicon-plus-sign"></i></a>
+        </div>
+        <div id="recipe_steps"  class="col-md-10" data-prototype="
+            {% filter escape %}
+                {{ include('Utils/steps_form.html.twig', { 'form': form.steps.vars.prototype }) }}
+            {% endfilter %}">
+            {% for step in form.steps %}
+                {{ include('Utils/steps_form.html.twig', { 'form': step }) }}
+            {% endfor %}
+        </div>
+
+        {{ form_row(form.isFinished) }}
+        {{ form_row(form.title) }}
+
+
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <a href="{{ path('recipe_list') }}" class="btn btn-md btn-info
+            {% if delete_form is defined %}col-md-offset-1{% else %}col-md-offset-2{% endif %} col-md-2">
+                <i class="glyphicon glyphicon-arrow-left"></i> {{ 'recipe.action.back'|trans }}
+            </a>
+            <input type="submit" value="{{ 'recipe.action.submit.update'|trans }}" class="btn btn-success btn-md col-md-offset-1 col-md-2" />
+            <input type="Reset" value="{{ 'recipe.action.reset'|trans }}" class="btn btn-warning btn-md col-md-offset-1 col-md-2" />
+            {#% if delete_form is defined %}
+                <div class="col-md-2 col-md-offset-1">
+                    {{ form_start(delete_form) }}
+                        <input type="submit" value="Delete" class="col-md-12 btn btn-danger btn-md">
+                    {{ form_end(delete_form) }}
+                </div>
+            {% endif %#}
+        </div>
+    {{ form_end(form) }}
+{%- endblock %}
+
+{% block javascripts -%}
+  {{ parent() }}
+  <script>
+  $(function(){
+    var $collectionStepHolder = $('#recipe_steps');
+    var $collectionIngredientHolder = $("#recipe_ingredients");
+
+    $collectionStepHolder.data('index', $collectionStepHolder.find('> .form-group').length);
+    $collectionIngredientHolder.data('index', $collectionIngredientHolder.find('> .form-group').length);
+
+    $('#add_step_link').on('click', function(e) {
+      // prevent the link from creating a "#" on the URL
+      e.preventDefault();
+
+      // add a new tag form (see next code block)
+      addStepForm($collectionStepHolder);
+    });
+    $('#add_ingredient_link').on('click', function(e) {
+      // prevent the link from creating a "#" on the URL
+      e.preventDefault();
+
+      // add a new tag form (see next code block)
+      addStepForm($collectionIngredientHolder);
+    });
+    function addStepForm($collectionHolder) {
+        var prototype = $collectionHolder.data('prototype');
+
+        // get the new index
+        var index = $collectionHolder.data('index');
+
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        var newForm = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
+
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+
+        $collectionHolder.append(newForm);
+    }
+  });
+
+  </script>
+{%- endblock %}
