@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\AppBundle\Utils;
+namespace Tests\App\Utils;
 
-use AppBundle\Utils\ListUtils;
+use App\Utils\ListUtils;
 
 class ListUtilsTest extends \PHPUnit_Framework_TestCase
 {

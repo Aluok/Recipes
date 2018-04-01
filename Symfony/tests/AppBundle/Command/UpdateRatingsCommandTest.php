@@ -1,11 +1,12 @@
 <?php
-namespace Test\AppBundle\Command;
+namespace Test\App\Command;
 
+use App\Entity\Rating;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-use AppBundle\Entity\Recipe;
-use AppBundle\Command\UpdateRatingsCommand;
+use App\Entity\Recipe;
+use App\Command\UpdateRatingsCommand;
 
 class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
 {
@@ -46,7 +47,7 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
         $entityManager = $this->getMockBuilder('Doctrine\\ORM\\EntityManager')
             ->disableOriginalConstructor()
             ->getMock();
-        $repository = $this->getMockBuilder('AppBundle\\Repository\\RecipeRepository')
+        $repository = $this->getMockBuilder(RecipeRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -63,7 +64,7 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
         $entityManager
             ->expects($this->once())
             ->method('getRepository')
-            ->with('AppBundle:Recipe')
+            ->with(Recipe::class)
             ->will($this->returnValue($repository));
         $repository
             ->expects($this->once())
@@ -81,7 +82,7 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
 
     public function getRecipesNoReview()
     {
-        $recipeMock = $this->getMockBuilder('AppBundle\\Entity\\Recipe')
+        $recipeMock = $this->getMockBuilder(Recipe::class)
             ->disableOriginalConstructor()
             ->getMock();
         $recipeMock
@@ -105,14 +106,14 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
 
     public function getRecipesLessThan4Reviews()
     {
-        $reviewMock = $this->getMockBuilder('AppBundle\\Entity\\Rating')
+        $reviewMock = $this->getMockBuilder(Rating::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reviewMock
             ->expects($this->exactly(2))
             ->method('getRating')
             ->will($this->returnValue(5));
-        $recipeMock = $this->getMockBuilder('AppBundle\\Entity\\Recipe')
+        $recipeMock = $this->getMockBuilder(Recipe::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -137,14 +138,14 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
 
     public function getRecipesLessThan4ReviewsScoreEqual1()
     {
-        $reviewMock = $this->getMockBuilder('AppBundle\\Entity\\Rating')
+        $reviewMock = $this->getMockBuilder(Rating::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reviewMock
             ->expects($this->exactly(2))
             ->method('getRating')
             ->will($this->returnValue(1));
-        $recipeMock = $this->getMockBuilder('AppBundle\\Entity\\Recipe')
+        $recipeMock = $this->getMockBuilder(Recipe::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -169,14 +170,14 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
 
     public function getRecipes4ReviewsScoreEqual1()
     {
-        $reviewMock = $this->getMockBuilder('AppBundle\\Entity\\Rating')
+        $reviewMock = $this->getMockBuilder(Rating::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reviewMock
             ->expects($this->exactly(4))
             ->method('getRating')
             ->will($this->returnValue(1));
-        $recipeMock = $this->getMockBuilder('AppBundle\\Entity\\Recipe')
+        $recipeMock = $this->getMockBuilder(Recipe::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -201,14 +202,14 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
 
     public function getRecipesOK()
     {
-        $reviewMock = $this->getMockBuilder('AppBundle\\Entity\\Rating')
+        $reviewMock = $this->getMockBuilder(Rating::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reviewMock
             ->expects($this->exactly(4))
             ->method('getRating')
             ->will($this->returnValue(5));
-        $recipeMock = $this->getMockBuilder('AppBundle\\Entity\\Recipe')
+        $recipeMock = $this->getMockBuilder(Recipe::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -233,11 +234,11 @@ class UpdateRatingsCommandTest extends \PHPUnit_Framework_TestCase
 
     public function getRecipesForAverageCheck()
     {
-        $reviewMock = $this->getMockBuilder('AppBundle\\Entity\\Rating')
+        $reviewMock = $this->getMockBuilder(Rating::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $recipeMock = $this->getMockBuilder('AppBundle\\Entity\\Recipe')
+        $recipeMock = $this->getMockBuilder(Recipe::class)
             ->disableOriginalConstructor()
             ->getMock();
 

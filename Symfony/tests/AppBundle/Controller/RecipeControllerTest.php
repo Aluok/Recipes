@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -47,7 +47,7 @@ class RecipeControllerTest extends WebTestCase
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'AppBundle_recipe[field_name]'  => 'Test',
+            'App_recipe[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 

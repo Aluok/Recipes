@@ -1,10 +1,14 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\App\Controller;
 
+use App\Entity\Recipe;
+use App\Repository\RecipeRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use AppBundle\Controller\APIController;
-use AppBundle\Utils\ListUtils;
+use App\Controller\APIController;
+use App\Utils\ListUtils;
+use Symfony\Component\Translation\DataCollectorTranslator;
 
 class APIControllerTest extends WebTestCase
 {
@@ -16,16 +20,16 @@ class APIControllerTest extends WebTestCase
     public function setUp()
     {
         //Create the Mocks
-        $this->repository = $this->getMockBuilder('AppBundle\\Repository\\RecipeRepository')
+        $this->repository = $this->getMockBuilder(RecipeRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->entityManager = $this->getMockBuilder('Doctrine\\ORM\\EntityManager')
+        $this->entityManager = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->translator = $this->getMockBuilder('Symfony\\Component\\Translation\\DataCollectorTranslator')
+        $this->translator = $this->getMockBuilder(DataCollectorTranslator::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->recipeMock = $this->getMockBuilder('AppBundle\\Entity\\Recipe')
+        $this->recipeMock = $this->getMockBuilder(Recipe::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -33,7 +37,7 @@ class APIControllerTest extends WebTestCase
         $this->entityManager
             ->expects($this->exactly(2))
             ->method('getRepository')
-            ->with($this->equalTo('AppBundle:Recipe'))
+            ->with($this->equalTo(Recipe::class))
             ->will($this->returnValue($this->repository));
         $this->recipeMock
             ->expects($this->exactly(3))
