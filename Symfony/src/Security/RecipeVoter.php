@@ -14,7 +14,7 @@ class RecipeVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (! in_array($attribute, array(self::VIEW, self::EDIT))) {
+        if (! \in_array($attribute, array(self::VIEW, self::EDIT), false)) {
             return false;
         }
 
@@ -33,7 +33,7 @@ class RecipeVoter extends Voter
         $recipe = $subject;
 
         if (! $user instanceof User) {
-            return $recipe->getIsPublished();
+            return $recipe->isPublished();
         }
 
         switch ($attribute) {
@@ -43,7 +43,7 @@ class RecipeVoter extends Voter
                 return $this->canView($recipe, $user);
         }
 
-            throw new \LogicException("This part should never be reached. Wrong attribute.");
+            throw new \LogicException('This part should never be reached. Wrong attribute.');
     }
 
     private function canView(Recipe $recipe, User $user)
@@ -52,7 +52,7 @@ class RecipeVoter extends Voter
             return true;
         }
 
-        return $recipe->getIsFinished();
+        return $recipe->isFinished();
     }
 
     private function canEdit(Recipe $recipe, User $user)

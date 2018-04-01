@@ -128,6 +128,7 @@ class Recipe
     /**
      * @var string
      *
+     * @ORM\Id()
      * @ORM\Column(name="language", type="string", length=4)
      */
     private $language;

@@ -170,7 +170,7 @@ class RecipeController extends Controller
      * @Route("/recipe/{id}/edit", name="recipe_edit")
      * @Method({"GET","POST"})
      */
-    public function editAction(Request $request, Recipe $recipe)
+    public function edit(Request $request, Recipe $recipe)
     {
         $this->denyAccessUnlessGranted('edit', $recipe);
 
