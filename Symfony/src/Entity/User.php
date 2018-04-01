@@ -17,38 +17,44 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="author")
+     * @var ArrayCollection
      */
     private $comments;
 
     /**
      * @ORM\OneToMany(targetEntity="Rating", mappedBy="author")
+     * @var ArrayCollection
      */
     private $ratings;
 
     /**
      * @ORM\OneToMany(targetEntity="Recipe", mappedBy="author")
+     * @var ArrayCollection
      */
     private $recipes;
 
     /**
      * @var string
      * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
+     * @var string
      */
     private $firstName;
 
     /**
      * @var string
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
+     * @var string
      */
     private $lastName;
 
     /**
-     * @var \Date
+     * @var \DateTime
      * @ORM\Column(name="birth_date", type="date", nullable=true)
      */
     private $birthDate;
@@ -63,48 +69,15 @@ class User extends BaseUser
         $this->ratings = new ArrayCollection();
     }
 
-    /**
-     * Add commment
-     *
-     * @param \App\Entity\Comment $commment
-     *
-     * @return User
-     */
-    public function addCommment(\App\Entity\Comment $commment)
-    {
-        $this->commments[] = $commment;
-
-        return $this;
-    }
-
-    /**
-     * Remove commment
-     *
-     * @param \App\Entity\Comment $commment
-     */
-    public function removeCommment(\App\Entity\Comment $commment)
-    {
-        $this->commments->removeElement($commment);
-    }
-
-    /**
-     * Get commments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCommments()
-    {
-        return $this->commments;
-    }
 
     /**
      * Add rating
      *
-     * @param \App\Entity\Rating $rating
+     * @param Rating $rating
      *
      * @return User
      */
-    public function addRating(\App\Entity\Rating $rating)
+    public function addRating(Rating $rating): User
     {
         $this->ratings[] = $rating;
 
@@ -114,9 +87,9 @@ class User extends BaseUser
     /**
      * Remove rating
      *
-     * @param \App\Entity\Rating $rating
+     * @param Rating $rating
      */
-    public function removeRating(\App\Entity\Rating $rating)
+    public function removeRating(Rating $rating)
     {
         $this->ratings->removeElement($rating);
     }
@@ -124,21 +97,21 @@ class User extends BaseUser
     /**
      * Get ratings
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Rating[]
      */
-    public function getRatings()
+    public function getRatings(): array
     {
-        return $this->ratings;
+        return $this->ratings->toArray();
     }
 
     /**
      * Add recipe
      *
-     * @param \App\Entity\Recipe $recipe
+     * @param Recipe $recipe
      *
      * @return User
      */
-    public function addRecipe(\App\Entity\Recipe $recipe)
+    public function addRecipe(Recipe $recipe): User
     {
         $this->recipes[] = $recipe;
 
@@ -148,9 +121,9 @@ class User extends BaseUser
     /**
      * Remove recipe
      *
-     * @param \App\Entity\Recipe $recipe
+     * @param Recipe $recipe
      */
-    public function removeRecipe(\App\Entity\Recipe $recipe)
+    public function removeRecipe(Recipe $recipe)
     {
         $this->recipes->removeElement($recipe);
     }
@@ -158,21 +131,21 @@ class User extends BaseUser
     /**
      * Get recipes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Recipe[]
      */
-    public function getRecipes()
+    public function getRecipes(): array
     {
-        return $this->recipes;
+        return $this->recipes->toArray();
     }
 
     /**
      * Add comment
      *
-     * @param \App\Entity\Comment $comment
+     * @param Comment $comment
      *
      * @return User
      */
-    public function addComment(\App\Entity\Comment $comment)
+    public function addComment(Comment $comment): User
     {
         $this->comments[] = $comment;
 
@@ -182,9 +155,9 @@ class User extends BaseUser
     /**
      * Remove comment
      *
-     * @param \App\Entity\Comment $comment
+     * @param Comment $comment
      */
-    public function removeComment(\App\Entity\Comment $comment)
+    public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
     }
@@ -194,7 +167,7 @@ class User extends BaseUser
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getComments()
+    public function getComments(): string
     {
         return $this->comments;
     }
@@ -206,7 +179,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): User
     {
         $this->firstName = $firstName;
 
@@ -218,7 +191,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -230,7 +203,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): User
     {
         $this->lastName = $lastName;
 
@@ -242,7 +215,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -254,7 +227,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setBirthDate($birthDate)
+    public function setBirthDate($birthDate): User
     {
         $this->birthDate = $birthDate;
 
@@ -266,7 +239,7 @@ class User extends BaseUser
      *
      * @return \DateTime
      */
-    public function getBirthDate()
+    public function getBirthDate(): \DateTime
     {
         return $this->birthDate;
     }
