@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Symfony\Component\Validator\Exception\InvalidOptionsException;
+use Symfony\Component\Validator\Exception\MissingOptionsException;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints;
 
@@ -25,6 +28,7 @@ class Recipe
     );
     /**
      * @ORM\OneToMany(targetEntity="Ingredient", mappedBy="recipe", cascade={"persist", "remove"})
+     * @var ArrayCollection
      */
     private $ingredients;
 
@@ -44,7 +48,7 @@ class Recipe
     private $category;
 
     /**
-     * @var \stdClass
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="recipes")
      * @ORM\JoinColumn(name="author", referencedColumnName="id")
@@ -80,6 +84,7 @@ class Recipe
     private $date;
 
     /**
+     * @var ArrayCollection
      * Bidirectionnal - One Recipe has many reviews. INVERSE SIDE
      * @ORM\OneToMany(targetEntity="Rating", mappedBy="recipe", cascade={"persist", "remove"})
      */
@@ -100,6 +105,7 @@ class Recipe
     private $published;
 
     /**
+     * @var ArrayCollection
      * Bidirectionnal - One Recipe has many steps. INVERSE SIDE
      * @ORM\OneToMany(targetEntity="Step", mappedBy="recipe", cascade={"persist", "remove"})
      */
@@ -113,13 +119,15 @@ class Recipe
     private $views = 0;
 
     /**
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="recipe", cascade={"remove"})
      * @ORM\JoinColumn(name="comments_id", nullable=true)
      */
     private $comments;
 
     /**
-     * @ORM\Id
+     * @var string
+     *
      * @ORM\Column(name="language", type="string", length=4)
      */
     private $language;
@@ -135,16 +143,22 @@ class Recipe
             ->setPublished(false);
     }
 
+    /**
+     * @param ClassMetadata $metadata
+     * @throws ConstraintDefinitionException
+     * @throws InvalidOptionsException
+     * @throws MissingOptionsException
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('title', new Constraints\NotBlank());
-        $metadata->addPropertyConstraint('title', new Constraints\Length(["min" => 3, "max" => 150]));
-        $metadata->addPropertyConstraint('title', new Constraints\Regex(
-            "#[a-zA-Z]{3,150}#",
-            "This value should contain a title of 3 to 15 characters (a-z)"
-        ));
+        $metadata->addPropertyConstraint('title', new Constraints\Length(['min' => 3, 'max' => 150]));
+        $metadata->addPropertyConstraint('title', new Constraints\Regex([
+            'pattern' => '#[a-zA-Z]{3,150}#',
+            'message' => 'This value should contain a title of 3 to 15 characters (a-z)',
+        ]));
         $metadata->addPropertyConstraint('category', new Constraints\Choice(array(
-            'choices' => Recipe::CATEGORIES,
+            'choices' => self::CATEGORIES,
             'message' => 'Choose a valid category.',
             'multiple' => false,
         )));
@@ -153,9 +167,9 @@ class Recipe
     /**
      * Get id
      *
-     * @return int
+     * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->slug;
     }
@@ -163,11 +177,11 @@ class Recipe
     /**
      * Get ingredients
      *
-     * @return string
+     * @return Ingredient[]
      */
-    public function getIngredients()
+    public function getIngredients(): array
     {
-        return $this->ingredients;
+        return $this->ingredients->toArray();
     }
 
     /**
@@ -177,9 +191,9 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setCategory($category)
+    public function setCategory($category): Recipe
     {
-        if (in_array($category, self::CATEGORIES)) {
+        if (\in_array($category, self::CATEGORIES, false)) {
             $this->category = $category;
         } else {
             $this->category = null;
@@ -193,7 +207,7 @@ class Recipe
      *
      * @return string
      */
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->category;
     }
@@ -201,11 +215,11 @@ class Recipe
     /**
      * Set author
      *
-     * @param App\User $author
+     * @param User $author
      *
      * @return Recipe
      */
-    public function setAuthor($author)
+    public function setAuthor(User $author): Recipe
     {
         $this->author = $author;
 
@@ -215,9 +229,9 @@ class Recipe
     /**
      * Get author
      *
-     * @return App\User
+     * @return User
      */
-    public function getAuthor()
+    public function getAuthor(): User
     {
         return $this->author;
     }
@@ -225,13 +239,11 @@ class Recipe
     /**
      * Generate slug
      *
-     * @param string $slug
-     *
      * @return Recipe
      */
-    public function generateSlug()
+    public function generateSlug(): Recipe
     {
-        $this->slug = preg_replace("/ /i", "_", $this->title . " by " . $this->author);
+        $this->slug = preg_replace('/ /', '_', $this->title . ' by ' . $this->author);
         return $this;
     }
 
@@ -240,7 +252,7 @@ class Recipe
      *
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -252,7 +264,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setDuration($duration)
+    public function setDuration($duration): Recipe
     {
         $this->duration = $duration;
 
@@ -264,7 +276,7 @@ class Recipe
      *
      * @return \DateTime
      */
-    public function getDuration()
+    public function getDuration(): \DateTime
     {
         return $this->duration;
     }
@@ -276,7 +288,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setRating($rating)
+    public function setRating($rating): Recipe
     {
         $this->rating = $rating;
 
@@ -288,7 +300,7 @@ class Recipe
      *
      * @return int
      */
-    public function getRating()
+    public function getRating(): int
     {
         return $this->rating;
     }
@@ -300,7 +312,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setDate($date)
+    public function setDate($date): Recipe
     {
         $this->date = $date;
 
@@ -312,7 +324,7 @@ class Recipe
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
@@ -320,9 +332,9 @@ class Recipe
     /**
      * Get date timmestamp
      *
-     * @return \DateTime
+     * @return int
      */
-    public function getDateTimestamp()
+    public function getDateTimestamp(): int
     {
         return $this->date->getTimestamp();
     }
@@ -335,7 +347,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setReviews($reviews)
+    public function setReviews($reviews): Recipe
     {
         $this->reviews = $reviews;
 
@@ -345,11 +357,11 @@ class Recipe
     /**
      * Get reviews
      *
-     * @return \stdClass
+     * @return Rating[]
      */
-    public function getReviews()
+    public function getReviews(): array
     {
-        return $this->reviews;
+        return $this->reviews->toArray();
     }
 
     /**
@@ -359,7 +371,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setFinished($finished)
+    public function setFinished($finished): Recipe
     {
         $this->finished = $finished;
 
@@ -371,7 +383,7 @@ class Recipe
      *
      * @return bool
      */
-    public function isFinished()
+    public function isFinished(): bool
     {
         return $this->finished;
     }
@@ -383,7 +395,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setPublished($published)
+    public function setPublished($published): Recipe
     {
         $this->published = $published;
 
@@ -395,7 +407,7 @@ class Recipe
      *
      * @return bool
      */
-    public function isPublished()
+    public function isPublished(): bool
     {
         return $this->published;
     }
@@ -403,14 +415,14 @@ class Recipe
     /**
      * Add step
      *
-     * @param \App\Entity\Step $step
+     * @param Step $step
      *
      * @return Recipe
      */
-    public function addStep(\App\Entity\Step $step)
+    public function addStep(Step $step): Recipe
     {
         $step->setRecipe($this);
-        $this->steps[] = $step;
+        $this->steps->add($step);
 
         return $this;
     }
@@ -418,9 +430,9 @@ class Recipe
     /**
      * Remove step
      *
-     * @param \App\Entity\Step $step
+     * @param Step $step
      */
-    public function removeStep(\App\Entity\Step $step)
+    public function removeStep(Step $step)
     {
         $this->steps->removeElement($step);
     }
@@ -428,21 +440,21 @@ class Recipe
     /**
      * Get steps
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Step[]
      */
-    public function getSteps()
+    public function getSteps(): array
     {
-        return $this->steps;
+        return $this->steps->toArray();
     }
 
     /**
      * Add comment
      *
-     * @param \App\Entity\Comment $comment
+     * @param Comment $comment
      *
      * @return Recipe
      */
-    public function addComment(\App\Entity\Comment $comment)
+    public function addComment(Comment $comment): Recipe
     {
         $this->comments[] = $comment;
 
@@ -452,9 +464,9 @@ class Recipe
     /**
      * Remove comment
      *
-     * @param \App\Entity\Comment $comment
+     * @param Comment $comment
      */
-    public function removeComment(\App\Entity\Comment $comment)
+    public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
     }
@@ -462,11 +474,11 @@ class Recipe
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Comment[]
      */
-    public function getComments()
+    public function getComments(): array
     {
-        return $this->comments;
+        return $this->comments->toArray();
     }
 
     /**
@@ -476,7 +488,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setTitle($title)
+    public function setTitle($title): Recipe
     {
         $this->title = $title;
 
@@ -488,7 +500,7 @@ class Recipe
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -500,7 +512,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setSlug($slug)
+    public function setSlug($slug): Recipe
     {
         $this->slug = $slug;
 
@@ -514,7 +526,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setViews($views)
+    public function setViews($views): Recipe
     {
         $this->views = $views;
 
@@ -526,7 +538,7 @@ class Recipe
      *
      * @return integer
      */
-    public function getViews()
+    public function getViews(): int
     {
         return $this->views;
     }
@@ -534,11 +546,11 @@ class Recipe
     /**
      * Add ingredient
      *
-     * @param \App\Entity\Ingredient $ingredient
+     * @param Ingredient $ingredient
      *
      * @return Recipe
      */
-    public function addIngredient(\App\Entity\Ingredient $ingredient)
+    public function addIngredient(Ingredient $ingredient): Recipe
     {
         $ingredient->setRecipe($this);
         $this->ingredients[] = $ingredient;
@@ -549,9 +561,9 @@ class Recipe
     /**
      * Remove ingredient
      *
-     * @param \App\Entity\Ingredient $ingredient
+     * @param Ingredient $ingredient
      */
-    public function removeIngredient(\App\Entity\Ingredient $ingredient)
+    public function removeIngredient(Ingredient $ingredient)
     {
         $this->ingredients->removeElement($ingredient);
     }
@@ -559,11 +571,11 @@ class Recipe
     /**
      * Add review
      *
-     * @param \App\Entity\Rating $review
+     * @param Rating $review
      *
      * @return Recipe
      */
-    public function addReview(\App\Entity\Rating $review)
+    public function addReview(Rating $review): Recipe
     {
         $this->reviews[] = $review;
 
@@ -573,9 +585,9 @@ class Recipe
     /**
      * Remove review
      *
-     * @param \App\Entity\Rating $review
+     * @param Rating $review
      */
-    public function removeReview(\App\Entity\Rating $review)
+    public function removeReview(Rating $review)
     {
         $this->reviews->removeElement($review);
     }
@@ -587,7 +599,7 @@ class Recipe
      *
      * @return Recipe
      */
-    public function setLanguage($language)
+    public function setLanguage($language): Recipe
     {
         $this->language = $language;
 
@@ -599,7 +611,7 @@ class Recipe
      *
      * @return string
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
