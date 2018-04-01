@@ -54,7 +54,7 @@ class Ingredient
     private $name;
 
     /**
-     * @var object
+     * @var Recipe
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="ingredients", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="recipe_slug", referencedColumnName="slug", nullable=false),
@@ -77,12 +77,18 @@ class Ingredient
      */
     private $recipe_slug;
 
+    /**
+     * @param ClassMetadata $metadata
+     * @throws \Symfony\Component\Validator\Exception\MissingOptionsException
+     * @throws \Symfony\Component\Validator\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Validator\Exception\ConstraintDefinitionException
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('name', new Constraints\NotBlank());
         $metadata->addPropertyConstraint('quantity', new Constraints\NotBlank());
         $metadata->addPropertyConstraint('quantity', new Constraints\Type(
-            array("type" => 'integer')
+            array('type' => 'integer')
         ));
         $metadata->addPropertyConstraint('quantityUnit', new Constraints\NotBlank());
     }
@@ -92,7 +98,7 @@ class Ingredient
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -104,7 +110,7 @@ class Ingredient
      *
      * @return Ingredient
      */
-    public function setQuantity($quantity)
+    public function setQuantity($quantity): Ingredient
     {
         $this->quantity = $quantity;
 
@@ -116,7 +122,7 @@ class Ingredient
      *
      * @return int
      */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
@@ -127,12 +133,13 @@ class Ingredient
      * @param integer $quantityUnit
      *
      * @return Ingredient
+     * @throws \InvalidArgumentException
      */
-    public function setQuantityUnit($quantityUnit)
+    public function setQuantityUnit($quantityUnit): Ingredient
     {
-        if (! in_array($quantityUnit, self::MESUREMENT_UNIT)) {
-            throw new InvalidArgumentException(
-                "The unit of the quantity needs to be in the allowed value"
+        if (! \in_array($quantityUnit, self::MESUREMENT_UNIT, false)) {
+            throw new \InvalidArgumentException(
+                'The unit of the quantity needs to be in the allowed value'
             );
         }
         $this->quantityUnit = $quantityUnit;
@@ -145,7 +152,7 @@ class Ingredient
      *
      * @return int
      */
-    public function getQuantityUnit()
+    public function getQuantityUnit(): int
     {
         return $this->quantityUnit;
     }
@@ -157,7 +164,7 @@ class Ingredient
      *
      * @return Ingredient
      */
-    public function setName($name)
+    public function setName($name): Ingredient
     {
         $this->name = $name;
 
@@ -169,7 +176,7 @@ class Ingredient
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -177,11 +184,11 @@ class Ingredient
     /**
      * Set recipe
      *
-     * @param \App\Entity\Recipe $recipe
+     * @param Recipe $recipe
      *
      * @return Ingredient
      */
-    public function setRecipe(\App\Entity\Recipe $recipe = null)
+    public function setRecipe(Recipe $recipe = null): Ingredient
     {
         $this->recipe = $recipe;
 
@@ -191,9 +198,9 @@ class Ingredient
     /**
      * Get recipe
      *
-     * @return \App\Entity\Recipe
+     * @return Recipe
      */
-    public function getRecipe()
+    public function getRecipe(): Recipe
     {
         return $this->recipe;
     }
@@ -205,7 +212,7 @@ class Ingredient
      *
      * @return Ingredient
      */
-    public function setLanguage($language)
+    public function setLanguage($language): Ingredient
     {
         $this->language = $language;
 
@@ -217,7 +224,7 @@ class Ingredient
      *
      * @return string
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
@@ -229,7 +236,7 @@ class Ingredient
      *
      * @return Ingredient
      */
-    public function setRecipeSlug($recipeSlug)
+    public function setRecipeSlug($recipeSlug): Ingredient
     {
         $this->recipe_slug = $recipeSlug;
 
@@ -241,7 +248,7 @@ class Ingredient
      *
      * @return string
      */
-    public function getRecipeSlug()
+    public function getRecipeSlug(): string
     {
         return $this->recipe_slug;
     }

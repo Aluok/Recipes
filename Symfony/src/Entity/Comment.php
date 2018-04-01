@@ -23,7 +23,7 @@ class Comment
     private $id;
 
     /**
-     * @var \stdClass
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
      * @ORM\JoinColumn(name="author", referencedColumnName="id", nullable=false)
@@ -51,7 +51,7 @@ class Comment
     private $responses;
 
     /**
-     * @var \stdClass
+     * @var Recipe
      *
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="comments")
      * @ORM\JoinColumns({
@@ -86,7 +86,7 @@ class Comment
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -94,11 +94,11 @@ class Comment
     /**
      * Set author
      *
-     * @param \stdClass $author
+     * @param User $author
      *
      * @return Comment
      */
-    public function setAuthor($author)
+    public function setAuthor($author): Comment
     {
         $this->author = $author;
 
@@ -108,9 +108,9 @@ class Comment
     /**
      * Get author
      *
-     * @return \stdClass
+     * @return User
      */
-    public function getAuthor()
+    public function getAuthor(): User
     {
         return $this->author;
     }
@@ -122,7 +122,7 @@ class Comment
      *
      * @return Comment
      */
-    public function setDate($date)
+    public function setDate($date): Comment
     {
         $this->date = $date;
 
@@ -134,7 +134,7 @@ class Comment
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
@@ -146,7 +146,7 @@ class Comment
      *
      * @return Comment
      */
-    public function setResponseTo($responseTo)
+    public function setResponseTo($responseTo): Comment
     {
         $this->responseTo = $responseTo;
 
@@ -158,7 +158,7 @@ class Comment
      *
      * @return int
      */
-    public function getResponseTo()
+    public function getResponseTo(): int
     {
         return $this->responseTo;
     }
@@ -166,11 +166,11 @@ class Comment
     /**
      * Set recipe
      *
-     * @param \stdClass $recipe
+     * @param Recipe $recipe
      *
      * @return Comment
      */
-    public function setRecipe($recipe)
+    public function setRecipe($recipe): Comment
     {
         $this->recipe = $recipe;
 
@@ -180,9 +180,9 @@ class Comment
     /**
      * Get recipe
      *
-     * @return \stdClass
+     * @return Recipe
      */
-    public function getRecipe()
+    public function getRecipe(): Recipe
     {
         return $this->recipe;
     }
@@ -194,7 +194,7 @@ class Comment
      *
      * @return Comment
      */
-    public function setText($text)
+    public function setText($text): Comment
     {
         $this->text = $text;
 
@@ -206,7 +206,7 @@ class Comment
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -218,7 +218,7 @@ class Comment
      *
      * @return Comment
      */
-    public function setLastUpdatedDate($lastUpdatedDate)
+    public function setLastUpdatedDate($lastUpdatedDate): Comment
     {
         $this->lastUpdatedDate = $lastUpdatedDate;
 
@@ -230,7 +230,7 @@ class Comment
      *
      * @return \DateTime
      */
-    public function getLastUpdatedDate()
+    public function getLastUpdatedDate(): \DateTime
     {
         return $this->lastUpdatedDate;
     }
@@ -238,11 +238,11 @@ class Comment
     /**
      * Add response
      *
-     * @param \App\Entity\Comment $response
+     * @param Comment $response
      *
      * @return Comment
      */
-    public function addResponse(\App\Entity\Comment $response)
+    public function addResponse(Comment $response): Comment
     {
         $this->responses[] = $response;
 
@@ -252,9 +252,9 @@ class Comment
     /**
      * Remove response
      *
-     * @param \App\Entity\Comment $response
+     * @param Comment $response
      */
-    public function removeResponse(\App\Entity\Comment $response)
+    public function removeResponse(Comment $response)
     {
         $this->responses->removeElement($response);
     }
@@ -262,10 +262,10 @@ class Comment
     /**
      * Get responses
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Comment[]
      */
-    public function getResponses()
+    public function getResponses(): array
     {
-        return $this->responses;
+        return $this->responses->toArray();
     }
 }

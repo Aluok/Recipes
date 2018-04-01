@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints;
 
@@ -32,7 +31,7 @@ class Step
     private $text;
 
     /**
-     * @var \stdClass
+     * @var Image
      *
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
      */
@@ -48,11 +47,12 @@ class Step
      */
     private $recipe;
 
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-    }
-
+    /**
+     * @param ClassMetadata $metadata
+     * @throws \Symfony\Component\Validator\Exception\MissingOptionsException
+     * @throws \Symfony\Component\Validator\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Validator\Exception\ConstraintDefinitionException
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('text', new Constraints\NotBlank());
@@ -63,9 +63,9 @@ class Step
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
-        return $this->recipe_order;
+        return $this->id;
     }
 
     /**
@@ -75,7 +75,7 @@ class Step
      *
      * @return Step
      */
-    public function setText($text)
+    public function setText($text): Step
     {
         $this->text = $text;
 
@@ -87,7 +87,7 @@ class Step
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -99,7 +99,7 @@ class Step
      *
      * @return Step
      */
-    public function setImage($image)
+    public function setImage($image): Step
     {
         $this->image = $image;
 
@@ -109,9 +109,9 @@ class Step
     /**
      * Get image
      *
-     * @return \stdClass
+     * @return Image
      */
-    public function getImage()
+    public function getImage(): Image
     {
         return $this->image;
     }
@@ -119,11 +119,11 @@ class Step
     /**
      * Set recipe
      *
-     * @param \stdClass $recipe
+     * @param Recipe $recipe
      *
      * @return Step
      */
-    public function setRecipe(Recipe $recipe)
+    public function setRecipe(Recipe $recipe): Step
     {
         $this->recipe = $recipe;
 
@@ -133,9 +133,9 @@ class Step
     /**
      * Get recipe
      *
-     * @return \stdClass
+     * @return Recipe
      */
-    public function getRecipe()
+    public function getRecipe(): Recipe
     {
         return $this->recipe;
     }

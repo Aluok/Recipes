@@ -55,7 +55,7 @@ class Image
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -67,7 +67,7 @@ class Image
      *
      * @return Image
      */
-    public function setSrc($src)
+    public function setSrc($src): Image
     {
         $this->src = $src;
 
@@ -79,7 +79,7 @@ class Image
      *
      * @return string
      */
-    public function getSrc()
+    public function getSrc(): string
     {
         return $this->src;
     }
@@ -91,7 +91,7 @@ class Image
      *
      * @return Image
      */
-    public function setAlt($alt)
+    public function setAlt($alt): Image
     {
         $this->alt = $alt;
 
@@ -103,7 +103,7 @@ class Image
      *
      * @return string
      */
-    public function getAlt()
+    public function getAlt(): string
     {
         return $this->alt;
     }
@@ -115,7 +115,7 @@ class Image
      *
      * @return Image
      */
-    public function setWidth($width)
+    public function setWidth($width): Image
     {
         $this->width = $width;
 
@@ -127,7 +127,7 @@ class Image
      *
      * @return int
      */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
@@ -139,7 +139,7 @@ class Image
      *
      * @return Image
      */
-    public function setHeight($height)
+    public function setHeight($height): Image
     {
         $this->height = $height;
 
@@ -151,7 +151,7 @@ class Image
      *
      * @return int
      */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->height;
     }

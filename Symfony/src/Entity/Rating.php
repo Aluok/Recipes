@@ -22,7 +22,7 @@ class Rating
     private $id;
 
     /**
-     * @var \stdClass
+     * @var Recipe
      *
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="reviews")
      * @ORM\JoinColumns({
@@ -40,7 +40,7 @@ class Rating
     private $rating;
 
     /**
-     * @var \stdClass
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="ratings")
      * @ORM\JoinColumn(name="author", referencedColumnName="id")
@@ -48,7 +48,7 @@ class Rating
     private $author;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(name="text", type="text")
      */
@@ -66,7 +66,7 @@ class Rating
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -78,7 +78,7 @@ class Rating
      *
      * @return Rating
      */
-    public function setRecipe($recipe)
+    public function setRecipe($recipe): Rating
     {
         $this->recipe = $recipe;
 
@@ -88,9 +88,9 @@ class Rating
     /**
      * Get recipe
      *
-     * @return \stdClass
+     * @return Recipe
      */
-    public function getRecipe()
+    public function getRecipe(): Recipe
     {
         return $this->recipe;
     }
@@ -102,7 +102,7 @@ class Rating
      *
      * @return Rating
      */
-    public function setRating($rating)
+    public function setRating($rating): Rating
     {
         $this->rating = $rating;
 
@@ -114,7 +114,7 @@ class Rating
      *
      * @return int
      */
-    public function getRating()
+    public function getRating(): int
     {
         return $this->rating;
     }
@@ -126,7 +126,7 @@ class Rating
      *
      * @return Rating
      */
-    public function setAuthor($author)
+    public function setAuthor($author): Rating
     {
         $this->author = $author;
 
@@ -136,9 +136,9 @@ class Rating
     /**
      * Get author
      *
-     * @return \stdClass
+     * @return User
      */
-    public function getAuthor()
+    public function getAuthor(): User
     {
         return $this->author;
     }
@@ -150,7 +150,7 @@ class Rating
      *
      * @return Rating
      */
-    public function setText($text)
+    public function setText($text): Rating
     {
         $this->text = $text;
 
@@ -162,7 +162,7 @@ class Rating
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -174,7 +174,7 @@ class Rating
      *
      * @return Rating
      */
-    public function setDate($date)
+    public function setDate($date): Rating
     {
         $this->date = $date;
 
@@ -186,7 +186,7 @@ class Rating
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
