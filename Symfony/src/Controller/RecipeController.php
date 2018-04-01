@@ -24,7 +24,7 @@ class RecipeController extends Controller
      *
      * @Route("/recipe/list", name="recipe_list")
      */
-    public function listAction(Request $request)
+    public function list(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository(Recipe::class)->getUniqueCategories();
@@ -41,7 +41,7 @@ class RecipeController extends Controller
      *
      * @Route("/reviews/list",name="recipe_list_for_reviews")
      */
-    public function listReviewsAction(Request $request)
+    public function listReviews(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository(Recipe::class)->getUniqueCategories();
@@ -58,7 +58,7 @@ class RecipeController extends Controller
      * @Route("/recipe/new", name="recipe_new")
      * @Method({"GET"})
      */
-    public function addAction(Request $request)
+    public function add(Request $request)
     {
         return $this->render('Recipes/add.html.twig', array(
         ));
@@ -69,7 +69,7 @@ class RecipeController extends Controller
      * @Route("/recipe/new/scratch", name="recipe_new_scratch")
      * @Method({"GET","POST"})
      */
-    public function addScratchAction(Request $request)
+    public function addScratch(Request $request)
     {
         $recipe = new Recipe();
         if (count($recipe->getIngredients()) == 0) {
@@ -108,7 +108,7 @@ class RecipeController extends Controller
      * @Route("/recipe/new/import", name="recipe_new_import")
      * @Method({"GET","POST"})
      */
-    public function addImportAction(Request $request)
+    public function addImport(Request $request)
     {
         $recipe = new Recipe();
         if (count($recipe->getIngredients()) == 0) {

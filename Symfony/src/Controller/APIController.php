@@ -10,7 +10,7 @@ use App\Utils\ListUtils;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * @Route(service="app.controller.api")
+ * @Route("/api")
  */
 class APIController extends Controller
 {
@@ -24,7 +24,7 @@ class APIController extends Controller
     }
 
     /**
-     * @Route("/api/list/{action}/{sorter}/{page}/{direction}/{categories}", name="recipe_api_list",
+     * @Route("/list/{action}/{sorter}/{page}/{direction}/{categories}", name="recipe_api_list",
      *      defaults={"sorter": "date", "page": 1, "categories": "All", "direction": "ASC"},
      *      requirements={
      *          "action": "recipe|review",
